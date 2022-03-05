@@ -12,23 +12,36 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 
+import javax.inject.Inject;
+
+import dagger.android.AndroidInjection;
 import fr.florent.mjmaker.fragment.common.menu.EnumMenu;
 import fr.florent.mjmaker.fragment.common.menu.MenuFragment;
 import fr.florent.mjmaker.fragment.monster.FindMonsterFragment;
+import fr.florent.mjmaker.service.monstrer.MonsterService;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getName();
 
+    @Inject
+    MonsterService monsterService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         loadFragment(R.id.menu, new MenuFragment(this::onMenuSelect));
         loadToolBar();
+        try {
+            monsterService.getAll();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
     }
 
 
@@ -39,15 +52,14 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit(); // save the changes
     }
 
-    /************************/
-    /**         Menu       **/
-    /************************/
+    /************************
+     *          Menu        *
+     ************************/
 
     private void onMenuSelect(EnumMenu menu) {
         Log.d(TAG, "Call menu : " + menu.name());
 
         switch (menu) {
-
             case FIND_MONSTER:
                 loadFragment(R.id.body, new FindMonsterFragment());
                 break;
@@ -56,9 +68,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /************************/
-    /**        Toolbar     **/
-    /************************/
+    /************************
+     *        Toolbar       *
+     ************************/
 
     private void loadToolBar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -86,7 +98,8 @@ public class MainActivity extends AppCompatActivity {
                     findViewById(R.id.menu).setVisibility(View.GONE);
                 }
                 break;
-
+            default:
+                Log.w(TAG, "Action not found for "+item.getItemId());
         }
         return super.onOptionsItemSelected(item);
     }
