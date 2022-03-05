@@ -7,12 +7,6 @@ import com.j256.ormlite.dao.Dao;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.inject.Inject;
-
-import dagger.android.AndroidInjection;
-import fr.florent.mjmaker.AppContext;
-import fr.florent.mjmaker.service.monstrer.Monster;
-
 public abstract class AbstractService<T, ID> {
 
     DatabaseHelper databaseHelper;

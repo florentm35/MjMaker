@@ -2,11 +2,9 @@ package fr.florent.mjmaker;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -14,11 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import java.sql.Array;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -41,9 +35,7 @@ public class MainActivity extends AppCompatActivity {
     @Inject
     MonsterService monsterService;
 
-    private static final int TEST = View.generateViewId();
-
-    private Map<Integer, ToolBarItem> menuItem = Collections.EMPTY_MAP;
+    private Map<Integer, ToolBarItem> menuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

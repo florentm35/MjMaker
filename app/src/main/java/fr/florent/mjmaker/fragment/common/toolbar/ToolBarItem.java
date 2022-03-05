@@ -1,7 +1,5 @@
 package fr.florent.mjmaker.fragment.common.toolbar;
 
-import java.util.Optional;
-
 import lombok.Builder;
 import lombok.Data;
 
