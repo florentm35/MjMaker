@@ -5,7 +5,7 @@ import java.util.Arrays;
 import fr.florent.mjmaker.R;
 
 public enum EnumMenu {
-    FIND_MONSTER(R.id.menu_monster);
+    FIND_MONSTER(R.id.menu_monster), TEST(R.id.menu_test);
 
     private final int id;
 

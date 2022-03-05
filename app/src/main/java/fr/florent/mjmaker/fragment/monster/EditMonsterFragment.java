@@ -1,4 +1,6 @@
 package fr.florent.mjmaker.fragment.monster;
 
-public class EditMonsterFragment {
+import fr.florent.mjmaker.fragment.common.AbstractFragment;
+
+public class EditMonsterFragment extends AbstractFragment {
 }
