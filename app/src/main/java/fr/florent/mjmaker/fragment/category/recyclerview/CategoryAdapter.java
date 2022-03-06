@@ -45,6 +45,8 @@ public class CategoryAdapter extends AbstractLinearAdapter<Category> {
 
             if (position % 2 == 1) {
                 view.setBackgroundColor(ContextCompat.getColor(context, R.color.teal_200));
+            } else {
+                view.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
             }
 
             Category category = values.get(position - 1);
