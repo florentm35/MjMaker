@@ -11,13 +11,30 @@ import java.sql.SQLException;
 import fr.florent.mjmaker.AppContext;
 import fr.florent.mjmaker.service.monstrer.Monster;
 
+/**
+ * Datasource for SQLite
+ */
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
+    /**
+     * Database name
+     */
     private static final String DB_NAME = "mj-maker.sqlite";
+    /**
+     * Database version
+     */
     private static final int DB_VERSION = 1;
 
+    /**
+     * The instance
+     */
     private static DatabaseHelper instance;
 
+    /**
+     * Get instance of {@link DatabaseHelper}
+     *
+     * @return The instance
+     */
     public static DatabaseHelper getInstance() {
         if (instance == null) {
             instance = new DatabaseHelper();
@@ -29,7 +46,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private DatabaseHelper() {
         super(AppContext.getContext(), DB_NAME, null, DB_VERSION);
     }
-
 
 
     @Override
@@ -46,6 +62,13 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     }
 
+    /**
+     * Create a repository instance
+     *
+     * @param Object The entity class
+     * @param id The entity id class
+     * @return The repository
+     */
     public <T, ID> Dao<T, ID> createDao(Class<T> Object, Class<ID> id) throws SQLException {
         return getDao(Object);
     }

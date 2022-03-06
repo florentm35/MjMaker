@@ -17,7 +17,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import fr.florent.mjmaker.fragment.common.AbstractFragment;
-import fr.florent.mjmaker.fragment.common.menu.EnumMenu;
+import fr.florent.mjmaker.fragment.common.menu.EnumScreen;
 import fr.florent.mjmaker.fragment.common.menu.MenuFragment;
 import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
 import fr.florent.mjmaker.fragment.monster.EditMonsterFragment;
@@ -29,15 +29,24 @@ public class MainActivity extends AppCompatActivity {
 
     private Map<Integer, ToolBarItem> menuItem;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        loadFragment(R.id.menu, new MenuFragment(m -> onMenuSelect(m, true)));
+        loadFragment(R.id.menu, new MenuFragment(m -> switchScreen(m, true)));
         loadToolBar();
     }
 
 
+    /**
+     * utils method to load fragment to the view by id
+     *
+     * @param id       The view id
+     * @param fragment The fragment to load
+     */
     private void loadFragment(int id, Fragment fragment) {
         FragmentManager fm = this.getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
@@ -45,24 +54,27 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit(); // save the changes
     }
 
-    /************************
-     *          Menu        *
-     ************************/
-
-    private void onMenuSelect(EnumMenu menu, boolean fromMenu, Object... param) {
-        Log.d(TAG, "Call menu : " + menu.name());
+    /**
+     * Change to the other screen
+     *
+     * @param screen   The screen
+     * @param fromMenu If action is from the side menu
+     * @param param    Optional parameters
+     */
+    private void switchScreen(EnumScreen screen, boolean fromMenu, Object... param) {
+        Log.d(TAG, "Call menu : " + screen.name());
 
         AbstractFragment fragment = null;
 
-        switch (menu) {
+        switch (screen) {
             case FIND_MONSTER:
                 fragment = new FindMonsterFragment();
                 break;
             case EDIT_MONSTER:
-                fragment= new EditMonsterFragment();
+                fragment = new EditMonsterFragment();
                 break;
             default:
-                Log.e(TAG, "Actions not found for " + menu.name());
+                Log.e(TAG, "Actions not found for " + screen.name());
                 throw new RuntimeException("Not implemented");
         }
 
@@ -70,15 +82,23 @@ public class MainActivity extends AppCompatActivity {
         menuItem = fragment.getToolbarItem()
                 .stream()
                 .collect(Collectors.toMap(t -> View.generateViewId(), Function.identity()));
+        // update the toolbar item
         invalidateOptionsMenu();
 
         loadFragment(R.id.body, fragment);
 
-        if(fromMenu) {
+        if (fromMenu) {
             changeMenuVisibility();
         }
     }
 
+    /************************
+     *          Menu        *
+     ************************/
+
+    /**
+     * If the side menu is visible so hide it, in other hand if he is hide set it visible
+     */
     private void changeMenuVisibility() {
         if (findViewById(R.id.menu).getVisibility() != View.VISIBLE) {
             findViewById(R.id.menu).setVisibility(View.VISIBLE);
@@ -91,6 +111,9 @@ public class MainActivity extends AppCompatActivity {
      *        Toolbar       *
      ************************/
 
+    /**
+     * Init the toolbar
+     */
     private void loadToolBar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -99,10 +122,11 @@ public class MainActivity extends AppCompatActivity {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.material_menu);
             getSupportActionBar().setTitle("");
         }
-
-
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -110,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
         if (menuItem != null) {
             menuItem.forEach((k, v) -> {
                 MenuItem item = menu.add(0, k, Menu.NONE, v.getLabel());
-                if(v.getIcone() != null) {
+                if (v.getIcone() != null) {
                     item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
                     item.setIcon(v.getIcone());
                 }
@@ -121,6 +145,9 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -132,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
                 if (menuItem.containsKey(item.getItemId())) {
                     ToolBarItem.IToolBarItemEventRedirect handler = menuItem.get(item.getItemId())
                             .getHandler();
-                    if(handler != null) {
+                    if (handler != null) {
                         handler.action(this::redirect);
                     }
                 } else {
@@ -145,8 +172,14 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private Void redirect(EnumMenu menu, Object[] params) {
-        onMenuSelect(menu,false, params);
+    /**
+     * Redirect to the new screen
+     *
+     * @param screen The screen
+     * @param params Optional screen parameters
+     */
+    private Void redirect(EnumScreen screen, Object[] params) {
+        switchScreen(screen, false, params);
         return null;
     }
 

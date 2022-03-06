@@ -11,31 +11,47 @@ import androidx.fragment.app.Fragment;
 
 import fr.florent.mjmaker.R;
 
+/**
+ * Fragment for the side menu
+ */
 public class MenuFragment extends Fragment {
 
+    /**
+     * Callback interface when click on menu item
+     */
     public interface IClickMenuEvent{
-        void action(EnumMenu btn);
+        void action(EnumScreen btn);
     }
 
+    /**
+     * Event handler when click on menu item
+     */
     private IClickMenuEvent handler;
 
+    /**
+     * Constructor
+     *
+     * @param handler Event handler when click on menu item
+     */
     public MenuFragment(IClickMenuEvent handler) {
         this.handler = handler;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.side_menu, container, false);
 
+        // Add event handler for all button
         LinearLayout layout = view.findViewById(R.id.parentMenu);
-
         for (int i = 0; i < layout.getChildCount(); i++) {
             View child = layout.getChildAt(i);
 
             if(child instanceof Button) {
-                child.setOnClickListener(v -> handler.action(EnumMenu.valueOf(child.getId())));
+                child.setOnClickListener(v -> handler.action(EnumScreen.valueOf(child.getId())));
             }
 
         }

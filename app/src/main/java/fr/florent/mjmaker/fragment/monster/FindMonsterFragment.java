@@ -12,13 +12,13 @@ import java.util.function.BiFunction;
 
 import fr.florent.mjmaker.R;
 import fr.florent.mjmaker.fragment.common.AbstractFragment;
-import fr.florent.mjmaker.fragment.common.menu.EnumMenu;
+import fr.florent.mjmaker.fragment.common.menu.EnumScreen;
 import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
-import fr.florent.mjmaker.service.monstrer.MonsterService;
+import fr.florent.mjmaker.service.monstrer.MonsterRepositoryService;
 
 public class FindMonsterFragment extends AbstractFragment {
 
-    MonsterService monsterService = MonsterService.getInstance();
+    MonsterRepositoryService monsterService = MonsterRepositoryService.getInstance();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,8 +44,8 @@ public class FindMonsterFragment extends AbstractFragment {
         );
     }
 
-    public void redirectToEditMonster(BiFunction<EnumMenu, Object[], Void> redirect) {
+    public void redirectToEditMonster(BiFunction<EnumScreen, Object[], Void> redirect) {
 
-        redirect.apply(EnumMenu.EDIT_MONSTER, null);
+        redirect.apply(EnumScreen.EDIT_MONSTER, null);
     }
 }

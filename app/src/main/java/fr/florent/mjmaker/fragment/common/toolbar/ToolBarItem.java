@@ -1,12 +1,14 @@
 package fr.florent.mjmaker.fragment.common.toolbar;
 
 import java.util.function.BiFunction;
-import java.util.function.Function;
 
-import fr.florent.mjmaker.fragment.common.menu.EnumMenu;
+import fr.florent.mjmaker.fragment.common.menu.EnumScreen;
 import lombok.Builder;
 import lombok.Data;
 
+/**
+ * Toolbar item pojo
+ */
 @Data
 @Builder
 public class ToolBarItem {
@@ -22,13 +24,22 @@ public class ToolBarItem {
          *                         EnumMenu for location
          *                         Object[] for param location
          */
-        void action(BiFunction< EnumMenu, Object[],Void> functionRedirect);
+        void action(BiFunction<EnumScreen, Object[], Void> functionRedirect);
     }
 
+    /**
+     * The label toolbar
+     */
     String label;
 
+    /**
+     * The drawable ressource id
+     */
     Integer icone;
 
+    /**
+     * The event handler
+     */
     IToolBarItemEventRedirect handler;
 
 }
