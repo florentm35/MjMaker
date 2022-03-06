@@ -1,6 +1,7 @@
 package fr.florent.mjmaker.service.common;
 
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
@@ -9,12 +10,14 @@ import com.j256.ormlite.table.TableUtils;
 import java.sql.SQLException;
 
 import fr.florent.mjmaker.AppContext;
-import fr.florent.mjmaker.service.monstrer.Monster;
+import fr.florent.mjmaker.service.model.Monster;
 
 /**
  * Datasource for SQLite
  */
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
+
+    private static final String TAG = DatabaseHelper.class.getName();
 
     /**
      * Database name
@@ -23,7 +26,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     /**
      * Database version
      */
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 2;
 
     /**
      * The instance
@@ -51,28 +54,37 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase, com.j256.ormlite.support.ConnectionSource connectionSource) {
         try {
-            TableUtils.createTable(connectionSource, Monster.class);
-        } catch (java.sql.SQLException e) {
-            e.printStackTrace();
+            for (Class entityClass : EntityHelper.ENTITY_LIST) {
+                TableUtils.createTable(connectionSource, entityClass);
+            }
+        } catch (SQLException e) {
+            Log.e(TAG, "Database can not be init", e);
+            throw new SQLRuntimeException(e);
         }
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, com.j256.ormlite.support.ConnectionSource connectionSource, int i, int i2) {
-
+        try {
+            for (Class entityClass : EntityHelper.ENTITY_LIST) {
+                TableUtils.dropTable(connectionSource, entityClass, true);
+            }
+        } catch (SQLException e) {
+            Log.e(TAG, "Database can not be init", e);
+            throw new SQLRuntimeException(e);
+        }
     }
 
     /**
      * Create a repository instance
      *
      * @param Object The entity class
-     * @param id The entity id class
+     * @param id     The entity id class
      * @return The repository
      */
     public <T, ID> Dao<T, ID> createDao(Class<T> Object, Class<ID> id) throws SQLException {
         return getDao(Object);
     }
-
 
 
 }

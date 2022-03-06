@@ -1,6 +1,7 @@
-package fr.florent.mjmaker.service.monstrer;
+package fr.florent.mjmaker.service.repository;
 
 import fr.florent.mjmaker.service.common.AbstractRepositoryService;
+import fr.florent.mjmaker.service.model.Monster;
 
 public class MonsterRepositoryService extends AbstractRepositoryService<Monster, Integer> {
 

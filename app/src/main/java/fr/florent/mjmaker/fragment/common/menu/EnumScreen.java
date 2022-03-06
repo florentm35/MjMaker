@@ -9,7 +9,8 @@ import fr.florent.mjmaker.R;
  */
 public enum EnumScreen {
     // Screen menu
-    FIND_MONSTER(R.id.menu_monster),
+    LIST_MONSTER(R.id.menu_monster),
+    LIST_CATEGORY(R.id.menu_category),
     // Sub screen
     EDIT_MONSTER();
 

@@ -1,4 +1,4 @@
-package fr.florent.mjmaker;
+package fr.florent.mjmaker.activity;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -17,12 +17,14 @@ import java.util.Stack;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import fr.florent.mjmaker.R;
+import fr.florent.mjmaker.fragment.category.ListCategoryFragment;
 import fr.florent.mjmaker.fragment.common.AbstractFragment;
 import fr.florent.mjmaker.fragment.common.menu.EnumScreen;
 import fr.florent.mjmaker.fragment.common.menu.MenuFragment;
 import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
 import fr.florent.mjmaker.fragment.monster.EditMonsterFragment;
-import fr.florent.mjmaker.fragment.monster.FindMonsterFragment;
+import fr.florent.mjmaker.fragment.monster.ListMonsterFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -58,11 +60,14 @@ public class MainActivity extends AppCompatActivity {
         // init the Fragment
         AbstractFragment fragment = null;
         switch (screen) {
-            case FIND_MONSTER:
-                fragment = new FindMonsterFragment();
+            case LIST_MONSTER:
+                fragment = new ListMonsterFragment();
                 break;
             case EDIT_MONSTER:
                 fragment = new EditMonsterFragment(param);
+                break;
+            case LIST_CATEGORY:
+                fragment = new ListCategoryFragment();
                 break;
             default:
                 Log.e(TAG, "Actions not found for " + screen.name());

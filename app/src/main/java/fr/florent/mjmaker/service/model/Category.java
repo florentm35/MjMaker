@@ -1,18 +1,25 @@
-package fr.florent.mjmaker.service.monstrer;
+package fr.florent.mjmaker.service.model;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-@DatabaseTable(tableName = "monster")
-public class Monster {
+@DatabaseTable(tableName = "category")
+public class Category {
 
     @DatabaseField(generatedId = true)
     private Integer id;
     @DatabaseField(columnName = "name")
     private String name;
+
 }

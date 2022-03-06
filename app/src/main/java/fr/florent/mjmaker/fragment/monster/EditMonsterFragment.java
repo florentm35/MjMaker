@@ -11,15 +11,15 @@ import androidx.annotation.Nullable;
 
 import fr.florent.mjmaker.R;
 import fr.florent.mjmaker.fragment.common.AbstractFragment;
-import fr.florent.mjmaker.service.monstrer.Monster;
-import fr.florent.mjmaker.service.monstrer.MonsterRepositoryService;
+import fr.florent.mjmaker.service.model.Monster;
+import fr.florent.mjmaker.service.repository.MonsterRepositoryService;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 
 public class EditMonsterFragment extends AbstractFragment {
 
     private static final String TAG = EditMonsterFragment.class.getName();
 
-    private MonsterRepositoryService monsterRepositoryService = MonsterRepositoryService.getInstance();
+    private final MonsterRepositoryService monsterRepositoryService = MonsterRepositoryService.getInstance();
 
 
     private Monster monster;
@@ -55,7 +55,7 @@ public class EditMonsterFragment extends AbstractFragment {
             monster = new Monster();
         }
 
-        monster.setName(AndroidLayoutUtil.getTextFromEditText(getView(), R.id.et_name));
+        monster.setName(AndroidLayoutUtil.getTextViewText(getView(), R.id.et_name));
 
         String message;
 
