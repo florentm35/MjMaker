@@ -38,11 +38,25 @@ public class ListCategoryFragment extends AbstractFragment {
 
         listCategory.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        categoryAdapter = new CategoryAdapter(getContext(), categoryRepositoryService.getAll());
+        categoryAdapter = new CategoryAdapter(getContext(), categoryRepositoryService.getAll(), this::onDataAction);
 
         listCategory.setAdapter(categoryAdapter);
 
         return view;
+    }
+
+    private void onDataAction(CategoryAdapter.EnumAction action, Category category) {
+        if (action == CategoryAdapter.EnumAction.EDIT) {
+            AndroidLayoutUtil.openModalAskText(getContext(),
+                    getLayoutInflater(),
+                    "Set the name ?",
+                    category.getName(), v -> this.onEdit(v, category));
+        } else {
+            categoryRepositoryService.delete(category);
+            categoryAdapter.removeItem(category);
+            AndroidLayoutUtil.showToast(getContext(), "Category removed");
+        }
+
     }
 
     @Override
@@ -59,18 +73,45 @@ public class ListCategoryFragment extends AbstractFragment {
     public void showPopup(BiFunction<EnumScreen, Object[], Void> redirect) {
         AndroidLayoutUtil.openModalAskText(getContext(),
                 getLayoutInflater(),
-                "Whats the names ?",
+                "Set the name ?",
                 null, this::onCreate);
+    }
+
+    // FIXME : Refacto with onCreate
+    private boolean onEdit(String value, Category category) {
+        if (value == null || value.isEmpty()) {
+            AndroidLayoutUtil.showToast(getContext(), "Category name can not be empty");
+            return false;
+        }
+
+        Category existCategory = categoryRepositoryService.findByName(value);
+
+        if (existCategory != null && !existCategory.getId().equals(category.getId())) {
+            AndroidLayoutUtil.showToast(getContext(), "A category with name " + value + " exist");
+            return false;
+        }
+
+        category.setName(value);
+
+        categoryRepositoryService.update(category);
+
+        categoryAdapter.updateItem(category);
+
+        AndroidLayoutUtil.showToast(getContext(), "Category modified");
+
+        return true;
     }
 
     private boolean onCreate(String value) {
 
-        if(value == null || value.isEmpty()) {
+        if (value == null || value.isEmpty()) {
             AndroidLayoutUtil.showToast(getContext(), "Category name can not be empty");
+            return false;
         }
 
-        if(categoryRepositoryService.findByName(value) != null) {
-            AndroidLayoutUtil.showToast(getContext(), "A category with name "+value+" exist");
+        if (categoryRepositoryService.findByName(value) != null) {
+            AndroidLayoutUtil.showToast(getContext(), "A category with name " + value + " exist");
+            return false;
         }
 
         Category category = Category.builder()

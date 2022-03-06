@@ -1,87 +1,60 @@
 package fr.florent.mjmaker.fragment.category.recyclerview;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.core.content.ContextCompat;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.function.BiFunction;
 
 import fr.florent.mjmaker.R;
-import fr.florent.mjmaker.fragment.common.menu.EnumScreen;
-import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
 import fr.florent.mjmaker.service.model.Category;
+import fr.florent.mjmaker.utils.AbstractLinearAdapter;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 
-public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class CategoryAdapter extends AbstractLinearAdapter<Category> {
 
 
-    private List<Category> categorys;
-    private Context context;
-
-    public CategoryAdapter(Context context, List<Category> categorys) {
-        this.categorys = categorys;
-        this.context = context;
+    public enum EnumAction {
+        EDIT, DELETE;
     }
 
-
-    @Override
-    public int getItemViewType(int position) {
-        // Just as an example, return 0 or 2 depending on position
-        // Note that unlike in ListView adapters, types don't have to be contiguous
-        return position == 0 ? ViewHolder.HEADER : ViewHolder.ROW;
+    public interface IEventAction {
+        void action(EnumAction action, Category category);
     }
 
-    public void addItem(Category category) {
-        categorys.add(category);
+    private final IEventAction handler;
+
+    public CategoryAdapter(Context context, List<Category> categorys, IEventAction handler) {
+        super(context, categorys);
+        this.handler = handler;
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-        View view;
-        if (ViewHolder.HEADER == viewType) {
-            view = LayoutInflater.from(context).inflate(R.layout.list_category_header, parent, false);
+    public int getLayout(int viewType) {
+        if (AbstractLinearAdapter.ViewHolder.HEADER == viewType) {
+            return R.layout.list_category_header;
         } else {
-            view = LayoutInflater.from(context).inflate(R.layout.list_category_row, parent, false);
+            return R.layout.list_category_row;
         }
-
-        return new ViewHolder(view, viewType);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        View view = holder.itemView;
-        int viewType = ((ViewHolder) holder).viewType;
+    public void onBindViewHolder(View view, int viewType, int position) {
+        if (viewType == AbstractLinearAdapter.ViewHolder.ROW) {
 
-        if (viewType == ViewHolder.ROW) {
-            Category category = categorys.get(position - 1);
+            if (position % 2 == 1) {
+                view.setBackgroundColor(ContextCompat.getColor(context, R.color.teal_200));
+            }
+
+            Category category = values.get(position - 1);
 
             AndroidLayoutUtil.setTextViewText(view, R.id.tv_name, category.getName());
-        }
 
-    }
-
-    @Override
-    public int getItemCount() {
-        return categorys.size() + 1;
-    }
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-
-        public final int viewType;
-        static int HEADER = 0;
-        static int ROW = 1;
-
-        public ViewHolder(View v, int viewType) {
-            super(v);
-            this.viewType = viewType;
+            view.findViewById(R.id.edit).setOnClickListener(v -> {handler.action(EnumAction.EDIT, category);});
+            view.findViewById(R.id.delete).setOnClickListener(v -> {handler.action(EnumAction.DELETE, category);});
         }
     }
+
 
 }
