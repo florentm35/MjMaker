@@ -18,10 +18,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     private static DatabaseHelper instance;
 
-    private DatabaseHelper() {
-        super(AppContext.getContext(), DB_NAME, null, DB_VERSION);
-    }
-
     public static DatabaseHelper getInstance() {
         if (instance == null) {
             instance = new DatabaseHelper();
@@ -29,6 +25,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
         return instance;
     }
+
+    private DatabaseHelper() {
+        super(AppContext.getContext(), DB_NAME, null, DB_VERSION);
+    }
+
 
 
     @Override

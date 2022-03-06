@@ -12,43 +12,29 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import java.sql.SQLException;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import javax.inject.Inject;
-
-import dagger.android.AndroidInjection;
 import fr.florent.mjmaker.fragment.common.AbstractFragment;
 import fr.florent.mjmaker.fragment.common.menu.EnumMenu;
 import fr.florent.mjmaker.fragment.common.menu.MenuFragment;
 import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
 import fr.florent.mjmaker.fragment.monster.EditMonsterFragment;
 import fr.florent.mjmaker.fragment.monster.FindMonsterFragment;
-import fr.florent.mjmaker.service.monstrer.MonsterService;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getName();
 
-    @Inject
-    MonsterService monsterService;
-
     private Map<Integer, ToolBarItem> menuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        loadFragment(R.id.menu, new MenuFragment(this::onMenuSelect));
+        loadFragment(R.id.menu, new MenuFragment(m -> onMenuSelect(m, true)));
         loadToolBar();
-        try {
-            monsterService.getAll();
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-        }
     }
 
 
@@ -63,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
      *          Menu        *
      ************************/
 
-    private void onMenuSelect(EnumMenu menu) {
+    private void onMenuSelect(EnumMenu menu, boolean fromMenu, Object... param) {
         Log.d(TAG, "Call menu : " + menu.name());
 
         AbstractFragment fragment = null;
@@ -72,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             case FIND_MONSTER:
                 fragment = new FindMonsterFragment();
                 break;
-            case TEST :
+            case EDIT_MONSTER:
                 fragment= new EditMonsterFragment();
                 break;
             default:
@@ -88,7 +74,9 @@ public class MainActivity extends AppCompatActivity {
 
         loadFragment(R.id.body, fragment);
 
-        changeMenuVisibility();
+        if(fromMenu) {
+            changeMenuVisibility();
+        }
     }
 
     private void changeMenuVisibility() {
@@ -142,10 +130,10 @@ public class MainActivity extends AppCompatActivity {
             default:
                 // Execute toolbar item handler from fragment
                 if (menuItem.containsKey(item.getItemId())) {
-                    ToolBarItem.IToolBarItemEvent handler = menuItem.get(item.getItemId())
+                    ToolBarItem.IToolBarItemEventRedirect handler = menuItem.get(item.getItemId())
                             .getHandler();
                     if(handler != null) {
-                        handler.action();
+                        handler.action(this::redirect);
                     }
                 } else {
                     Log.w(TAG, "Action not found for " + item.getItemId());
@@ -157,5 +145,9 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private Void redirect(EnumMenu menu, Object[] params) {
+        onMenuSelect(menu,false, params);
+        return null;
+    }
 
 }

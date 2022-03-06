@@ -1,29 +1,10 @@
 package fr.florent.mjmaker;
-import android.app.Activity;
+
 import android.app.Application;
 import android.content.Context;
 
-import javax.inject.Inject;
 
-import dagger.Component;
-import dagger.android.AndroidInjector;
-import dagger.android.DispatchingAndroidInjector;
-import dagger.android.HasAndroidInjector;
-
-
-public class AppContext extends Application implements HasAndroidInjector {
-
-    @Inject
-    DispatchingAndroidInjector<Activity> dispatchingAndroidInjector;
-
-    @Override
-    public AndroidInjector androidInjector() {
-        return dispatchingAndroidInjector;
-    }
-
-    @Component
-    public interface ApplicationComponent {
-    }
+public class AppContext extends Application {
 
     private static Application sApplication;
 
@@ -38,7 +19,6 @@ public class AppContext extends Application implements HasAndroidInjector {
     @Override
     public void onCreate() {
         super.onCreate();
-        DaggerMyApplicationComponent.create().inject(this);
         sApplication = this;
     }
 }

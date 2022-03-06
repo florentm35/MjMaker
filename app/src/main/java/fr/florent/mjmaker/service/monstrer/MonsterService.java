@@ -1,16 +1,23 @@
 package fr.florent.mjmaker.service.monstrer;
 
-import javax.inject.Inject;
-
 import fr.florent.mjmaker.service.common.AbstractService;
 
 public class MonsterService extends AbstractService<Monster, Integer> {
 
-    @Inject
-    public MonsterService() {
+    private MonsterService() {
         super();
     }
 
+
+    private static MonsterService instance;
+
+    public static MonsterService getInstance() {
+        if (instance == null) {
+            instance = new MonsterService();
+        }
+
+        return instance;
+    }
 
     @Override
     public Class<Monster> getTableClass() {
