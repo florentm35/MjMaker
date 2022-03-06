@@ -2,34 +2,28 @@ package fr.florent.mjmaker.service.repository;
 
 import android.util.Log;
 
-import androidx.core.widget.TintableImageSourceView;
-
-import com.j256.ormlite.stmt.query.In;
-
 import java.sql.SQLException;
 
 import fr.florent.mjmaker.service.common.AbstractRepositoryService;
 import fr.florent.mjmaker.service.common.SQLRuntimeException;
-import fr.florent.mjmaker.service.model.Category;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import fr.florent.mjmaker.service.model.Game;
 
-public class CategoryRepositoryService extends AbstractRepositoryService<Category, Integer> {
+public class GameRepositoryService extends AbstractRepositoryService<Game, Integer> {
 
-    private CategoryRepositoryService() {
+    private GameRepositoryService() {
         super();
     }
 
-    private static CategoryRepositoryService instance;
+    private static GameRepositoryService instance;
 
-    public static CategoryRepositoryService getInstance() {
+    public static GameRepositoryService getInstance() {
         if (instance == null) {
-            instance = new CategoryRepositoryService();
+            instance = new GameRepositoryService();
         }
         return instance;
     }
 
-    public Category findByName(String name) {
+    public Game findByName(String name) {
         try {
             return repository.queryForFirst(
                     repository.queryBuilder()
@@ -44,8 +38,8 @@ public class CategoryRepositoryService extends AbstractRepositoryService<Categor
     }
 
     @Override
-    public Class<Category> getTableClass() {
-        return Category.class;
+    public Class<Game> getTableClass() {
+        return Game.class;
     }
 
     @Override
@@ -55,6 +49,6 @@ public class CategoryRepositoryService extends AbstractRepositoryService<Categor
 
     @Override
     protected String getTag() {
-        return CategoryRepositoryService.class.getName();
+        return GameRepositoryService.class.getName();
     }
 }

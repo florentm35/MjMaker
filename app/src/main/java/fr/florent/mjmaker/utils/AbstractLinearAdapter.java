@@ -31,6 +31,10 @@ public abstract class AbstractLinearAdapter<T> extends RecyclerView.Adapter<Recy
         return position == 0 ? AbstractLinearAdapter.ViewHolder.HEADER : AbstractLinearAdapter.ViewHolder.ROW;
     }
 
+    public void setItems(List<T> items) {
+        values = items;
+    }
+
     public void updateItem(T category) {
         notifyItemChanged(values.indexOf(category) + 1);
     }

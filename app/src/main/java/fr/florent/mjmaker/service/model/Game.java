@@ -16,8 +16,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id")
-@DatabaseTable(tableName = "category")
-public class Category {
+@DatabaseTable(tableName = "game")
+public class Game {
 
     @DatabaseField(generatedId = true)
     private Integer id;

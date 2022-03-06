@@ -6,4 +6,6 @@
     <string name="name_label">Name :</string>
     <string name="name_header">Name</string>
     <string name="category_management">Category manager</string>
+    <string name="theme">Theme</string>
+    <string name="game">Game</string>
 </resources>

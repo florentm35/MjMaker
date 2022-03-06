@@ -17,13 +17,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id")
-@DatabaseTable(tableName = "subcategory")
-public class SubCategory {
+@DatabaseTable(tableName = "theme")
+public class Theme {
 
     @DatabaseField(generatedId = true)
     private Integer id;
     @DatabaseField(columnName = "name")
     private String name;
-    @DatabaseField(columnName = "idCategory")
-    private Integer idCategory;
+    @DatabaseField(columnName = "idGame")
+    private Integer idGame;
 }

@@ -31,28 +31,5 @@
             android:layout_height="wrap_content"
             android:src="@drawable/material_delete" />
 
-        <ImageButton
-            android:id="@+id/more"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/material_more" />
-
     </LinearLayout>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/subcategory"
-        android:layout_margin="5dp"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_actions">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/subcategory_recycler"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

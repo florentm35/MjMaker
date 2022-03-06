@@ -19,13 +19,13 @@ import fr.florent.mjmaker.fragment.category.recyclerview.CategoryAdapter;
 import fr.florent.mjmaker.fragment.common.AbstractFragment;
 import fr.florent.mjmaker.fragment.common.menu.EnumScreen;
 import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
-import fr.florent.mjmaker.service.model.Category;
-import fr.florent.mjmaker.service.repository.CategoryRepositoryService;
+import fr.florent.mjmaker.service.model.Game;
+import fr.florent.mjmaker.service.repository.GameRepositoryService;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 
 public class ListCategoryFragment extends AbstractFragment {
 
-    private final CategoryRepositoryService categoryRepositoryService = CategoryRepositoryService.getInstance();
+    private final GameRepositoryService gameRepositoryService = GameRepositoryService.getInstance();
 
     private CategoryAdapter categoryAdapter;
 
@@ -38,22 +38,21 @@ public class ListCategoryFragment extends AbstractFragment {
 
         listCategory.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        categoryAdapter = new CategoryAdapter(getContext(), categoryRepositoryService.getAll(), this::onDataAction);
+        categoryAdapter = new CategoryAdapter(getContext(), gameRepositoryService.getAll(), this::onDataAction);
 
         listCategory.setAdapter(categoryAdapter);
 
         return view;
     }
 
-    private void onDataAction(CategoryAdapter.EnumAction action, Category category) {
+    private void onDataAction(CategoryAdapter.EnumAction action, Game game) {
         if (action == CategoryAdapter.EnumAction.EDIT) {
             AndroidLayoutUtil.openModalAskText(getContext(),
-                    getLayoutInflater(),
                     "Set the name ?",
-                    category.getName(), v -> this.onEdit(v, category));
+                    game.getName(), v -> this.onEdit(v, game));
         } else {
-            categoryRepositoryService.delete(category);
-            categoryAdapter.removeItem(category);
+            gameRepositoryService.delete(game);
+            categoryAdapter.removeItem(game);
             AndroidLayoutUtil.showToast(getContext(), "Category removed");
         }
 
@@ -72,30 +71,29 @@ public class ListCategoryFragment extends AbstractFragment {
 
     public void showPopup(BiFunction<EnumScreen, Object[], Void> redirect) {
         AndroidLayoutUtil.openModalAskText(getContext(),
-                getLayoutInflater(),
                 "Set the name ?",
                 null, this::onCreate);
     }
 
     // FIXME : Refacto with onCreate
-    private boolean onEdit(String value, Category category) {
+    private boolean onEdit(String value, Game game) {
         if (value == null || value.isEmpty()) {
             AndroidLayoutUtil.showToast(getContext(), "Category name can not be empty");
             return false;
         }
 
-        Category existCategory = categoryRepositoryService.findByName(value);
+        Game existGame = gameRepositoryService.findByName(value);
 
-        if (existCategory != null && !existCategory.getId().equals(category.getId())) {
+        if (existGame != null && !existGame.getId().equals(game.getId())) {
             AndroidLayoutUtil.showToast(getContext(), "A category with name " + value + " exist");
             return false;
         }
 
-        category.setName(value);
+        game.setName(value);
 
-        categoryRepositoryService.update(category);
+        gameRepositoryService.update(game);
 
-        categoryAdapter.updateItem(category);
+        categoryAdapter.updateItem(game);
 
         AndroidLayoutUtil.showToast(getContext(), "Category modified");
 
@@ -109,18 +107,18 @@ public class ListCategoryFragment extends AbstractFragment {
             return false;
         }
 
-        if (categoryRepositoryService.findByName(value) != null) {
+        if (gameRepositoryService.findByName(value) != null) {
             AndroidLayoutUtil.showToast(getContext(), "A category with name " + value + " exist");
             return false;
         }
 
-        Category category = Category.builder()
+        Game game = Game.builder()
                 .name(value)
                 .build();
 
-        categoryRepositoryService.save(category);
+        gameRepositoryService.save(game);
 
-        categoryAdapter.addItem(category);
+        categoryAdapter.addItem(game);
 
         AndroidLayoutUtil.showToast(getContext(), "Category created");
 

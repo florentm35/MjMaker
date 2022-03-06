@@ -33,13 +33,12 @@ public abstract class AndroidLayoutUtil {
     }
 
     public static void openModalAskText(Context context,
-                                        LayoutInflater inflater,
                                         String title,
                                         String value,
                                         IModalAskTextEvent onValidate
                                         ) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        View view = inflater.inflate(R.layout.modal_ask_text, null);
+        View view = LayoutInflater.from(context).inflate(R.layout.modal_ask_text, null);
 
         if (value != null) {
             AndroidLayoutUtil.setTextViewText(view, R.id.value, value);
