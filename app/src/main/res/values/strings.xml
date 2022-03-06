@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">MjMaker</string>
-    <string name="gestion_monstre">Gestion monstre</string>
-    <string name="afficher_menu">Afficher menu</string>
+    <string name="manage_monster">Monster manager</string>
+    <string name="show_menu">Show menu</string>
     <string name="settings">Settings</string>
+    <string name="name_label">Name :</string>
 </resources>

@@ -11,14 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/black"
-        android:text="@string/gestion_monstre"
+        android:text="@string/manage_monster"
         android:textColor="@color/white" />
 
-    <Button
-        android:id="@+id/menu_test"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/black"
-        android:text="Test"
-        android:textColor="@color/white" />
 </LinearLayout>

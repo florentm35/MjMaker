@@ -24,12 +24,6 @@ public class FindMonsterFragment extends AbstractFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.find_monster, container, false);
 
-        try {
-            monsterService.getAll();
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-        }
-
         return view;
     }
 

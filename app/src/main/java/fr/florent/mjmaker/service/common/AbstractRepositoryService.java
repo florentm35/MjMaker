@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Abstract service class with repository
  *
- * @param <T> The entity class
+ * @param <T>  The entity class
  * @param <ID> The id class
  */
 public abstract class AbstractRepositoryService<T, ID> {
@@ -31,6 +31,7 @@ public abstract class AbstractRepositoryService<T, ID> {
             repository = databaseHelper.createDao(getTableClass(), getTableId());
         } catch (SQLException ex) {
             Log.e(getTag(), "Can not be init repository", ex);
+            throw new SQLRuntimeException(ex);
         }
     }
 
@@ -60,8 +61,12 @@ public abstract class AbstractRepositoryService<T, ID> {
      *
      * @return Return all entity of repository
      */
-    public List<T> getAll() throws SQLException {
-        return repository.queryForAll();
+    public List<T> getAll() {
+        try {
+            return repository.queryForAll();
+        } catch (SQLException exception) {
+            throw new SQLRuntimeException(exception);
+        }
     }
 
     /**
@@ -70,8 +75,13 @@ public abstract class AbstractRepositoryService<T, ID> {
      * @param id Entity id
      * @return The entity if found else null
      */
-    public T findBydId(ID id) throws SQLException {
-        return repository.queryForId(id);
+    public T findBydId(ID id) {
+
+        try {
+            return repository.queryForId(id);
+        } catch (SQLException exception) {
+            throw new SQLRuntimeException(exception);
+        }
     }
 
     /**
@@ -79,8 +89,12 @@ public abstract class AbstractRepositoryService<T, ID> {
      *
      * @param entity The entity
      */
-    public void save(T entity) throws SQLException {
-        repository.create(entity);
+    public void save(T entity) {
+        try {
+            repository.create(entity);
+        } catch (SQLException exception) {
+            throw new SQLRuntimeException(exception);
+        }
     }
 
     /**
@@ -88,8 +102,12 @@ public abstract class AbstractRepositoryService<T, ID> {
      *
      * @param entity The entity
      */
-    public void update(T entity) throws SQLException {
-        repository.update(entity);
+    public void update(T entity) {
+        try {
+            repository.update(entity);
+        } catch (SQLException exception) {
+            throw new SQLRuntimeException(exception);
+        }
     }
 
     /**
@@ -97,8 +115,12 @@ public abstract class AbstractRepositoryService<T, ID> {
      *
      * @param entity The entity
      */
-    public void delete(T entity) throws SQLException {
-        repository.delete(entity);
+    public void delete(T entity) {
+        try {
+            repository.delete(entity);
+        } catch (SQLException exception) {
+            throw new SQLRuntimeException(exception);
+        }
     }
 
     /**
@@ -106,8 +128,12 @@ public abstract class AbstractRepositoryService<T, ID> {
      *
      * @param id The entity id
      */
-    public void deleteById(ID id) throws SQLException {
-        repository.deleteById(id);
+    public void deleteById(ID id) {
+        try {
+            repository.deleteById(id);
+        } catch (SQLException exception) {
+            throw new SQLRuntimeException(exception);
+        }
     }
 
 }

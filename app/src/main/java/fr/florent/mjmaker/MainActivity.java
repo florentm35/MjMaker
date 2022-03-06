@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import java.util.Map;
+import java.util.Stack;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -27,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getName();
 
+    private Stack<AbstractFragment> callStack = new Stack<>();
+
     private Map<Integer, ToolBarItem> menuItem;
 
     /**
@@ -36,22 +39,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // Load the side menu
         loadFragment(R.id.menu, new MenuFragment(m -> switchScreen(m, true)));
+        // Load the default toolbar
         loadToolBar();
-    }
-
-
-    /**
-     * utils method to load fragment to the view by id
-     *
-     * @param id       The view id
-     * @param fragment The fragment to load
-     */
-    private void loadFragment(int id, Fragment fragment) {
-        FragmentManager fm = this.getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.replace(id, fragment);
-        fragmentTransaction.commit(); // save the changes
     }
 
     /**
@@ -64,32 +55,77 @@ public class MainActivity extends AppCompatActivity {
     private void switchScreen(EnumScreen screen, boolean fromMenu, Object... param) {
         Log.d(TAG, "Call menu : " + screen.name());
 
+        // init the Fragment
         AbstractFragment fragment = null;
-
         switch (screen) {
             case FIND_MONSTER:
                 fragment = new FindMonsterFragment();
                 break;
             case EDIT_MONSTER:
-                fragment = new EditMonsterFragment();
+                fragment = new EditMonsterFragment(param);
                 break;
             default:
                 Log.e(TAG, "Actions not found for " + screen.name());
                 throw new RuntimeException("Not implemented");
         }
 
+        if (fromMenu) {
+            // Hide side menu
+            changeMenuVisibility();
+            // Clear stack
+            callStack.clear();
+        }
+
+        // load the fragment
+        loadBodyFragment(fragment);
+
+    }
+
+    /**
+     * Lod a fragment on body FrameLayout
+     *
+     * @param fragment The fragment to load
+     */
+    private void loadBodyFragment(AbstractFragment fragment) {
+        // Add back handler action
+        fragment.setBackHandler(this::back);
+
         // Add toolbar item from fragment
         menuItem = fragment.getToolbarItem()
                 .stream()
                 .collect(Collectors.toMap(t -> View.generateViewId(), Function.identity()));
-        // update the toolbar item
+        // Update the toolbar item
         invalidateOptionsMenu();
 
-        loadFragment(R.id.body, fragment);
+        // Add fragment to the stack
+        callStack.push(fragment);
 
-        if (fromMenu) {
-            changeMenuVisibility();
-        }
+        // Load the fragment
+        loadFragment(R.id.body, fragment);
+    }
+
+    /**
+     * Call the previous fragment
+     */
+    private void back() {
+        // Remove the current fragment
+        callStack.pop();
+        // Get the previous fragment
+        AbstractFragment fragment = callStack.pop();
+        loadBodyFragment(fragment);
+    }
+
+    /**
+     * utils method to load fragment to the view by id
+     *
+     * @param id       The view id
+     * @param fragment The fragment to load
+     */
+    private void loadFragment(int id, Fragment fragment) {
+        FragmentManager fm = this.getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.replace(id, fragment);
+        fragmentTransaction.commit(); // save the changes
     }
 
     /************************

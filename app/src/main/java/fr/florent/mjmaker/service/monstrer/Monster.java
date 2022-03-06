@@ -12,7 +12,7 @@ import lombok.Setter;
 public class Monster {
 
     @DatabaseField(generatedId = true)
-    private int id;
+    private Integer id;
     @DatabaseField(columnName = "name")
     private String name;
 }
