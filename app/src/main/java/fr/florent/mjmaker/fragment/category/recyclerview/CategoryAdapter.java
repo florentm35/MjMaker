@@ -40,9 +40,9 @@ public class CategoryAdapter extends AbstractLinearAdapter<Game> {
     @Override
     public int getLayout(int viewType) {
         if (AbstractLinearAdapter.ViewHolder.HEADER == viewType) {
-            return R.layout.list_category_header;
+            return R.layout.list_game_header;
         } else {
-            return R.layout.list_category_row;
+            return R.layout.list_game_row;
         }
     }
 

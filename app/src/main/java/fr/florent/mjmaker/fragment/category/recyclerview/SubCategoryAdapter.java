@@ -33,9 +33,9 @@ public class SubCategoryAdapter extends AbstractLinearAdapter<Theme> {
     @Override
     public int getLayout(int viewType) {
         if (ViewHolder.HEADER == viewType) {
-            return R.layout.list_subcategory_header;
+            return R.layout.list_theme_header;
         } else {
-            return R.layout.list_subcategory_row;
+            return R.layout.list_theme_row;
         }
     }
 

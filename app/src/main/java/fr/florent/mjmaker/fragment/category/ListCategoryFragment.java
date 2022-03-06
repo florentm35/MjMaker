@@ -32,7 +32,7 @@ public class ListCategoryFragment extends AbstractFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.list_category, container, false);
+        View view = inflater.inflate(R.layout.list_game, container, false);
 
         RecyclerView listCategory = view.findViewById(R.id.list_category);
 
