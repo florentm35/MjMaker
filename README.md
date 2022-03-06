@@ -1,5 +1,5 @@
 # MjMaker
-
+- Gestion de catégorie et sous catégorie
 - Gestion ecriture campagne
 	- Lore personnage
 	- Ajancement des Sénarios ?
