@@ -3,33 +3,35 @@ package fr.florent.mjmaker.service.repository;
 import android.util.Log;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import fr.florent.mjmaker.service.common.AbstractRepositoryService;
 import fr.florent.mjmaker.service.common.SQLRuntimeException;
-import fr.florent.mjmaker.service.model.Game;
+import fr.florent.mjmaker.service.model.TextScenario;
 
-// FIXME : Refacto to use (de)serializer for theme entity
-public class GameRepositoryService extends AbstractRepositoryService<Game, Integer> {
+public class TextScenarioRepositoryService extends AbstractRepositoryService<TextScenario, Integer> {
 
-    private GameRepositoryService() {
+    private TextScenarioRepositoryService() {
         super();
     }
 
-    private static GameRepositoryService instance;
+    private static TextScenarioRepositoryService instance;
 
-    public static GameRepositoryService getInstance() {
+    public static TextScenarioRepositoryService getInstance() {
         if (instance == null) {
-            instance = new GameRepositoryService();
+            instance = new TextScenarioRepositoryService();
         }
+
         return instance;
     }
 
-    public Game findByName(String name) {
+    public List<TextScenario> findByIdFieldSetScenario(Integer idFieldSetScenario) {
+
         try {
-            return repository.queryForFirst(
+            return repository.query(
                     repository.queryBuilder()
                             .where()
-                            .eq("name", name)
+                            .eq("idFieldSetScenario", idFieldSetScenario)
                             .prepare()
             );
         } catch (SQLException exception) {
@@ -39,8 +41,8 @@ public class GameRepositoryService extends AbstractRepositoryService<Game, Integ
     }
 
     @Override
-    public Class<Game> getTableClass() {
-        return Game.class;
+    public Class<TextScenario> getTableClass() {
+        return TextScenario.class;
     }
 
     @Override
@@ -50,6 +52,6 @@ public class GameRepositoryService extends AbstractRepositoryService<Game, Integ
 
     @Override
     protected String getTag() {
-        return GameRepositoryService.class.getName();
+        return TextScenarioRepositoryService.class.getName();
     }
 }
