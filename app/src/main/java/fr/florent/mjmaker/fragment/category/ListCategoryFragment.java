@@ -75,7 +75,7 @@ public class ListCategoryFragment extends AbstractFragment {
                 null, this::onCreate);
     }
 
-    // FIXME : Refacto with onCreate
+    // FIXME : refactor with onCreate and move control to service
     private boolean onEdit(String value, Game game) {
         if (value == null || value.isEmpty()) {
             AndroidLayoutUtil.showToast(getContext(), "Category name can not be empty");
