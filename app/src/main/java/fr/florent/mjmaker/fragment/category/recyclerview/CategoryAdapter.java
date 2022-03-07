@@ -119,6 +119,7 @@ public class CategoryAdapter extends AbstractLinearAdapter<Game> {
 
     }
 
+    // FIXME : refactor with onAdd and move control to service
     private boolean onEdit(String value, Game game, Theme subcategory, SubCategoryAdapter adapter) {
         if (value == null || value.isEmpty()) {
             AndroidLayoutUtil.showToast(context.getApplicationContext(), "Sub category name can not be empty");
