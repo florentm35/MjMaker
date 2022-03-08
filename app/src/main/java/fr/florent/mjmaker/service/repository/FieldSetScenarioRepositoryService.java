@@ -1,15 +1,11 @@
 package fr.florent.mjmaker.service.repository;
 
-import android.util.Log;
-
-import java.sql.SQLException;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import fr.florent.mjmaker.service.common.AbstractRepositoryService;
-import fr.florent.mjmaker.service.common.SQLRuntimeException;
 import fr.florent.mjmaker.service.model.FieldSetScenario;
 
+/**
+ * FieldSetScenario service repository
+ */
 public class FieldSetScenarioRepositoryService extends AbstractRepositoryService<FieldSetScenario, Integer> {
 
     private TextScenarioRepositoryService textScenarioRepositoryService = TextScenarioRepositoryService.getInstance();
@@ -20,6 +16,11 @@ public class FieldSetScenarioRepositoryService extends AbstractRepositoryService
 
     private static FieldSetScenarioRepositoryService instance;
 
+    /**
+     * Get service instance
+     *
+     * @return Service instance
+     */
     public static FieldSetScenarioRepositoryService getInstance() {
         if (instance == null) {
             instance = new FieldSetScenarioRepositoryService();

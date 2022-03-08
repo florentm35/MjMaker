@@ -8,7 +8,9 @@ import fr.florent.mjmaker.service.common.AbstractRepositoryService;
 import fr.florent.mjmaker.service.common.SQLRuntimeException;
 import fr.florent.mjmaker.service.model.Game;
 
-// FIXME : Refacto to use (de)serializer for theme entity
+/**
+ * Game service repository
+ */
 public class GameRepositoryService extends AbstractRepositoryService<Game, Integer> {
 
     private GameRepositoryService() {
@@ -17,6 +19,11 @@ public class GameRepositoryService extends AbstractRepositoryService<Game, Integ
 
     private static GameRepositoryService instance;
 
+    /**
+     * Get service instance
+     *
+     * @return Service instance
+     */
     public static GameRepositoryService getInstance() {
         if (instance == null) {
             instance = new GameRepositoryService();
@@ -24,6 +31,12 @@ public class GameRepositoryService extends AbstractRepositoryService<Game, Integ
         return instance;
     }
 
+    /**
+     * Find a game by is name
+     *
+     * @param name The game name
+     * @return The game found, null if not
+     */
     public Game findByName(String name) {
         try {
             return repository.queryForFirst(

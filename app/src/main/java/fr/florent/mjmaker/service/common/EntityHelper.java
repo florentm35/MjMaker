@@ -10,8 +10,14 @@ import fr.florent.mjmaker.service.model.Scenario;
 import fr.florent.mjmaker.service.model.TextScenario;
 import fr.florent.mjmaker.service.model.Theme;
 
+/**
+ * Helper class for reference all entity
+ */
 public abstract class EntityHelper {
-    public static final List<Class> ENTITY_LIST = Arrays.asList(
+    /**
+     * List of all entity
+     */
+    public static final List<Class<?>> ENTITY_LIST = Arrays.asList(
             Monster.class,
             Game.class,
             Theme.class,

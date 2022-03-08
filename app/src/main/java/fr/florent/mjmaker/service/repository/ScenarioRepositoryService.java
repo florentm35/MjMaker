@@ -3,6 +3,9 @@ package fr.florent.mjmaker.service.repository;
 import fr.florent.mjmaker.service.common.AbstractRepositoryService;
 import fr.florent.mjmaker.service.model.Scenario;
 
+/**
+ * Scenario service repository
+ */
 public class ScenarioRepositoryService extends AbstractRepositoryService<Scenario, Integer> {
 
     FieldSetScenarioRepositoryService fieldSetScenarioRepositoryService = FieldSetScenarioRepositoryService.getInstance();
@@ -13,6 +16,11 @@ public class ScenarioRepositoryService extends AbstractRepositoryService<Scenari
 
     private static ScenarioRepositoryService instance;
 
+    /**
+     * Get service instance
+     *
+     * @return Service instance
+     */
     public static ScenarioRepositoryService getInstance() {
         if (instance == null) {
             instance = new ScenarioRepositoryService();

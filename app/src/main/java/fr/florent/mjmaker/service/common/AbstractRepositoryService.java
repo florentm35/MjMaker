@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
  */
 public abstract class AbstractRepositoryService<T, ID> {
 
-
     /**
      * Datasource sqlite
      */
@@ -138,7 +137,12 @@ public abstract class AbstractRepositoryService<T, ID> {
         }
     }
 
-    public Dao<T,ID> getRepository() {
+    /**
+     * Get the repository instance
+     *
+     * @return The repository
+     */
+    public Dao<T, ID> getRepository() {
         return repository;
     }
 

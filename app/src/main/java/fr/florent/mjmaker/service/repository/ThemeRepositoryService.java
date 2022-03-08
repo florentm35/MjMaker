@@ -11,6 +11,9 @@ import fr.florent.mjmaker.service.common.SQLRuntimeException;
 import fr.florent.mjmaker.service.model.Game;
 import fr.florent.mjmaker.service.model.Theme;
 
+/**
+ * Theme service repository
+ */
 public class ThemeRepositoryService extends AbstractRepositoryService<Theme, Integer> {
 
     private static ThemeRepositoryService instance;
@@ -21,6 +24,11 @@ public class ThemeRepositoryService extends AbstractRepositoryService<Theme, Int
         super();
     }
 
+    /**
+     * Get service instance
+     * 
+     * @return Service instance
+     */
     public static ThemeRepositoryService getInstance() {
         if (instance == null) {
             instance = new ThemeRepositoryService();

@@ -3,6 +3,9 @@ package fr.florent.mjmaker.service.repository;
 import fr.florent.mjmaker.service.common.AbstractRepositoryService;
 import fr.florent.mjmaker.service.model.Monster;
 
+/**
+ * Monster service repository
+ */
 public class MonsterRepositoryService extends AbstractRepositoryService<Monster, Integer> {
 
     private MonsterRepositoryService() {
@@ -11,6 +14,11 @@ public class MonsterRepositoryService extends AbstractRepositoryService<Monster,
 
     private static MonsterRepositoryService instance;
 
+    /**
+     * Get service instance
+     *
+     * @return Service instance
+     */
     public static MonsterRepositoryService getInstance() {
         if (instance == null) {
             instance = new MonsterRepositoryService();

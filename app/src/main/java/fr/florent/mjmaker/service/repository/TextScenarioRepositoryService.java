@@ -1,14 +1,11 @@
 package fr.florent.mjmaker.service.repository;
 
-import android.util.Log;
-
-import java.sql.SQLException;
-import java.util.List;
-
 import fr.florent.mjmaker.service.common.AbstractRepositoryService;
-import fr.florent.mjmaker.service.common.SQLRuntimeException;
 import fr.florent.mjmaker.service.model.TextScenario;
 
+/**
+ * TextScenario service repository
+ */
 public class TextScenarioRepositoryService extends AbstractRepositoryService<TextScenario, Integer> {
 
     private TextScenarioRepositoryService() {
@@ -17,6 +14,11 @@ public class TextScenarioRepositoryService extends AbstractRepositoryService<Tex
 
     private static TextScenarioRepositoryService instance;
 
+    /**
+     * Get service instance
+     *
+     * @return Service instance
+     */
     public static TextScenarioRepositoryService getInstance() {
         if (instance == null) {
             instance = new TextScenarioRepositoryService();
