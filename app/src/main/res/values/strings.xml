@@ -8,4 +8,7 @@
     <string name="category_management">Category manager</string>
     <string name="theme">Theme</string>
     <string name="game">Game</string>
+    <string name="scenario_manager">Scenario manager</string>
+    <string name="title">Title</string>
+    <string name="level">Level</string>
 </resources>

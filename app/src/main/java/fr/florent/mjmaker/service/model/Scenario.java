@@ -29,8 +29,11 @@ public class Scenario {
     @DatabaseField(columnName = "title")
     private String title;
 
-    @DatabaseField(columnName = "idGame")
-    private Integer idGame;
+    @DatabaseField(columnName = "level")
+    private Integer level;
+
+    @DatabaseField(foreign = true)
+    private Game game;
 
     @ForeignCollectionField
     private ForeignCollection<FieldSetScenario> lstFieldSet;

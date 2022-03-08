@@ -11,8 +11,10 @@ public enum EnumScreen {
     // Screen menu
     LIST_MONSTER(R.id.menu_monster),
     LIST_CATEGORY(R.id.menu_category),
+    LIST_SCENARIO(R.id.menu_scenario),
     // Sub screen
-    EDIT_MONSTER();
+    EDIT_MONSTER(),
+    DETAIL_SCENARIO();
 
     private final Integer id;
 

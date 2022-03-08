@@ -1,6 +1,10 @@
 package fr.florent.mjmaker.service.repository;
 
+import java.util.Collections;
+import java.util.List;
+
 import fr.florent.mjmaker.service.common.AbstractRepositoryService;
+import fr.florent.mjmaker.service.model.Game;
 import fr.florent.mjmaker.service.model.Scenario;
 
 /**
@@ -15,6 +19,19 @@ public class ScenarioRepositoryService extends AbstractRepositoryService<Scenari
     }
 
     private static ScenarioRepositoryService instance;
+
+    @Override
+    public List<Scenario> getAll() {
+        return Collections.singletonList(Scenario.builder()
+                .id(1)
+                .game(Game.builder()
+                        .id(1)
+                        .name("Anima")
+                        .build())
+                .level(1)
+                .title("Mon premier scenario !")
+                .build());
+    }
 
     /**
      * Get service instance

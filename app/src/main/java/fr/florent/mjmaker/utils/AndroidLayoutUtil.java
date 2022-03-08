@@ -17,7 +17,11 @@ import fr.florent.mjmaker.R;
 public abstract class AndroidLayoutUtil {
 
     public static void setTextViewText(View view, int id, String text) {
-        ((TextView) view.findViewById(id)).setText(text);
+        ((TextView) view.findViewById(id)).setText(text != null ? text : "");
+    }
+
+    public static void setTextViewText(View view, int id, Integer text) {
+        ((TextView) view.findViewById(id)).setText(text != null ? text.toString() : "");
     }
 
     public static String getTextViewText(View view, int id) {
@@ -36,7 +40,7 @@ public abstract class AndroidLayoutUtil {
                                         String title,
                                         String value,
                                         IModalAskTextEvent onValidate
-                                        ) {
+    ) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View view = LayoutInflater.from(context).inflate(R.layout.modal_ask_text, null);
 
@@ -52,7 +56,7 @@ public abstract class AndroidLayoutUtil {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
 
-                        if(onValidate.action(AndroidLayoutUtil.getTextViewText(view, R.id.value))) {
+                        if (onValidate.action(AndroidLayoutUtil.getTextViewText(view, R.id.value))) {
                             dialog.cancel();
                         }
                     }

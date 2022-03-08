@@ -25,6 +25,8 @@ import fr.florent.mjmaker.fragment.common.menu.MenuFragment;
 import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
 import fr.florent.mjmaker.fragment.monster.EditMonsterFragment;
 import fr.florent.mjmaker.fragment.monster.ListMonsterFragment;
+import fr.florent.mjmaker.fragment.scenario.ListScenarioFragment;
+import fr.florent.mjmaker.fragment.scenario.ScenarioFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -68,6 +70,12 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case LIST_CATEGORY:
                 fragment = new ListGameFragment();
+                break;
+            case LIST_SCENARIO:
+                fragment = new ListScenarioFragment();
+                break;
+            case DETAIL_SCENARIO:
+                fragment = new ScenarioFragment(param);
                 break;
             default:
                 Log.e(TAG, "Actions not found for " + screen.name());
