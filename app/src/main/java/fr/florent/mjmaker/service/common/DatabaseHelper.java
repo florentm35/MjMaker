@@ -26,7 +26,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     /**
      * Database version
      */
-    private static final int DB_VERSION = 4;
+    private static final int DB_VERSION = 5;
 
     /**
      * The instance
@@ -68,7 +68,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
         try {
             for (Class entityClass : EntityHelper.ENTITY_LIST) {
-                TableUtils.createTableIfNotExists(connectionSource, entityClass);
+                TableUtils.dropTable(connectionSource, entityClass, true);
             }
         } catch (SQLException e) {
             Log.e(TAG, "Database can not be init", e);

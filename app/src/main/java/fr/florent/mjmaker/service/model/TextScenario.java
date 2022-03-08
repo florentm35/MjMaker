@@ -22,8 +22,8 @@ public class TextScenario {
     @DatabaseField(generatedId = true)
     private Integer id;
 
-    @DatabaseField(columnName = "idFieldSetScenario")
-    private Integer idFieldSetScenario;
+    @DatabaseField(canBeNull = false, foreign = true)
+    private FieldSetScenario fieldSetScenario;
 
     @DatabaseField(columnName = "text")
     private String text;

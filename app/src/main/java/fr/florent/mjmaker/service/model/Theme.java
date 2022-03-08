@@ -24,6 +24,6 @@ public class Theme {
     private Integer id;
     @DatabaseField(columnName = "name")
     private String name;
-    @DatabaseField(columnName = "idGame")
-    private Integer idGame;
+    @DatabaseField(canBeNull = false, foreign = true)
+    private Game game;
 }

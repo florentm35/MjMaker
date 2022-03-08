@@ -22,23 +22,6 @@ public class ScenarioRepositoryService extends AbstractRepositoryService<Scenari
     }
 
     @Override
-    protected IMapperSerializer<Scenario> serializer() {
-        return (e, delete) -> {
-            if(e.getLstFieldSet() != null) {
-                e.getLstFieldSet().forEach(fieldSetScenario -> fieldSetScenarioRepositoryService.delete(fieldSetScenario));
-            }
-        };
-    }
-
-    @Override
-    protected IMapperDeserializer<Scenario> deserializer() {
-        return e -> {
-            e.setLstFieldSet(fieldSetScenarioRepositoryService.findByIdScenario(e.getId()));
-            return e;
-        };
-    }
-
-    @Override
     public Class<Scenario> getTableClass() {
         return Scenario.class;
     }

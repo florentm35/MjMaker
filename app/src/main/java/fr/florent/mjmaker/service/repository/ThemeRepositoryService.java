@@ -2,16 +2,20 @@ package fr.florent.mjmaker.service.repository;
 
 import android.util.Log;
 
+import com.j256.ormlite.stmt.QueryBuilder;
+
 import java.sql.SQLException;
-import java.util.List;
 
 import fr.florent.mjmaker.service.common.AbstractRepositoryService;
 import fr.florent.mjmaker.service.common.SQLRuntimeException;
+import fr.florent.mjmaker.service.model.Game;
 import fr.florent.mjmaker.service.model.Theme;
 
 public class ThemeRepositoryService extends AbstractRepositoryService<Theme, Integer> {
 
     private static ThemeRepositoryService instance;
+
+    private GameRepositoryService gameRepositoryService = GameRepositoryService.getInstance();
 
     private ThemeRepositoryService() {
         super();
@@ -24,30 +28,19 @@ public class ThemeRepositoryService extends AbstractRepositoryService<Theme, Int
         return instance;
     }
 
-    /**
-     * Return all SubCategory for a given category
-     *
-     * @param idGame The parent game id
-     * @return List of sub category
-     */
-    public List<Theme> findByIdGame(Integer idGame) {
-        try {
-            return repository.query(repository.queryBuilder()
-                    .where()
-                    .eq("idGame", idGame)
-                    .prepare());
-        } catch (SQLException exception) {
-            throw new SQLRuntimeException(exception);
-        }
-    }
-
     public Theme findByIdGameAndName(Integer idGame, String name) {
         try {
+
+            QueryBuilder<Game, Integer> gameQueryBuilder = gameRepositoryService.getRepository()
+                    .queryBuilder();
+            gameQueryBuilder
+                    .where()
+                    .eq("id", idGame);
+
             return repository.queryForFirst(
                     repository.queryBuilder()
+                            .join(gameQueryBuilder)
                             .where()
-                            .eq("idGame", idGame)
-                            .and()
                             .eq("name", name)
                             .prepare()
             );

@@ -25,21 +25,6 @@ public class TextScenarioRepositoryService extends AbstractRepositoryService<Tex
         return instance;
     }
 
-    public List<TextScenario> findByIdFieldSetScenario(Integer idFieldSetScenario) {
-
-        try {
-            return repository.query(
-                    repository.queryBuilder()
-                            .where()
-                            .eq("idFieldSetScenario", idFieldSetScenario)
-                            .prepare()
-            );
-        } catch (SQLException exception) {
-            Log.e(getTag(), "An erreur occured", exception);
-            throw new SQLRuntimeException(exception);
-        }
-    }
-
     @Override
     public Class<TextScenario> getTableClass() {
         return TextScenario.class;

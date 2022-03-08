@@ -1,7 +1,11 @@
 package fr.florent.mjmaker.service.model;
 
+import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
+
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,5 +27,8 @@ public class Game {
     private Integer id;
     @DatabaseField(columnName = "name")
     private String name;
+
+    @ForeignCollectionField
+    ForeignCollection<Theme> lstTheme;
 
 }

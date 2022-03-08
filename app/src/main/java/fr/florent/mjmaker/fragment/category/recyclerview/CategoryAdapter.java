@@ -1,6 +1,7 @@
 package fr.florent.mjmaker.fragment.category.recyclerview;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -9,16 +10,22 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.florent.mjmaker.R;
+import fr.florent.mjmaker.service.common.SQLRuntimeException;
 import fr.florent.mjmaker.service.model.Game;
 import fr.florent.mjmaker.service.model.Theme;
 import fr.florent.mjmaker.service.repository.ThemeRepositoryService;
 import fr.florent.mjmaker.utils.AbstractLinearAdapter;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;
+import fr.florent.mjmaker.utils.DataBaseUtil;
 
 public class CategoryAdapter extends AbstractLinearAdapter<Game> {
+
+    private static String TAG = CategoryAdapter.class.getName();
 
     private ThemeRepositoryService themeRepositoryService = ThemeRepositoryService.getInstance();
 
@@ -76,11 +83,11 @@ public class CategoryAdapter extends AbstractLinearAdapter<Game> {
             SubCategoryAdapter subCategoryAdapter;
             if (recyclerView.getAdapter() != null) {
                 subCategoryAdapter = (SubCategoryAdapter) recyclerView.getAdapter();
-                subCategoryAdapter.setItems( themeRepositoryService.findByIdGame(game.getId()));
+                subCategoryAdapter.setItems(DataBaseUtil.convertForeignCollectionToList(game.getLstTheme()));
             } else {
                 subCategoryAdapter = new SubCategoryAdapter(
                         recyclerView.getContext(),
-                        themeRepositoryService.findByIdGame(game.getId()),
+                        DataBaseUtil.convertForeignCollectionToList(game.getLstTheme()),
                         (a, s) -> onActionSubCategory(recyclerView, a, s, game)
                 );
                 recyclerView.setLayoutManager(new LinearLayoutManager(context.getApplicationContext()));
@@ -115,6 +122,13 @@ public class CategoryAdapter extends AbstractLinearAdapter<Game> {
                 themeRepositoryService.delete(theme);
                 subCategoryAdapter.removeItem(theme);
                 break;
+        }
+
+        try {
+            game.getLstTheme().refreshCollection();
+        } catch (SQLException exception) {
+            Log.e(TAG, "Can not be refresh game entity", exception);
+            throw new SQLRuntimeException(exception);
         }
 
     }
@@ -161,7 +175,7 @@ public class CategoryAdapter extends AbstractLinearAdapter<Game> {
 
         Theme subcategory = new Theme();
 
-        subcategory.setIdGame(game.getId());
+        subcategory.setGame(game);
         subcategory.setName(value);
 
         themeRepositoryService.save(subcategory);

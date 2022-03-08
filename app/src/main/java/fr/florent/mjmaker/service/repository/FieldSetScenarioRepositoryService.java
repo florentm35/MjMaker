@@ -28,39 +28,6 @@ public class FieldSetScenarioRepositoryService extends AbstractRepositoryService
         return instance;
     }
 
-    public List<FieldSetScenario> findByIdScenario(Integer idScenario) {
-
-        try {
-            return repository.query(
-                    repository.queryBuilder()
-                            .where()
-                            .eq("idScenario", idScenario)
-                            .prepare()
-            ).stream()
-                    .map(e -> deserializer().action(e))
-                    .collect(Collectors.toList());
-        } catch (SQLException exception) {
-            Log.e(getTag(), "An erreur occured", exception);
-            throw new SQLRuntimeException(exception);
-        }
-    }
-
-    @Override
-    protected IMapperSerializer<FieldSetScenario> serializer() {
-        return (e, delete) -> {
-            if (e.getLstText() != null) {
-                e.getLstText().forEach(fieldSetScenario -> textScenarioRepositoryService.delete(fieldSetScenario));
-            }
-        };
-    }
-
-    @Override
-    protected IMapperDeserializer<FieldSetScenario> deserializer() {
-        return e -> {
-            e.setLstText(textScenarioRepositoryService.findByIdFieldSetScenario(e.getId()));
-            return e;
-        };
-    }
 
     @Override
     public Class<FieldSetScenario> getTableClass() {

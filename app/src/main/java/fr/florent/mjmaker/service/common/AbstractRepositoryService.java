@@ -17,15 +17,6 @@ import java.util.stream.Collectors;
 public abstract class AbstractRepositoryService<T, ID> {
 
 
-    protected interface IMapperSerializer<T> {
-        void action(T entity, boolean delete);
-    }
-
-
-    protected interface IMapperDeserializer<T> {
-        T action(T entity);
-    }
-
     /**
      * Datasource sqlite
      */
@@ -74,13 +65,7 @@ public abstract class AbstractRepositoryService<T, ID> {
      */
     public List<T> getAll() {
         try {
-            List<T> lstEntity = repository.queryForAll();
-            return lstEntity == null
-                    ? null
-                    : lstEntity.stream()
-                    .map(e -> deserializer().action(e))
-                    .collect(Collectors.toList());
-
+            return repository.queryForAll();
         } catch (SQLException exception) {
             throw new SQLRuntimeException(exception);
         }
@@ -95,8 +80,7 @@ public abstract class AbstractRepositoryService<T, ID> {
     public T findBydId(ID id) {
 
         try {
-            T entity = repository.queryForId(id);
-            return deserializer().action(entity);
+            return repository.queryForId(id);
         } catch (SQLException exception) {
             throw new SQLRuntimeException(exception);
         }
@@ -110,7 +94,6 @@ public abstract class AbstractRepositoryService<T, ID> {
     public void save(T entity) {
         try {
             repository.create(entity);
-            serializer().action(entity, false);
         } catch (SQLException exception) {
             throw new SQLRuntimeException(exception);
         }
@@ -124,7 +107,6 @@ public abstract class AbstractRepositoryService<T, ID> {
     public void update(T entity) {
         try {
             repository.update(entity);
-            serializer().action(entity, false);
         } catch (SQLException exception) {
             throw new SQLRuntimeException(exception);
         }
@@ -137,7 +119,6 @@ public abstract class AbstractRepositoryService<T, ID> {
      */
     public void delete(T entity) {
         try {
-            serializer().action(entity, true);
             repository.delete(entity);
         } catch (SQLException exception) {
             throw new SQLRuntimeException(exception);
@@ -157,26 +138,8 @@ public abstract class AbstractRepositoryService<T, ID> {
         }
     }
 
-    /**
-     * Method call after {@link AbstractRepositoryService#findBydId} {@link AbstractRepositoryService#getAll}
-     *
-     * @return Deserialize action
-     */
-    protected IMapperDeserializer<T> deserializer() {
-        return entity1 -> entity1;
-
-    }
-
-
-    /**
-     * Method call before {@link AbstractRepositoryService#save} {@link AbstractRepositoryService#update}
-     * and after {@link AbstractRepositoryService#delete}
-     *
-     * @return Serialize action
-     */
-    protected IMapperSerializer<T> serializer() {
-        return (entity1, delete) -> {
-        };
+    public Dao<T,ID> getRepository() {
+        return repository;
     }
 
 }

@@ -1,6 +1,8 @@
 package fr.florent.mjmaker.service.model;
 
+import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.util.List;
@@ -30,6 +32,7 @@ public class Scenario {
     @DatabaseField(columnName = "idGame")
     private Integer idGame;
 
-    private transient List<FieldSetScenario> lstFieldSet;
+    @ForeignCollectionField
+    private ForeignCollection<FieldSetScenario> lstFieldSet;
 
 }
