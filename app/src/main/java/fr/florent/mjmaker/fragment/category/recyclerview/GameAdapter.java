@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import fr.florent.mjmaker.R;
@@ -23,9 +22,9 @@ import fr.florent.mjmaker.utils.AbstractLinearAdapter;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 import fr.florent.mjmaker.utils.DataBaseUtil;
 
-public class CategoryAdapter extends AbstractLinearAdapter<Game> {
+public class GameAdapter extends AbstractLinearAdapter<Game> {
 
-    private static String TAG = CategoryAdapter.class.getName();
+    private static String TAG = GameAdapter.class.getName();
 
     private ThemeRepositoryService themeRepositoryService = ThemeRepositoryService.getInstance();
 
@@ -39,7 +38,7 @@ public class CategoryAdapter extends AbstractLinearAdapter<Game> {
 
     private final IEventAction handler;
 
-    public CategoryAdapter(Context context, List<Game> categories, IEventAction handler) {
+    public GameAdapter(Context context, List<Game> categories, IEventAction handler) {
         super(context, categories);
         this.handler = handler;
     }
@@ -80,18 +79,18 @@ public class CategoryAdapter extends AbstractLinearAdapter<Game> {
         CardView cardView = view.findViewById(R.id.subcategory);
 
         if (cardView.getVisibility() == View.GONE) {
-            SubCategoryAdapter subCategoryAdapter;
+            ThemeAdapter themeAdapter;
             if (recyclerView.getAdapter() != null) {
-                subCategoryAdapter = (SubCategoryAdapter) recyclerView.getAdapter();
-                subCategoryAdapter.setItems(DataBaseUtil.convertForeignCollectionToList(game.getLstTheme()));
+                themeAdapter = (ThemeAdapter) recyclerView.getAdapter();
+                themeAdapter.setItems(DataBaseUtil.convertForeignCollectionToList(game.getLstTheme()));
             } else {
-                subCategoryAdapter = new SubCategoryAdapter(
+                themeAdapter = new ThemeAdapter(
                         recyclerView.getContext(),
                         DataBaseUtil.convertForeignCollectionToList(game.getLstTheme()),
                         (a, s) -> onActionSubCategory(recyclerView, a, s, game)
                 );
                 recyclerView.setLayoutManager(new LinearLayoutManager(context.getApplicationContext()));
-                recyclerView.setAdapter(subCategoryAdapter);
+                recyclerView.setAdapter(themeAdapter);
             }
 
             cardView.setVisibility(View.VISIBLE);
@@ -103,24 +102,24 @@ public class CategoryAdapter extends AbstractLinearAdapter<Game> {
 
     }
 
-    private void onActionSubCategory(RecyclerView view, SubCategoryAdapter.EnumAction action, Theme theme, Game game) {
-        SubCategoryAdapter subCategoryAdapter = (SubCategoryAdapter) view.getAdapter();
+    private void onActionSubCategory(RecyclerView view, ThemeAdapter.EnumAction action, Theme theme, Game game) {
+        ThemeAdapter themeAdapter = (ThemeAdapter) view.getAdapter();
 
         switch (action) {
 
             case ADD:
                 AndroidLayoutUtil.openModalAskText(view.getContext(),
                         "Set the name ?",
-                        null, v -> this.onAdd(v, game, subCategoryAdapter));
+                        null, v -> this.onValidateModalAskText(v, game, null, themeAdapter));
                 break;
             case EDIT:
                 AndroidLayoutUtil.openModalAskText(view.getContext(),
                         "Set the name ?",
-                        theme.getName(), v -> this.onEdit(v, game, theme, subCategoryAdapter));
+                        theme.getName(), v -> this.onValidateModalAskText(v, game, theme, themeAdapter));
                 break;
             case DELETE:
                 themeRepositoryService.delete(theme);
-                subCategoryAdapter.removeItem(theme);
+                themeAdapter.removeItem(theme);
                 break;
         }
 
@@ -133,8 +132,14 @@ public class CategoryAdapter extends AbstractLinearAdapter<Game> {
 
     }
 
-    // FIXME : refactor with onAdd and move control to service
-    private boolean onEdit(String value, Game game, Theme subcategory, SubCategoryAdapter adapter) {
+    private boolean onValidateModalAskText(String value, Game game, Theme subcategory, ThemeAdapter adapter) {
+        boolean isCreation = false;
+
+        if (subcategory == null) {
+            subcategory = new Theme();
+            isCreation = true;
+        }
+
         if (value == null || value.isEmpty()) {
             AndroidLayoutUtil.showToast(context.getApplicationContext(), "Sub category name can not be empty");
             return false;
@@ -144,46 +149,28 @@ public class CategoryAdapter extends AbstractLinearAdapter<Game> {
 
         if (existCategory != null && !existCategory.getId().equals(subcategory.getId())) {
             AndroidLayoutUtil.showToast(context.getApplicationContext(),
-                    "A sub category with name " + value + " for the category " + game.getName() + " exist");
+                    "A sub category named " + value + " for theme " + game.getName() + " exist");
             return false;
         }
 
         subcategory.setName(value);
 
-        themeRepositoryService.update(subcategory);
+        String message;
+        if (isCreation) {
 
-        adapter.updateItem(subcategory);
+            themeRepositoryService.save(subcategory);
+            adapter.addItem(subcategory);
+            message = "Theme created";
+        } else {
+            themeRepositoryService.update(subcategory);
+            adapter.updateItem(subcategory);
+            message = "Theme modified";
+        }
 
-        AndroidLayoutUtil.showToast(context.getApplicationContext(), "Sub category modified");
+
+        AndroidLayoutUtil.showToast(context.getApplicationContext(), message);
 
         return true;
     }
 
-    private boolean onAdd(String value, Game game, SubCategoryAdapter adapter) {
-        if (value == null || value.isEmpty()) {
-            AndroidLayoutUtil.showToast(context.getApplicationContext(), "Sub category name can not be empty");
-            return false;
-        }
-
-        Theme existCategory = themeRepositoryService.findByIdGameAndName(game.getId(), value);
-
-        if (existCategory != null) {
-            AndroidLayoutUtil.showToast(context.getApplicationContext(),
-                    "A sub category with name " + value + " for the category " + game.getName() + " exist");
-            return false;
-        }
-
-        Theme subcategory = new Theme();
-
-        subcategory.setGame(game);
-        subcategory.setName(value);
-
-        themeRepositoryService.save(subcategory);
-
-        adapter.addItem(subcategory);
-
-        AndroidLayoutUtil.showToast(context.getApplicationContext(), "Sub category created");
-
-        return true;
-    }
 }

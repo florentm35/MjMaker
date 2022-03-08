@@ -18,7 +18,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import fr.florent.mjmaker.R;
-import fr.florent.mjmaker.fragment.category.ListCategoryFragment;
+import fr.florent.mjmaker.fragment.category.ListGameFragment;
 import fr.florent.mjmaker.fragment.common.AbstractFragment;
 import fr.florent.mjmaker.fragment.common.menu.EnumScreen;
 import fr.florent.mjmaker.fragment.common.menu.MenuFragment;
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                 fragment = new EditMonsterFragment(param);
                 break;
             case LIST_CATEGORY:
-                fragment = new ListCategoryFragment();
+                fragment = new ListGameFragment();
                 break;
             default:
                 Log.e(TAG, "Actions not found for " + screen.name());

@@ -9,14 +9,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import fr.florent.mjmaker.R;
-import fr.florent.mjmaker.fragment.category.recyclerview.CategoryAdapter;
+import fr.florent.mjmaker.fragment.category.recyclerview.GameAdapter;
 
 public abstract class AbstractLinearAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     protected List<T> values;
     protected final Context context;
-    private CategoryAdapter.IEventAction handler;
+    private GameAdapter.IEventAction handler;
 
     public AbstractLinearAdapter(Context context, List<T> values) {
         this.values = values;
@@ -63,7 +62,7 @@ public abstract class AbstractLinearAdapter<T> extends RecyclerView.Adapter<Recy
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         View view = holder.itemView;
-        int viewType = ((CategoryAdapter.ViewHolder) holder).viewType;
+        int viewType = ((GameAdapter.ViewHolder) holder).viewType;
 
         onBindViewHolder(view, viewType, position);
 

@@ -12,7 +12,7 @@ import fr.florent.mjmaker.service.model.Theme;
 import fr.florent.mjmaker.utils.AbstractLinearAdapter;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 
-public class SubCategoryAdapter extends AbstractLinearAdapter<Theme> {
+public class ThemeAdapter extends AbstractLinearAdapter<Theme> {
 
 
     public enum EnumAction {
@@ -25,7 +25,7 @@ public class SubCategoryAdapter extends AbstractLinearAdapter<Theme> {
 
     private final IEventAction handler;
 
-    public SubCategoryAdapter(Context context, List<Theme> subCategories, IEventAction handler) {
+    public ThemeAdapter(Context context, List<Theme> subCategories, IEventAction handler) {
         super(context, subCategories);
         this.handler = handler;
     }
