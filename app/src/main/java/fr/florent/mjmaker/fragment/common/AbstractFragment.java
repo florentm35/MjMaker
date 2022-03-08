@@ -4,7 +4,9 @@ import androidx.fragment.app.Fragment;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.function.BiFunction;
 
+import fr.florent.mjmaker.fragment.common.menu.EnumScreen;
 import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
 import lombok.Setter;
 
@@ -19,6 +21,9 @@ public abstract class AbstractFragment extends Fragment {
 
     @Setter
     protected IBackHandler backHandler;
+
+    @Setter
+    protected BiFunction<EnumScreen, Object[], Void> redirect;
 
     /**
      * Get the screen toolbar item

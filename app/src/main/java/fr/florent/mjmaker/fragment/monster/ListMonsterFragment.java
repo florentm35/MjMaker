@@ -37,7 +37,7 @@ public class ListMonsterFragment extends AbstractFragment {
         );
     }
 
-    public void redirectToEditMonster(BiFunction<EnumScreen, Object[], Void> redirect) {
+    public void redirectToEditMonster() {
 
         redirect.apply(EnumScreen.EDIT_MONSTER, null);
     }

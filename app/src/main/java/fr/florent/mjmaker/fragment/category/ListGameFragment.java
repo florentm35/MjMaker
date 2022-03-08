@@ -69,7 +69,7 @@ public class ListGameFragment extends AbstractFragment {
         );
     }
 
-    public void showPopup(BiFunction<EnumScreen, Object[], Void> redirect) {
+    public void showPopup() {
         AndroidLayoutUtil.openModalAskText(getContext(),
                 "Set the name ?",
                 null, v -> this.onValidateModalAskText(v, null));

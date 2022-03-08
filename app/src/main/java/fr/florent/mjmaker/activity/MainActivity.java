@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
     private void loadBodyFragment(AbstractFragment fragment) {
         // Add back handler action
         fragment.setBackHandler(this::back);
-
+        fragment.setRedirect(this::redirect);
         // Add toolbar item from fragment
         menuItem = fragment.getToolbarItem()
                 .stream()
@@ -201,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
                     ToolBarItem.IToolBarItemEventRedirect handler = menuItem.get(item.getItemId())
                             .getHandler();
                     if (handler != null) {
-                        handler.action(this::redirect);
+                        handler.action();
                     }
                 } else {
                     Log.w(TAG, "Action not found for " + item.getItemId());

@@ -20,11 +20,8 @@ public class ToolBarItem {
         /**
          * Action call when clieck on item toolbar
          *
-         * @param functionRedirect The redirect fonction return Void
-         *                         EnumMenu for location
-         *                         Object[] for param location
          */
-        void action(BiFunction<EnumScreen, Object[], Void> functionRedirect);
+        void action();
     }
 
     /**
