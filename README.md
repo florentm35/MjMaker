@@ -2,15 +2,14 @@
 - Gestion des Jeux et des thèmes
 	- Ajouter des valeurs possible pour les thèmes (Permet de creer des list de param harmonisé)
 	- Permettre de rajouter des champs "thème" en plus sur les différente entité 
-- Gestion ecriture campagne
-	- Lore personnage
-	- Ajancement des Sénarios ?
+- Gestion ecriture campagne ?
 - Gestion écriture sénarios
  	- Chapitre/fieldset
-	- Ecriture de lore
-		- Makdown
-		- Custom lien Monstre/pnj/map/combat/autres élément de fieldset ?
+	- Ajout de note ?
 	- Element ajoutable	
+		- Ecriture de lore
+			- Markdown
+			- Custom lien Monstre/pnj/map/combat/autres élément de fieldset ?
 		- Creation de combat
 			- Gestion des combats
 			- Ordre des tours
@@ -31,6 +30,7 @@
 		- Case à case
 		- Couleur
 		- Legende pré-renseigné + modifiable
+- internationalization de l'application
 - GED One drive ?
 	
 ============================================================
