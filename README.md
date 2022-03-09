@@ -1,25 +1,36 @@
 # MjMaker
-- Gestion de catégorie et sous catégorie
+- Gestion des Jeux et des thèmes
+	- Ajouter des valeurs possible pour les thèmes (Permet de creer des list de param harmonisé)
+	- Permettre de rajouter des champs "thème" en plus sur les différente entité 
 - Gestion ecriture campagne
 	- Lore personnage
 	- Ajancement des Sénarios ?
 - Gestion écriture sénarios
+ 	- Chapitre/fieldset
 	- Ecriture de lore
-	- Gestion monstre
-	- Création de maps
+		- Makdown
+		- Custom lien Monstre/pnj/map/combat/autres élément de fieldset ?
+	- Element ajoutable	
+		- Creation de combat
+			- Gestion des combats
+			- Ordre des tours
+			- Gestion des PDV des monstres
+			- Recap monstre
+			- Marqueur d'avancement du combats
+			- Marqueur d'état ?
+		- Affichage map (cf gestion de map)
+			- Redirection edit
+			- Affichage fullscreen en modal ?
+		- Affichage pnj/monstre
+		 	- Redirection edit
+			- Affichage fullscreen en modal ?
+	- Generation PDF + export one drive ?
+- Gestion monstre / pnj
+- Création de maps
 		- Ajout de légende
 		- Case à case
 		- Couleur
 		- Legende pré-renseigné + modifiable
-	- Chapitre/fieldset
-	- Generation PDF + export one drive ?
-- Mise en route des combats
-- Gestion des combats
-	- Ordre des tours
-	- Gestion des PDV des monstres
-	- Recap monstre
-	- Marqueur d'avancement du combats
-	- Marqueur d'état ?
 - GED One drive ?
 	
 ============================================================
