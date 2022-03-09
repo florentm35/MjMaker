@@ -5,9 +5,9 @@ import java.util.List;
 
 import fr.florent.mjmaker.service.model.FieldSetScenario;
 import fr.florent.mjmaker.service.model.Game;
-import fr.florent.mjmaker.service.model.Monster;
+import fr.florent.mjmaker.service.model.Entity;
 import fr.florent.mjmaker.service.model.Scenario;
-import fr.florent.mjmaker.service.model.TextScenario;
+import fr.florent.mjmaker.service.model.TextElement;
 import fr.florent.mjmaker.service.model.Theme;
 
 /**
@@ -18,11 +18,11 @@ public abstract class EntityHelper {
      * List of all entity
      */
     public static final List<Class<?>> ENTITY_LIST = Arrays.asList(
-            Monster.class,
+            Entity.class,
             Game.class,
             Theme.class,
             Scenario.class,
             FieldSetScenario.class,
-            TextScenario.class
+            TextElement.class
     );
 }

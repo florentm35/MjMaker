@@ -8,12 +8,11 @@ import androidx.core.content.ContextCompat;
 import java.util.List;
 
 import fr.florent.mjmaker.R;
-import fr.florent.mjmaker.fragment.category.recyclerview.GameAdapter;
 import fr.florent.mjmaker.service.model.Scenario;
-import fr.florent.mjmaker.utils.AbstractLinearAdapter;
+import fr.florent.mjmaker.utils.AbstractLinearWithHeaderAdapter;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 
-public class ScenarioAdapter extends AbstractLinearAdapter<Scenario> {
+public class ScenarioAdapter extends AbstractLinearWithHeaderAdapter<Scenario> {
 
     private static String TAG = ScenarioAdapter.class.getName();
 

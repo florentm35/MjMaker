@@ -1,35 +1,35 @@
 package fr.florent.mjmaker.service.repository;
 
 import fr.florent.mjmaker.service.common.AbstractRepositoryService;
-import fr.florent.mjmaker.service.model.Monster;
+import fr.florent.mjmaker.service.model.Entity;
 
 /**
  * Monster service repository
  */
-public class MonsterRepositoryService extends AbstractRepositoryService<Monster, Integer> {
+public class EntityRepositoryService extends AbstractRepositoryService<Entity, Integer> {
 
-    private MonsterRepositoryService() {
+    private EntityRepositoryService() {
         super();
     }
 
-    private static MonsterRepositoryService instance;
+    private static EntityRepositoryService instance;
 
     /**
      * Get service instance
      *
      * @return Service instance
      */
-    public static MonsterRepositoryService getInstance() {
+    public static EntityRepositoryService getInstance() {
         if (instance == null) {
-            instance = new MonsterRepositoryService();
+            instance = new EntityRepositoryService();
         }
 
         return instance;
     }
 
     @Override
-    public Class<Monster> getTableClass() {
-        return Monster.class;
+    public Class<Entity> getTableClass() {
+        return Entity.class;
     }
 
     @Override
@@ -39,6 +39,6 @@ public class MonsterRepositoryService extends AbstractRepositoryService<Monster,
 
     @Override
     protected String getTag() {
-        return MonsterRepositoryService.class.getName();
+        return EntityRepositoryService.class.getName();
     }
 }

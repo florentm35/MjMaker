@@ -9,10 +9,10 @@ import java.util.List;
 
 import fr.florent.mjmaker.R;
 import fr.florent.mjmaker.service.model.Theme;
-import fr.florent.mjmaker.utils.AbstractLinearAdapter;
+import fr.florent.mjmaker.utils.AbstractLinearWithHeaderAdapter;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 
-public class ThemeAdapter extends AbstractLinearAdapter<Theme> {
+public class ThemeAdapter extends AbstractLinearWithHeaderAdapter<Theme> {
 
 
     public enum EnumAction {

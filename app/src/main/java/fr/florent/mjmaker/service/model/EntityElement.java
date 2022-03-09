@@ -1,8 +1,6 @@
 package fr.florent.mjmaker.service.model;
 
-import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import lombok.AllArgsConstructor;
@@ -17,23 +15,21 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(of = "id")
-@DatabaseTable(tableName = "fieldset_scenario")
-public class FieldSetScenario {
+@EqualsAndHashCode(of = "fieldSetElement")
+@DatabaseTable(tableName = "entity_element")
+public class EntityElement implements FieldSetElement.Element {
 
     @DatabaseField(generatedId = true)
     private Integer id;
 
     @DatabaseField(canBeNull = false, foreign = true)
-    private Scenario scenario;
+    private FieldSetElement fieldSetElement;
 
-    @DatabaseField(columnName = "title")
-    private String title;
+    @DatabaseField(foreign = true)
+    private Entity entity;
 
-    @DatabaseField(canBeNull = false, columnName = "order")
-    private Integer order;
-
-    @ForeignCollectionField
-    private ForeignCollection<FieldSetElement> lstElement;
-
+    @Override
+    public FieldSetElement.TypeElement getType() {
+        return FieldSetElement.TypeElement.ENTITY;
+    }
 }

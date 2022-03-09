@@ -11,22 +11,22 @@ import androidx.annotation.Nullable;
 
 import fr.florent.mjmaker.R;
 import fr.florent.mjmaker.fragment.common.AbstractFragment;
-import fr.florent.mjmaker.service.model.Monster;
-import fr.florent.mjmaker.service.repository.MonsterRepositoryService;
+import fr.florent.mjmaker.service.model.Entity;
+import fr.florent.mjmaker.service.repository.EntityRepositoryService;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 
 public class EditMonsterFragment extends AbstractFragment {
 
     private static final String TAG = EditMonsterFragment.class.getName();
 
-    private final MonsterRepositoryService monsterRepositoryService = MonsterRepositoryService.getInstance();
+    private final EntityRepositoryService entityRepositoryService = EntityRepositoryService.getInstance();
 
 
-    private Monster monster;
+    private Entity entity;
 
     public EditMonsterFragment(Object... params) {
         if (params != null && params.length > 0) {
-            monster = monsterRepositoryService.findBydId((Integer) params[0]);
+            entity = entityRepositoryService.findBydId((Integer) params[0]);
         }
     }
 
@@ -37,7 +37,7 @@ public class EditMonsterFragment extends AbstractFragment {
 
         ImageButton saveButton = view.findViewById(R.id.valide);
 
-        if (monster == null) {
+        if (entity == null) {
             saveButton.setImageResource(R.drawable.material_add);
         } else {
             saveButton.setImageResource(R.drawable.material_done);
@@ -51,19 +51,19 @@ public class EditMonsterFragment extends AbstractFragment {
 
     private void save(View view) {
 
-        if (monster == null) {
-            monster = new Monster();
+        if (entity == null) {
+            entity = new Entity();
         }
 
-        monster.setName(AndroidLayoutUtil.getTextViewText(getView(), R.id.et_name));
+        entity.setName(AndroidLayoutUtil.getTextViewText(getView(), R.id.et_name));
 
         String message;
 
-        if (monster.getId() == null) {
-            monsterRepositoryService.save(monster);
+        if (entity.getId() == null) {
+            entityRepositoryService.save(entity);
             message = "Monster create";
         } else {
-            monsterRepositoryService.update(monster);
+            entityRepositoryService.update(entity);
             message = "Monster update";
         }
 

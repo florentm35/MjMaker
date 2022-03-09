@@ -15,16 +15,21 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(of = "id")
-@DatabaseTable(tableName = "text_scenario")
-public class TextScenario {
+@EqualsAndHashCode(of = "fieldSetElement")
+@DatabaseTable(tableName = "text_element")
+public class TextElement implements FieldSetElement.Element {
 
     @DatabaseField(generatedId = true)
     private Integer id;
 
     @DatabaseField(canBeNull = false, foreign = true)
-    private FieldSetScenario fieldSetScenario;
+    private FieldSetElement fieldSetElement;
 
     @DatabaseField(columnName = "text")
     private String text;
+
+    @Override
+    public FieldSetElement.TypeElement getType() {
+        return FieldSetElement.TypeElement.TEXT;
+    }
 }

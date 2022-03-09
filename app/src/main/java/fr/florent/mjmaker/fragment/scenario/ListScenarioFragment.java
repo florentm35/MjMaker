@@ -36,14 +36,23 @@ public class ListScenarioFragment extends AbstractFragment {
         RecyclerView recyclerView = view.findViewById(R.id.list_scenario);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        scenarioAdapter = new ScenarioAdapter(getContext(), scenarioRepositoryService.getAll(), null);
+        scenarioAdapter = new ScenarioAdapter(getContext(), scenarioRepositoryService.getAll(), this::onAction);
         recyclerView.setAdapter(scenarioAdapter);
 
         return view;
     }
 
     public void onAction(ScenarioAdapter.EnumAction action, Scenario scenario)  {
+        switch (action) {
 
+            case EDIT:
+                this.redirectToDetailScenario(scenario);
+                break;
+            case DELETE:
+                scenarioRepositoryService.delete(scenario);
+                scenarioAdapter.removeItem(scenario);
+                break;
+        }
     }
 
     @Override

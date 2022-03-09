@@ -8,6 +8,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import fr.florent.mjmaker.service.model.FieldSetElement;
+import fr.florent.mjmaker.service.model.TextElement;
+
 /**
  * Abstract service class with repository
  *
@@ -19,7 +22,7 @@ public abstract class AbstractRepositoryService<T, ID> {
     /**
      * Datasource sqlite
      */
-    DatabaseHelper databaseHelper;
+    protected DatabaseHelper databaseHelper;
 
     /**
      * Service repository
@@ -28,12 +31,7 @@ public abstract class AbstractRepositoryService<T, ID> {
 
     protected AbstractRepositoryService() {
         databaseHelper = DatabaseHelper.getInstance();
-        try {
-            repository = databaseHelper.createDao(getTableClass(), getTableId());
-        } catch (SQLException ex) {
-            Log.e(getTag(), "Can not be init repository", ex);
-            throw new SQLRuntimeException(ex);
-        }
+        repository = databaseHelper.createDao(getTableClass(), getTableId());
     }
 
     /**

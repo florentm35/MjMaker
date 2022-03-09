@@ -7,17 +7,16 @@ import android.view.ViewGroup;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.BiFunction;
 
 import fr.florent.mjmaker.R;
 import fr.florent.mjmaker.fragment.common.AbstractFragment;
 import fr.florent.mjmaker.fragment.common.menu.EnumScreen;
 import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
-import fr.florent.mjmaker.service.repository.MonsterRepositoryService;
+import fr.florent.mjmaker.service.repository.EntityRepositoryService;
 
 public class ListMonsterFragment extends AbstractFragment {
 
-    private final MonsterRepositoryService monsterService = MonsterRepositoryService.getInstance();
+    private final EntityRepositoryService monsterService = EntityRepositoryService.getInstance();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

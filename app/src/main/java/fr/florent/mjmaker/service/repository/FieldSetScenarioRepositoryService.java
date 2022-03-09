@@ -2,13 +2,14 @@ package fr.florent.mjmaker.service.repository;
 
 import fr.florent.mjmaker.service.common.AbstractRepositoryService;
 import fr.florent.mjmaker.service.model.FieldSetScenario;
+import fr.florent.mjmaker.service.model.Scenario;
 
 /**
  * FieldSetScenario service repository
  */
 public class FieldSetScenarioRepositoryService extends AbstractRepositoryService<FieldSetScenario, Integer> {
 
-    private TextScenarioRepositoryService textScenarioRepositoryService = TextScenarioRepositoryService.getInstance();
+    private final FieldSetElementRepositoryService fieldSetElementRepositoryService = FieldSetElementRepositoryService.getInstance();
 
     private FieldSetScenarioRepositoryService() {
         super();
@@ -29,6 +30,18 @@ public class FieldSetScenarioRepositoryService extends AbstractRepositoryService
         return instance;
     }
 
+    @Override
+    public void delete(FieldSetScenario entity) {
+        if (entity.getLstElement() != null) {
+            entity.getLstElement().forEach(fieldSetElementRepositoryService::delete);
+        }
+        super.delete(entity);
+    }
+
+    @Override
+    public void deleteById(Integer integer) {
+        delete(findBydId(integer));
+    }
 
     @Override
     public Class<FieldSetScenario> getTableClass() {

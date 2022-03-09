@@ -17,7 +17,7 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode(of = "id")
 @DatabaseTable(tableName = "monster")
-public class Monster {
+public class Entity {
 
     @DatabaseField(generatedId = true)
     private Integer id;

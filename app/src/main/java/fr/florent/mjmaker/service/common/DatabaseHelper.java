@@ -10,7 +10,6 @@ import com.j256.ormlite.table.TableUtils;
 import java.sql.SQLException;
 
 import fr.florent.mjmaker.AppContext;
-import fr.florent.mjmaker.service.model.Monster;
 
 /**
  * Datasource for SQLite
@@ -79,12 +78,17 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     /**
      * Create a repository instance
      *
-     * @param Object The entity class
+     * @param object The entity class
      * @param id     The entity id class
      * @return The repository
      */
-    public <T, ID> Dao<T, ID> createDao(Class<T> Object, Class<ID> id) throws SQLException {
-        return getDao(Object);
+    public <T, ID> Dao<T, ID> createDao(Class<T> object, Class<ID> id) {
+        try {
+            return getDao(object);
+        } catch (SQLException e) {
+            Log.e(TAG, "Can not create " + object.getName() + " repository", e);
+            throw new SQLRuntimeException(e);
+        }
     }
 
 

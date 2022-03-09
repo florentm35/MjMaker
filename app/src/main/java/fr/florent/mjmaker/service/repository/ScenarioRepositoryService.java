@@ -21,6 +21,20 @@ public class ScenarioRepositoryService extends AbstractRepositoryService<Scenari
     private static ScenarioRepositoryService instance;
 
     @Override
+    public void delete(Scenario entity) {
+        if (entity.getLstFieldSet() != null) {
+            entity.getLstFieldSet().forEach(fieldSetScenario -> fieldSetScenarioRepositoryService.delete(fieldSetScenario));
+        }
+        super.delete(entity);
+    }
+
+    @Override
+    public void deleteById(Integer integer) {
+        delete(findBydId(integer));
+    }
+
+
+    @Override
     public List<Scenario> getAll() {
         return Collections.singletonList(Scenario.builder()
                 .id(1)

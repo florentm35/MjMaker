@@ -19,7 +19,7 @@ public abstract class DataBaseUtil {
      */
     public static <T> List<T> convertForeignCollectionToList(ForeignCollection<T> collection) {
         if (collection == null) {
-            return Collections.emptyList();
+            return new ArrayList<>();
         } else {
             return new ArrayList<>(collection);
         }

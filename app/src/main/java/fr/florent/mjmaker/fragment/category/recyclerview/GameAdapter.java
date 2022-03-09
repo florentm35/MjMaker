@@ -18,11 +18,11 @@ import fr.florent.mjmaker.service.common.SQLRuntimeException;
 import fr.florent.mjmaker.service.model.Game;
 import fr.florent.mjmaker.service.model.Theme;
 import fr.florent.mjmaker.service.repository.ThemeRepositoryService;
-import fr.florent.mjmaker.utils.AbstractLinearAdapter;
+import fr.florent.mjmaker.utils.AbstractLinearWithHeaderAdapter;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 import fr.florent.mjmaker.utils.DataBaseUtil;
 
-public class GameAdapter extends AbstractLinearAdapter<Game> {
+public class GameAdapter extends AbstractLinearWithHeaderAdapter<Game> {
 
     private static String TAG = GameAdapter.class.getName();
 
@@ -45,7 +45,7 @@ public class GameAdapter extends AbstractLinearAdapter<Game> {
 
     @Override
     public int getLayout(int viewType) {
-        if (AbstractLinearAdapter.ViewHolder.HEADER == viewType) {
+        if (AbstractLinearWithHeaderAdapter.ViewHolder.HEADER == viewType) {
             return R.layout.list_game_header;
         } else {
             return R.layout.list_game_row;
@@ -54,7 +54,7 @@ public class GameAdapter extends AbstractLinearAdapter<Game> {
 
     @Override
     public void onBindViewHolder(View view, int viewType, int position) {
-        if (viewType == AbstractLinearAdapter.ViewHolder.ROW) {
+        if (viewType == AbstractLinearWithHeaderAdapter.ViewHolder.ROW) {
 
             if (position % 2 == 1) {
                 view.setBackgroundColor(ContextCompat.getColor(context, R.color.dark_purple));
