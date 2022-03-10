@@ -25,7 +25,7 @@ public class EntityElement implements FieldSetElement.Element {
     @DatabaseField(canBeNull = false, foreign = true)
     private FieldSetElement fieldSetElement;
 
-    @DatabaseField(foreign = true)
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Entity entity;
 
     @Override

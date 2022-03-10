@@ -34,19 +34,6 @@ public class ScenarioRepositoryService extends AbstractRepositoryService<Scenari
     }
 
 
-    @Override
-    public List<Scenario> getAll() {
-        return Collections.singletonList(Scenario.builder()
-                .id(1)
-                .game(Game.builder()
-                        .id(1)
-                        .name("Anima")
-                        .build())
-                .level(1)
-                .title("Mon premier scenario !")
-                .build());
-    }
-
     /**
      * Get service instance
      *

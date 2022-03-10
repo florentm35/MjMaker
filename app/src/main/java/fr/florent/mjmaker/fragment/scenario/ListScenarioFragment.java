@@ -12,21 +12,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.BiFunction;
 
 import fr.florent.mjmaker.R;
 import fr.florent.mjmaker.fragment.common.AbstractFragment;
 import fr.florent.mjmaker.fragment.common.menu.EnumScreen;
 import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
-import fr.florent.mjmaker.fragment.scenario.recyclerview.ScenarioAdapter;
+import fr.florent.mjmaker.fragment.scenario.adapter.ScenarioAdapter;
 import fr.florent.mjmaker.service.model.Scenario;
 import fr.florent.mjmaker.service.repository.ScenarioRepositoryService;
 
 public class ListScenarioFragment extends AbstractFragment {
 
-    ScenarioRepositoryService scenarioRepositoryService = ScenarioRepositoryService.getInstance();
+    private final ScenarioRepositoryService scenarioRepositoryService = ScenarioRepositoryService.getInstance();
 
-    ScenarioAdapter scenarioAdapter;
+    private ScenarioAdapter scenarioAdapter;
 
     @Nullable
     @Override
@@ -42,7 +41,7 @@ public class ListScenarioFragment extends AbstractFragment {
         return view;
     }
 
-    public void onAction(ScenarioAdapter.EnumAction action, Scenario scenario)  {
+    private void onAction(ScenarioAdapter.EnumAction action, Scenario scenario) {
         switch (action) {
 
             case EDIT:
@@ -60,14 +59,25 @@ public class ListScenarioFragment extends AbstractFragment {
         return Arrays.asList(
                 ToolBarItem.builder()
                         .label("New scenario")
-                        .handler(() -> this.redirectToDetailScenario(null))
+                        .handler(this::initScenario)
                         .icone(R.drawable.material_add)
                         .build()
         );
     }
 
-    public void redirectToDetailScenario(Scenario scenario) {
+    private void redirectToDetailScenario(Scenario scenario) {
         redirect.apply(EnumScreen.DETAIL_SCENARIO, new Object[]{scenario});
     }
 
+    private void initScenario() {
+        ParamScenarioModal dialog = new ParamScenarioModal();
+
+        dialog.show(getContext(), null, this::saveScenario);
+    }
+
+    private boolean saveScenario(Scenario scenario) {
+        scenarioRepositoryService.save(scenario);
+        redirectToDetailScenario(scenario);
+        return true;
+    }
 }

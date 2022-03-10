@@ -16,7 +16,7 @@ import java.util.List;
 import fr.florent.mjmaker.R;
 import fr.florent.mjmaker.fragment.common.AbstractFragment;
 import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
-import fr.florent.mjmaker.fragment.scenario.recyclerview.FieldSetAdapter;
+import fr.florent.mjmaker.fragment.scenario.adapter.FieldSetAdapter;
 import fr.florent.mjmaker.service.model.FieldSetScenario;
 import fr.florent.mjmaker.service.model.Scenario;
 import fr.florent.mjmaker.service.repository.FieldSetScenarioRepositoryService;

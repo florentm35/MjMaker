@@ -1,4 +1,4 @@
-package fr.florent.mjmaker.fragment.scenario.recyclerview;
+package fr.florent.mjmaker.fragment.scenario.adapter;
 
 import android.content.Context;
 import android.view.View;

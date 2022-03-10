@@ -28,6 +28,12 @@ public abstract class AndroidLayoutUtil {
         return ((TextView) view.findViewById(id)).getText().toString();
     }
 
+    public static Integer getTextViewInteger(View view, int id) {
+        String value = ((TextView) view.findViewById(id)).getText().toString();
+
+        return value != null && !value.isEmpty() ? Integer.parseInt(value) : null;
+    }
+
     public static void showToast(Context context, String message) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }

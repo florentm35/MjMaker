@@ -32,7 +32,7 @@ public class Scenario {
     @DatabaseField(columnName = "level")
     private Integer level;
 
-    @DatabaseField(foreign = true)
+    @DatabaseField(foreign = true, foreignAutoRefresh=true)
     private Game game;
 
     @ForeignCollectionField
