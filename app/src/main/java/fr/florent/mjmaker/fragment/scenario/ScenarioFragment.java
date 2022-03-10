@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,6 +25,7 @@ import fr.florent.mjmaker.service.repository.ScenarioRepositoryService;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 import fr.florent.mjmaker.utils.DataBaseUtil;
 
+// TODO : comment class
 public class ScenarioFragment extends AbstractFragment {
 
     private final ScenarioRepositoryService scenarioRepositoryService = ScenarioRepositoryService.getInstance();
@@ -45,12 +47,6 @@ public class ScenarioFragment extends AbstractFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.detail_scenario, container, false);
 
-        if(scenario == null) {
-            // TODO init scenario
-            scenario = new Scenario();
-            scenarioRepositoryService.save(scenario);
-        }
-
         initListFieldSet(view);
 
         return view;
@@ -60,10 +56,25 @@ public class ScenarioFragment extends AbstractFragment {
         RecyclerView recyclerView = view.findViewById(R.id.list_fieldset);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        adapter = new FieldSetAdapter(getContext(), DataBaseUtil.convertForeignCollectionToList(scenario.getLstFieldSet()), null);
+        adapter = new FieldSetAdapter(getContext(), DataBaseUtil.convertForeignCollectionToList(scenario.getLstFieldSet()), this::onFieldSetAction);
         recyclerView.setAdapter(adapter);
+
+        ItemTouchHelper itemTouchHelper = getItemTouchHelper();
+        itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
+    private void onFieldSetAction(FieldSetAdapter.EnumAction action, FieldSetScenario fieldSetScenario) {
+        switch (action) {
+            case EDIT:
+                editFieldSet(fieldSetScenario);
+                break;
+            case DELETE:
+                AndroidLayoutUtil.showToast(getContext(), "Fieldset deleted");
+                fieldSetScenarioRepositoryService.delete(fieldSetScenario);
+                adapter.removeItem(fieldSetScenario);
+                break;
+        }
+    }
 
     @Override
     public List<ToolBarItem> getToolbarItem() {
@@ -96,12 +107,14 @@ public class ScenarioFragment extends AbstractFragment {
 
         fieldSetScenario.setTitle(title);
         fieldSetScenario.setOrder(DataBaseUtil.convertForeignCollectionToList(scenario.getLstFieldSet()).size());
-        fieldSetScenario.setScenario(scenario);
-        // TODO update adapter
+
 
         if (creation) {
+            fieldSetScenario.setScenario(scenario);
+            fieldSetScenario.setOrder(scenario.getLstFieldSet().size());
             fieldSetScenarioRepositoryService.save(fieldSetScenario);
             adapter.addItem(fieldSetScenario);
+            AndroidLayoutUtil.showToast(getContext(), "Fieldset created");
         } else {
             fieldSetScenarioRepositoryService.update(fieldSetScenario);
             adapter.updateItem(fieldSetScenario);
@@ -110,4 +123,35 @@ public class ScenarioFragment extends AbstractFragment {
         return true;
     }
 
+
+    private ItemTouchHelper getItemTouchHelper() {
+        return new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(
+                ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END, 0) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+
+                int fromPosition = viewHolder.getAdapterPosition();
+                int toPosition = target.getAdapterPosition();
+
+                FieldSetScenario fromFieldSet = adapter.getItem(fromPosition);
+
+                FieldSetScenario toFieldSet = adapter.getItem(toPosition);
+
+                int tmpOrder = toFieldSet.getOrder();
+                toFieldSet.setOrder(fromFieldSet.getOrder());
+                fromFieldSet.setOrder(tmpOrder);
+
+                adapter.swapItem(fromPosition, toPosition);
+
+                fieldSetScenarioRepositoryService.update(fromFieldSet);
+                fieldSetScenarioRepositoryService.update(toFieldSet);
+
+                return true;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            }
+        });
+    }
 }

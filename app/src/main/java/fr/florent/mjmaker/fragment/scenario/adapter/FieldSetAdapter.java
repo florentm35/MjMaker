@@ -16,7 +16,7 @@ import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 public class FieldSetAdapter extends AbstractLinearAdapter<FieldSetScenario> {
 
     public enum EnumAction {
-        ADD, EDIT, DELETE;
+       EDIT, DELETE;
     }
 
     public interface IEventAction {
@@ -41,7 +41,7 @@ public class FieldSetAdapter extends AbstractLinearAdapter<FieldSetScenario> {
 
         AndroidLayoutUtil.setTextViewText(view, R.id.tv_title, item.getTitle());
 
-        view.findViewById(R.id.add).setOnClickListener(v -> handler.action(EnumAction.ADD, item));
+        //view.findViewById(R.id.add).setOnClickListener(v -> handler.action(EnumAction.ADD, item));
         view.findViewById(R.id.edit).setOnClickListener(v -> handler.action(EnumAction.EDIT, item));
         view.findViewById(R.id.delete).setOnClickListener(v -> handler.action(EnumAction.DELETE, item));
         view.findViewById(R.id.more).setOnClickListener(v -> switchVisibilityListElement(view));

@@ -20,6 +20,7 @@ import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
 import fr.florent.mjmaker.fragment.scenario.adapter.ScenarioAdapter;
 import fr.florent.mjmaker.service.model.Scenario;
 import fr.florent.mjmaker.service.repository.ScenarioRepositoryService;
+import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 
 public class ListScenarioFragment extends AbstractFragment {
 
@@ -50,6 +51,7 @@ public class ListScenarioFragment extends AbstractFragment {
             case DELETE:
                 scenarioRepositoryService.delete(scenario);
                 scenarioAdapter.removeItem(scenario);
+                AndroidLayoutUtil.showToast(getContext(), "Scenario deleted");
                 break;
         }
     }
@@ -77,6 +79,7 @@ public class ListScenarioFragment extends AbstractFragment {
 
     private boolean saveScenario(Scenario scenario) {
         scenarioRepositoryService.save(scenario);
+        AndroidLayoutUtil.showToast(getContext(), "Scenario created");
         redirectToDetailScenario(scenario);
         return true;
     }

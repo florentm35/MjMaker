@@ -35,7 +35,7 @@ public class Scenario {
     @DatabaseField(foreign = true, foreignAutoRefresh=true)
     private Game game;
 
-    @ForeignCollectionField
+    @ForeignCollectionField(orderColumnName = "order")
     private ForeignCollection<FieldSetScenario> lstFieldSet;
 
 }

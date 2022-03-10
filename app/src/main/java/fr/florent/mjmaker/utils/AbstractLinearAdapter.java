@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Collections;
 import java.util.List;
 
 public abstract class AbstractLinearAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -34,6 +35,15 @@ public abstract class AbstractLinearAdapter<T> extends RecyclerView.Adapter<Recy
 
     public void addItem(T value) {
         values.add(value);
+    }
+
+    public T getItem(int position) {
+        return values.get(position);
+    }
+
+    public void swapItem(int position, int destination) {
+        Collections.swap(values, position, destination);
+        notifyItemMoved(position, destination);
     }
 
     public abstract int getLayout(int viewType);
