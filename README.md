@@ -1,14 +1,14 @@
 # MjMaker
-- Gestion des Jeux et des thèmes
+- Gestion des Jeux et des thèmes 
 	- Ajouter des valeurs possible pour les thèmes (Permet de creer des list de param harmonisé)
 	- Permettre de rajouter des champs "thème" en plus sur les différente entité 
 - Gestion ecriture campagne ?
 - Gestion écriture sénarios
- 	- Chapitre/fieldset
+ 	- Chapitre/fieldset X
 	- Ajout de note ?
 	- Element ajoutable	
-		- Ecriture de lore
-			- Markdown
+		- Ecriture de lore X
+			- Markdown X
 			- Custom lien Monstre/pnj/map/combat/autres élément de fieldset ?
 		- Creation de combat
 			- Gestion des combats
