@@ -1,8 +1,14 @@
-package fr.florent.mjmaker.service;
+package fr.florent.mjmaker.service.markdown;
 
+import org.commonmark.Extension;
+import org.commonmark.ext.gfm.strikethrough.StrikethroughExtension;
+import org.commonmark.ext.ins.InsExtension;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
+
+import java.util.Arrays;
+import java.util.List;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -20,7 +26,12 @@ public class MarkDownService {
     }
 
     public String parseMarkDown(String text) {
-        Parser parser = Parser.builder().build();
+        List<Extension> extensions = Arrays.asList(StrikethroughExtension.create(),
+                InsExtension.create()
+        );
+        Parser parser = Parser.builder()
+                .extensions(extensions)
+                .build();
         Node document = parser.parse(text);
         HtmlRenderer renderer = HtmlRenderer.builder().build();
         return renderer.render(document);

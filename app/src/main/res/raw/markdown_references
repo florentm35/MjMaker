@@ -1,0 +1,38 @@
+<h1 class="smaller-h1">Text format</h1>
+*Italic* -> <em>Italic</em>
+<br/>
+<br/>
+**Bold** -> <strong>Bold</strong>
+<br/>
+<br/>
+
+<h1 class="smaller-h1">Title</h1>
+# Heading 1
+<br/>
+ <h1 class="smaller-h1">Heading 1</h1>
+<br/>
+## Heading 2
+<br/>
+<h2 class="smaller-h2">Heading 2</h2>
+<br/>
+
+<h1 class="smaller-h1">List</h1>
+<p>
+   * List<br>
+   * List<br>
+   * List
+</p>
+<br/>
+<ul>
+   <li>List</li>
+   <li>List</li>
+   <li>List</li>
+</ul>
+<br/>
+<br/>
+<h1 class="smaller-h1">Other</h1>
+&gt; Blockquote
+<br/>
+<blockquote>Blockquote</blockquote>
+
+

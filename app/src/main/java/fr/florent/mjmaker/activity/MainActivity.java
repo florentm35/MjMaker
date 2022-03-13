@@ -42,11 +42,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        // Load the side menu
-        loadFragment(R.id.menu, new MenuFragment(m -> switchScreen(m, true)));
-        // Load the default toolbar
-        loadToolBar();
+            setContentView(R.layout.activity_main);
+            // Load the side menu
+            loadFragment(R.id.menu, new MenuFragment(m -> switchScreen(m, true)));
+            // Load the default toolbar
+            loadToolBar();
     }
 
     /**

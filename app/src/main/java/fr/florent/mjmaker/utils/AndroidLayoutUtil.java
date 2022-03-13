@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.text.Editable;
+import android.text.Html;
 import android.text.Spanned;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -124,6 +125,30 @@ public abstract class AndroidLayoutUtil {
                         if (onValidate.action(false)) {
                             dialog.cancel();
                         }
+                    }
+                });
+
+        builder.create()
+                .show();
+    }
+
+    public static void openModalInfo(Context context,
+                                         String text
+    ) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        View view = LayoutInflater.from(context).inflate(R.layout.modal_text, null);
+
+        AndroidLayoutUtil.setTextViewText(view, R.id.tv_text, Html.fromHtml(text, Html.FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM));
+
+        builder.setView(view);
+
+        // Set the dialog title
+        builder.setTitle("")
+                // Set the action buttons
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
                     }
                 });
 

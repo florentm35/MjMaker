@@ -10,6 +10,8 @@ import android.widget.LinearLayout;
 import androidx.fragment.app.Fragment;
 
 import fr.florent.mjmaker.R;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 /**
  * Fragment for the side menu
