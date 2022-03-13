@@ -21,9 +21,6 @@ import lombok.Setter;
 public class FieldSetElement {
 
     public interface Element {
-        void setFieldSetElement(FieldSetElement id);
-
-        FieldSetElement getFieldSetElement();
 
         TypeElement getType();
     }

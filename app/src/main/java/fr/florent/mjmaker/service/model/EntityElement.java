@@ -22,9 +22,6 @@ public class EntityElement implements FieldSetElement.Element {
     @DatabaseField(generatedId = true)
     private Integer id;
 
-    @DatabaseField(canBeNull = false, foreign = true)
-    private FieldSetElement fieldSetElement;
-
     @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Entity entity;
 

@@ -22,8 +22,6 @@ public class TextElement implements FieldSetElement.Element {
     @DatabaseField(generatedId = true)
     private Integer id;
 
-    @DatabaseField(canBeNull = false, foreign = true)
-    private FieldSetElement fieldSetElement;
 
     @DatabaseField(columnName = "text")
     private String text;

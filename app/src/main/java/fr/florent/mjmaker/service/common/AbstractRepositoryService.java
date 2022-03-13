@@ -135,6 +135,14 @@ public abstract class AbstractRepositoryService<T, ID> {
         }
     }
 
+    public void refresh(T entity) {
+        try {
+            repository.refresh(entity);
+        } catch (SQLException exception) {
+            throw new SQLRuntimeException(exception);
+        }
+    }
+
     /**
      * Get the repository instance
      *

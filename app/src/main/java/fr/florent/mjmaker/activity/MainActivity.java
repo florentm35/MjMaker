@@ -103,18 +103,24 @@ public class MainActivity extends AppCompatActivity {
         // Add back handler action
         fragment.setBackHandler(this::back);
         fragment.setRedirect(this::redirect);
+        fragment.setUpdateToolBarHandler(() -> this.updateToolBar(fragment));
         // Add toolbar item from fragment
-        menuItem = fragment.getToolbarItem()
-                .stream()
-                .collect(Collectors.toMap(t -> View.generateViewId(), Function.identity()));
-        // Update the toolbar item
-        invalidateOptionsMenu();
+        updateToolBar(fragment);
 
         // Add fragment to the stack
         callStack.push(fragment);
 
         // Load the fragment
         loadFragment(R.id.body, fragment);
+    }
+
+    private void updateToolBar(AbstractFragment fragment) {
+        // Add toolbar item from fragment
+        menuItem = fragment.getToolbarItem()
+                .stream()
+                .collect(Collectors.toMap(t -> View.generateViewId(), Function.identity()));
+        // Update the toolbar item
+        invalidateOptionsMenu();
     }
 
     /**
@@ -190,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
-        getMenuInflater().inflate(R.menu.toolbar, menu);
+        getMenuInflater().inflate(R.menu.empty_menu, menu);
         return true;
     }
 

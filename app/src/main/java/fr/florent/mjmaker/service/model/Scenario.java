@@ -5,6 +5,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.Iterator;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -37,5 +38,19 @@ public class Scenario {
 
     @ForeignCollectionField(orderColumnName = "order")
     private ForeignCollection<FieldSetScenario> lstFieldSet;
+
+    public int getNextFieldSetScenarioOrder() {
+        if(lstFieldSet == null) {
+            return 0;
+        } else {
+            final Iterator<FieldSetScenario> iterator = lstFieldSet.iterator();
+            int ordre = 0;
+            while (iterator.hasNext()) {
+                ordre = iterator.next().getOrder();
+            }
+            return ordre +1;
+        }
+
+    }
 
 }

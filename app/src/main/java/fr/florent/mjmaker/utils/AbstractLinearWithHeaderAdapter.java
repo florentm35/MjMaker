@@ -19,7 +19,6 @@ public abstract class AbstractLinearWithHeaderAdapter<T> extends RecyclerView.Ad
         this.context = context;
     }
 
-
     @Override
     public int getItemViewType(int position) {
         return position == 0 ? AbstractLinearWithHeaderAdapter.ViewHolder.HEADER : AbstractLinearWithHeaderAdapter.ViewHolder.ROW;

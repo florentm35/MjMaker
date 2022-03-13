@@ -19,9 +19,16 @@ public abstract class AbstractFragment extends Fragment {
         void back();
     }
 
+    public interface IUpdateToolBarHandler {
+        void updateToolBar();
+    }
+
     @Setter
     protected IBackHandler backHandler;
 
+    @Setter
+    protected IUpdateToolBarHandler updateToolBarHandler;
+    
     @Setter
     protected BiFunction<EnumScreen, Object[], Void> redirect;
 
@@ -33,7 +40,5 @@ public abstract class AbstractFragment extends Fragment {
     public List<ToolBarItem> getToolbarItem() {
         return Collections.EMPTY_LIST;
     }
-
-
 
 }

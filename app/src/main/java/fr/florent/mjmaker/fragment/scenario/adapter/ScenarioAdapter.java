@@ -17,7 +17,7 @@ public class ScenarioAdapter extends AbstractLinearWithHeaderAdapter<Scenario> {
     private static String TAG = ScenarioAdapter.class.getName();
 
     public enum EnumAction {
-        EDIT, DELETE;
+        VIEW, DELETE;
     }
 
     public interface IEventAction {
@@ -57,7 +57,7 @@ public class ScenarioAdapter extends AbstractLinearWithHeaderAdapter<Scenario> {
             AndroidLayoutUtil.setTextViewText(view, R.id.tv_level, scenario.getLevel());
 
 
-            view.findViewById(R.id.edit).setOnClickListener(v -> handler.action(ScenarioAdapter.EnumAction.EDIT, scenario));
+            view.findViewById(R.id.view).setOnClickListener(v -> handler.action(ScenarioAdapter.EnumAction.VIEW, scenario));
             view.findViewById(R.id.delete).setOnClickListener(v -> handler.action(ScenarioAdapter.EnumAction.DELETE, scenario));
         }
     }

@@ -45,13 +45,21 @@ public class ListScenarioFragment extends AbstractFragment {
     private void onAction(ScenarioAdapter.EnumAction action, Scenario scenario) {
         switch (action) {
 
-            case EDIT:
-                this.redirectToDetailScenario(scenario);
+            case VIEW:
+                this.redirectToDetailScenario(scenario, ScenarioFragment.EnumState.VIEW);
                 break;
             case DELETE:
-                scenarioRepositoryService.delete(scenario);
-                scenarioAdapter.removeItem(scenario);
-                AndroidLayoutUtil.showToast(getContext(), "Scenario deleted");
+                AndroidLayoutUtil.openModalQuestion(getContext(),
+                        "Did you want really delete this scenario ?",
+                        (choice) -> {
+                            if (choice) {
+                                scenarioRepositoryService.delete(scenario);
+                                scenarioAdapter.removeItem(scenario);
+                                AndroidLayoutUtil.showToast(getContext(), "Scenario deleted");
+                            }
+                            return true;
+                        });
+
                 break;
         }
     }
@@ -67,8 +75,8 @@ public class ListScenarioFragment extends AbstractFragment {
         );
     }
 
-    private void redirectToDetailScenario(Scenario scenario) {
-        redirect.apply(EnumScreen.DETAIL_SCENARIO, new Object[]{scenario});
+    private void redirectToDetailScenario(Scenario scenario, ScenarioFragment.EnumState state) {
+        redirect.apply(EnumScreen.DETAIL_SCENARIO, new Object[]{scenario, state});
     }
 
     private void initScenario() {
@@ -80,7 +88,7 @@ public class ListScenarioFragment extends AbstractFragment {
     private boolean saveScenario(Scenario scenario) {
         scenarioRepositoryService.save(scenario);
         AndroidLayoutUtil.showToast(getContext(), "Scenario created");
-        redirectToDetailScenario(scenario);
+        redirectToDetailScenario(scenario, ScenarioFragment.EnumState.EDIT);
         return true;
     }
 }

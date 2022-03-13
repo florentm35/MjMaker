@@ -1,6 +1,7 @@
 package fr.florent.mjmaker.fragment.scenario;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +13,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import fr.florent.mjmaker.R;
 import fr.florent.mjmaker.fragment.common.AbstractFragment;
 import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
 import fr.florent.mjmaker.fragment.scenario.adapter.FieldSetAdapter;
+import fr.florent.mjmaker.service.model.FieldSetElement;
 import fr.florent.mjmaker.service.model.FieldSetScenario;
 import fr.florent.mjmaker.service.model.Scenario;
+import fr.florent.mjmaker.service.repository.FieldSetElementRepositoryService;
 import fr.florent.mjmaker.service.repository.FieldSetScenarioRepositoryService;
 import fr.florent.mjmaker.service.repository.ScenarioRepositoryService;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;
@@ -28,17 +32,32 @@ import fr.florent.mjmaker.utils.DataBaseUtil;
 // TODO : comment class
 public class ScenarioFragment extends AbstractFragment {
 
-    private final ScenarioRepositoryService scenarioRepositoryService = ScenarioRepositoryService.getInstance();
+    private final static String TAG = ScenarioFragment.class.getName();
+
+    public enum EnumState {
+        VIEW, EDIT;
+    }
+
     private final FieldSetScenarioRepositoryService fieldSetScenarioRepositoryService = FieldSetScenarioRepositoryService.getInstance();
+    private final FieldSetElementRepositoryService fieldSetElementRepositoryService = FieldSetElementRepositoryService.getInstance();
 
     private Scenario scenario;
 
-    FieldSetAdapter adapter;
+    private FieldSetAdapter adapter;
+
+    private EnumState state;
 
     public ScenarioFragment(Object[] param) {
         super();
-        if (param != null && param.length > 0 && param[0] != null) {
-            scenario = (Scenario) param[0];
+        if (param != null) {
+            if (param.length > 0 && param[0] != null) {
+                scenario = (Scenario) param[0];
+            }
+            if (param.length > 1 && param[1] != null) {
+                state = (EnumState) param[1];
+            } else {
+                state = EnumState.VIEW;
+            }
         }
     }
 
@@ -56,40 +75,91 @@ public class ScenarioFragment extends AbstractFragment {
         RecyclerView recyclerView = view.findViewById(R.id.list_fieldset);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        adapter = new FieldSetAdapter(getContext(), DataBaseUtil.convertForeignCollectionToList(scenario.getLstFieldSet()), this::onFieldSetAction);
+        adapter = new FieldSetAdapter(getContext(), DataBaseUtil.convertForeignCollectionToList(scenario.getLstFieldSet()), state, this::onFieldSetAction);
         recyclerView.setAdapter(adapter);
 
         ItemTouchHelper itemTouchHelper = getItemTouchHelper();
         itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
-    private void onFieldSetAction(FieldSetAdapter.EnumAction action, FieldSetScenario fieldSetScenario) {
+    private void onFieldSetAction(FieldSetAdapter.EnumAction action, FieldSetScenario fieldSetScenario, FieldSetElement element) {
         switch (action) {
+            case UPDATE:
+                adapter.updateItem(fieldSetScenario);
+                break;
             case EDIT:
                 editFieldSet(fieldSetScenario);
                 break;
             case DELETE:
-                AndroidLayoutUtil.showToast(getContext(), "Fieldset deleted");
-                fieldSetScenarioRepositoryService.delete(fieldSetScenario);
-                adapter.removeItem(fieldSetScenario);
+                AndroidLayoutUtil.openModalQuestion(getContext(),
+                        "Did you want really delete this fieldset ?",
+                        (choice) -> {
+                            if (choice) {
+                                fieldSetScenarioRepositoryService.delete(fieldSetScenario);
+                                adapter.removeItem(fieldSetScenario);
+                                AndroidLayoutUtil.showToast(getContext(), "Fieldset deleted");
+                            }
+                            return true;
+                        });
+                break;
+            case ADD_ELEMENT:
+                fieldSetElementRepositoryService.save(element);
+                fieldSetScenarioRepositoryService.refresh(fieldSetScenario);
+                adapter.updateItem(fieldSetScenario);
+                break;
+            case UPDATE_ELEMENT:
+                Log.d(TAG, String.format("Update element id :%d, ordre: %d", element.getId(), element.getOrder()));
+                fieldSetElementRepositoryService.update(element);
+                fieldSetScenarioRepositoryService.refresh(fieldSetScenario);
+                break;
+            case DELETE_ELEMENT:
+                AndroidLayoutUtil.openModalQuestion(getContext(),
+                        "Did you want really delete this element ?",
+                        (choice) -> {
+                            if (choice) {
+                                fieldSetElementRepositoryService.delete(element);
+                                fieldSetScenarioRepositoryService.refresh(fieldSetScenario);
+                                adapter.updateItem(fieldSetScenario);
+                                AndroidLayoutUtil.showToast(getContext(), "Element deleted");
+                            }
+                            return true;
+                        });
                 break;
         }
     }
 
     @Override
     public List<ToolBarItem> getToolbarItem() {
+        List<ToolBarItem> lstItem = new ArrayList<>();
 
-        List<ToolBarItem> items = new ArrayList<>();
+        if (state == EnumState.EDIT) {
+            lstItem.add(ToolBarItem.builder()
+                    .label("New fieldset")
+                    .handler(() -> editFieldSet(null))
+                    .icone(R.drawable.material_add)
+                    .build()
+            );
 
-        items.add(
-                ToolBarItem.builder()
-                        .label("New scenario")
-                        .handler(() -> editFieldSet(null))
-                        .icone(R.drawable.material_add)
-                        .build()
-        );
+            lstItem.add(ToolBarItem.builder()
+                    .label("View mode")
+                    .handler(this::switchMode)
+                    .build());
+        } else {
+            lstItem.add(ToolBarItem.builder()
+                    .label("Edit mode")
+                    .handler(this::switchMode)
+                    .build());
+        }
+        return lstItem;
+    }
 
-        return items;
+    private void switchMode() {
+        state = state == EnumState.EDIT ? EnumState.VIEW : EnumState.EDIT;
+        // Update adapter
+        adapter.setState(state);
+        adapter.notifyDataSetChanged();
+        // Update toolbar
+        updateToolBarHandler.updateToolBar();
     }
 
     private void editFieldSet(FieldSetScenario fieldSetScenario) {
@@ -106,12 +176,10 @@ public class ScenarioFragment extends AbstractFragment {
         }
 
         fieldSetScenario.setTitle(title);
-        fieldSetScenario.setOrder(DataBaseUtil.convertForeignCollectionToList(scenario.getLstFieldSet()).size());
-
 
         if (creation) {
             fieldSetScenario.setScenario(scenario);
-            fieldSetScenario.setOrder(scenario.getLstFieldSet().size());
+            fieldSetScenario.setOrder(scenario.getNextFieldSetScenarioOrder());
             fieldSetScenarioRepositoryService.save(fieldSetScenario);
             adapter.addItem(fieldSetScenario);
             AndroidLayoutUtil.showToast(getContext(), "Fieldset created");
