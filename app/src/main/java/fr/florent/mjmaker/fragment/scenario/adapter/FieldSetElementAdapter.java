@@ -1,6 +1,8 @@
 package fr.florent.mjmaker.fragment.scenario.adapter;
 
 import android.content.Context;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,7 @@ import java.util.concurrent.locks.Lock;
 
 import fr.florent.mjmaker.R;
 import fr.florent.mjmaker.fragment.scenario.ScenarioFragment;
+import fr.florent.mjmaker.service.MarkDownService;
 import fr.florent.mjmaker.service.model.FieldSetElement;
 import fr.florent.mjmaker.service.model.TextElement;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;
@@ -23,6 +26,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 public class FieldSetElementAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private final MarkDownService markDownService = MarkDownService.getInstance();
 
     private static final String TAG = FieldSetElementAdapter.class.getName();
 
@@ -82,7 +87,9 @@ public class FieldSetElementAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 TextElement textElement = (TextElement) element.getElement();
                 switch (state) {
                     case VIEW:
-                        AndroidLayoutUtil.setTextViewText(view, R.id.tv_text, textElement.getText());
+
+                        Spanned text = Html.fromHtml(markDownService.parseMarkDown(textElement.getText()));
+                        AndroidLayoutUtil.setTextViewText(view, R.id.tv_text, text);
                         view.findViewById(R.id.tv_text).setVisibility(View.VISIBLE);
                         view.findViewById(R.id.ll_editeur).setVisibility(View.GONE);
                         view.findViewById(R.id.layout_actions).setVisibility(View.GONE);
@@ -186,7 +193,6 @@ public class FieldSetElementAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             }
 
         }
-
 
         public ViewHolder(View v, int viewType) {
             super(v);

@@ -158,6 +158,4 @@ public class FieldSetAdapter extends AbstractLinearAdapter<FieldSetScenario> {
         }
     }
 
-
-
 }

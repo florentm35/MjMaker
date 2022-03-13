@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.text.Editable;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,10 @@ public abstract class AndroidLayoutUtil {
     }
 
     public static void setTextViewText(View view, int id, String text) {
+        ((TextView) view.findViewById(id)).setText(text != null ? text : "");
+    }
+
+    public static void setTextViewText(View view, int id, Spanned text) {
         ((TextView) view.findViewById(id)).setText(text != null ? text : "");
     }
 
