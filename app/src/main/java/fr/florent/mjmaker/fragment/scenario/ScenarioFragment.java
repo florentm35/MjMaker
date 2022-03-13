@@ -222,4 +222,9 @@ public class ScenarioFragment extends AbstractFragment {
             }
         });
     }
+
+    @Override
+    public boolean showBack() {
+        return true;
+    }
 }

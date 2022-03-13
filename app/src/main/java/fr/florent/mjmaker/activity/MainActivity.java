@@ -34,7 +34,11 @@ public class MainActivity extends AppCompatActivity {
 
     private Stack<AbstractFragment> callStack = new Stack<>();
 
+    private AbstractFragment currentFragment;
+
     private Map<Integer, ToolBarItem> menuItem;
+
+    private boolean isBack = false;
 
     /**
      * {@inheritDoc}
@@ -104,11 +108,15 @@ public class MainActivity extends AppCompatActivity {
         fragment.setBackHandler(this::back);
         fragment.setRedirect(this::redirect);
         fragment.setUpdateToolBarHandler(() -> this.updateToolBar(fragment));
+
+        currentFragment = fragment;
+
         // Add toolbar item from fragment
         updateToolBar(fragment);
 
         // Add fragment to the stack
         callStack.push(fragment);
+
 
         // Load the fragment
         loadFragment(R.id.body, fragment);
@@ -119,6 +127,12 @@ public class MainActivity extends AppCompatActivity {
         menuItem = fragment.getToolbarItem()
                 .stream()
                 .collect(Collectors.toMap(t -> View.generateViewId(), Function.identity()));
+
+        if(!fragment.showBack()) {
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.material_menu);
+        } else {
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.material_back);
+        }
         // Update the toolbar item
         invalidateOptionsMenu();
     }
@@ -174,7 +188,12 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.material_menu);
+
+            if(currentFragment == null || !currentFragment.showBack()) {
+                getSupportActionBar().setHomeAsUpIndicator(R.drawable.material_menu);
+            } else {
+                getSupportActionBar().setHomeAsUpIndicator(R.drawable.material_back);
+            }
             getSupportActionBar().setTitle("");
         }
     }
@@ -207,7 +226,11 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                changeMenuVisibility();
+                if(currentFragment == null || !currentFragment.showBack()) {
+                    changeMenuVisibility();
+                } else {
+                    back();
+                }
                 break;
             default:
                 // Execute toolbar item handler from fragment

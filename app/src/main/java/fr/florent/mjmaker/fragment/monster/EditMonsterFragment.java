@@ -72,4 +72,8 @@ public class EditMonsterFragment extends AbstractFragment {
         backHandler.back();
     }
 
+    @Override
+    public boolean showBack() {
+        return true;
+    }
 }

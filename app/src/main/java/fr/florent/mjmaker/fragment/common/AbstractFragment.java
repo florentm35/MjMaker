@@ -41,4 +41,7 @@ public abstract class AbstractFragment extends Fragment {
         return Collections.EMPTY_LIST;
     }
 
+    public boolean showBack() {
+        return false;
+    }
 }
