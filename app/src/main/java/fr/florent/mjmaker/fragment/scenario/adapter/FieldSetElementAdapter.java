@@ -88,7 +88,7 @@ public class FieldSetElementAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 switch (state) {
                     case VIEW:
 
-                        Spanned text = Html.fromHtml(markDownService.parseMarkDown(textElement.getText()));
+                        Spanned text = Html.fromHtml(markDownService.parseMarkDown(textElement.getText()), Html.FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM);
                         AndroidLayoutUtil.setTextViewText(view, R.id.tv_text, text);
                         view.findViewById(R.id.tv_text).setVisibility(View.VISIBLE);
                         view.findViewById(R.id.ll_editeur).setVisibility(View.GONE);
