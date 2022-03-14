@@ -24,7 +24,8 @@
 		 	- Redirection edit
 			- Affichage fullscreen en modal ?
 	- Generation PDF + export one drive ?
-- Gestion monstre / pnj
+- Gestion entité : monstre / pnj / sort / équipement
+	- Template markdown + variable (Type : Entity, Thème, text et number)  ?
 - Création de maps
 		- Ajout de légende
 		- Case à case
@@ -34,3 +35,5 @@
 - GED One drive ?
 	
 ============================================================
+- Externaliser dans un composant SelectList avec filtre
+- Externaliser dans un composant l'éditeur markdown
