@@ -1,4 +1,4 @@
-package fr.florent.mjmaker.fragment.monster;
+package fr.florent.mjmaker.fragment.entity;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,7 +14,7 @@ import fr.florent.mjmaker.fragment.common.menu.EnumScreen;
 import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
 import fr.florent.mjmaker.service.repository.EntityRepositoryService;
 
-public class ListMonsterFragment extends AbstractFragment {
+public class ListEntityFragment extends AbstractFragment {
 
     private final EntityRepositoryService monsterService = EntityRepositoryService.getInstance();
 
@@ -32,12 +32,18 @@ public class ListMonsterFragment extends AbstractFragment {
                         .label("add_monster")
                         .handler(this::redirectToEditMonster)
                         .icone(R.drawable.material_add)
+                        .build(),
+                ToolBarItem.builder()
+                        .label("Template")
+                        .handler(this::redirectToListTemplate)
                         .build()
         );
     }
 
     public void redirectToEditMonster() {
-
         redirect.apply(EnumScreen.EDIT_MONSTER, null);
+    }
+    public void redirectToListTemplate() {
+        redirect.apply(EnumScreen.LIST_ENTITY_TEMPLATE, null);
     }
 }

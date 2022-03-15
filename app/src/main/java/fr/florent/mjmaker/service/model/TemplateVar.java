@@ -16,13 +16,15 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id")
-@DatabaseTable(tableName = "entity")
-public class Entity {
+@DatabaseTable(tableName = "template_var")
+public class TemplateVar {
 
     @DatabaseField(generatedId = true)
     private Integer id;
-    @DatabaseField(columnName = "name")
-    private String name;
-    @DatabaseField(columnName = "idCategory")
-    private Integer idCategory;
+    @DatabaseField(columnName = "label")
+    private String label;
+    @DatabaseField(columnName = "type")
+    private String type;
+    @DatabaseField(foreign = true)
+    private Template template;
 }

@@ -1,4 +1,4 @@
-package fr.florent.mjmaker.fragment.monster;
+package fr.florent.mjmaker.fragment.entity;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,16 +15,16 @@ import fr.florent.mjmaker.service.model.Entity;
 import fr.florent.mjmaker.service.repository.EntityRepositoryService;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 
-public class EditMonsterFragment extends AbstractFragment {
+public class EditEntityFragment extends AbstractFragment {
 
-    private static final String TAG = EditMonsterFragment.class.getName();
+    private static final String TAG = EditEntityFragment.class.getName();
 
     private final EntityRepositoryService entityRepositoryService = EntityRepositoryService.getInstance();
 
 
     private Entity entity;
 
-    public EditMonsterFragment(Object... params) {
+    public EditEntityFragment(Object... params) {
         if (params != null && params.length > 0) {
             entity = entityRepositoryService.findBydId((Integer) params[0]);
         }

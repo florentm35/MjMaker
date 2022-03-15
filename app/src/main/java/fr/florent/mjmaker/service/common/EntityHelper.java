@@ -9,6 +9,8 @@ import fr.florent.mjmaker.service.model.FieldSetScenario;
 import fr.florent.mjmaker.service.model.Game;
 import fr.florent.mjmaker.service.model.Entity;
 import fr.florent.mjmaker.service.model.Scenario;
+import fr.florent.mjmaker.service.model.Template;
+import fr.florent.mjmaker.service.model.TemplateVar;
 import fr.florent.mjmaker.service.model.TextElement;
 import fr.florent.mjmaker.service.model.Theme;
 
@@ -27,6 +29,8 @@ public abstract class EntityHelper {
             FieldSetScenario.class,
             FieldSetElement.class,
             EntityElement.class,
-            TextElement.class
+            TextElement.class,
+            Template.class,
+            TemplateVar.class
     );
 }

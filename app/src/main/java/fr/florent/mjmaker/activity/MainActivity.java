@@ -23,8 +23,9 @@ import fr.florent.mjmaker.fragment.common.AbstractFragment;
 import fr.florent.mjmaker.fragment.common.menu.EnumScreen;
 import fr.florent.mjmaker.fragment.common.menu.MenuFragment;
 import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
-import fr.florent.mjmaker.fragment.monster.EditMonsterFragment;
-import fr.florent.mjmaker.fragment.monster.ListMonsterFragment;
+import fr.florent.mjmaker.fragment.entity.EditEntityFragment;
+import fr.florent.mjmaker.fragment.entity.ListEntityFragment;
+import fr.florent.mjmaker.fragment.entity.template.ListTemplateFragment;
 import fr.florent.mjmaker.fragment.scenario.ListScenarioFragment;
 import fr.florent.mjmaker.fragment.scenario.ScenarioFragment;
 
@@ -66,11 +67,11 @@ public class MainActivity extends AppCompatActivity {
         // init the Fragment
         AbstractFragment fragment = null;
         switch (screen) {
-            case LIST_MONSTER:
-                fragment = new ListMonsterFragment();
+            case LIST_ENTITY:
+                fragment = new ListEntityFragment();
                 break;
             case EDIT_MONSTER:
-                fragment = new EditMonsterFragment(param);
+                fragment = new EditEntityFragment(param);
                 break;
             case LIST_CATEGORY:
                 fragment = new ListGameFragment();
@@ -80,6 +81,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case DETAIL_SCENARIO:
                 fragment = new ScenarioFragment(param);
+                break;
+            case LIST_ENTITY_TEMPLATE:
+                fragment = new ListTemplateFragment();
                 break;
             default:
                 Log.e(TAG, "Actions not found for " + screen.name());
