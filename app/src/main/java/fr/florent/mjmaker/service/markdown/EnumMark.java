@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 public enum EnumMark {
-    BOLD("**"), ITALIC("*"), UNDERLINE("__"), STRICKETHROUGH("~~");
+    BOLD("**"), ITALIC("*"), STRICKETHROUGH("~~");
 
     @Getter
     private final String makdownTag;

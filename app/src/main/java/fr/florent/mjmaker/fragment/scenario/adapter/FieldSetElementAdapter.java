@@ -116,7 +116,6 @@ public class FieldSetElementAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         ExtendedEditText editText = view.findViewById(R.id.et_text);
                         view.findViewById(R.id.bold).setOnClickListener((v -> applyMarkdownTag(EnumMark.BOLD,editText)));
                         view.findViewById(R.id.italic).setOnClickListener((v -> applyMarkdownTag(EnumMark.ITALIC,editText)));
-                        view.findViewById(R.id.underline).setOnClickListener((v -> applyMarkdownTag(EnumMark.UNDERLINE,editText)));
                         view.findViewById(R.id.strikethrough).setOnClickListener((v -> applyMarkdownTag(EnumMark.STRICKETHROUGH,editText)));
 
                         view.findViewById(R.id.info).setOnClickListener((v)-> openModalInfo());

@@ -64,12 +64,6 @@
                     android:src="@drawable/material_italic" />
 
                 <ImageButton
-                    android:id="@+id/underline"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/material_underline" />
-
-                <ImageButton
                     android:id="@+id/strikethrough"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

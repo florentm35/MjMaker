@@ -33,7 +33,9 @@ public class MarkDownService {
                 .extensions(extensions)
                 .build();
         Node document = parser.parse(text);
-        HtmlRenderer renderer = HtmlRenderer.builder().build();
+        HtmlRenderer renderer = HtmlRenderer.builder()
+                .extensions(extensions)
+                .build();
         return renderer.render(document);
     }
 

@@ -25,6 +25,7 @@ import fr.florent.mjmaker.fragment.common.menu.MenuFragment;
 import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
 import fr.florent.mjmaker.fragment.entity.EditEntityFragment;
 import fr.florent.mjmaker.fragment.entity.ListEntityFragment;
+import fr.florent.mjmaker.fragment.entity.template.EditTemplateFragment;
 import fr.florent.mjmaker.fragment.entity.template.ListTemplateFragment;
 import fr.florent.mjmaker.fragment.scenario.ListScenarioFragment;
 import fr.florent.mjmaker.fragment.scenario.ScenarioFragment;
@@ -84,6 +85,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case LIST_ENTITY_TEMPLATE:
                 fragment = new ListTemplateFragment();
+                break;
+            case EDIT_ENTITY_TEMPLATE:
+                fragment = new EditTemplateFragment(param);
                 break;
             default:
                 Log.e(TAG, "Actions not found for " + screen.name());
