@@ -29,6 +29,8 @@ android {
     sourceSets {
         main {
             res.srcDirs = ['src/main/res',
+                           'src/main/res/values',
+                           'src/main/res/layouts/component',
                            'src/main/res/layouts/category',
                            'src/main/res/layouts/common',
                            'src/main/res/layouts/entity',

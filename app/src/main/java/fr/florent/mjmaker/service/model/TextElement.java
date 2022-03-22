@@ -9,13 +9,15 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(of = "fieldSetElement")
+@EqualsAndHashCode(of = "id")
+@ToString
 @DatabaseTable(tableName = "text_element")
 public class TextElement implements FieldSetElement.Element {
 

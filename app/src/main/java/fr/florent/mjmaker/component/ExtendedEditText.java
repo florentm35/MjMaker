@@ -17,44 +17,14 @@ public class ExtendedEditText extends androidx.appcompat.widget.AppCompatEditTex
 
     public ExtendedEditText(Context ctx) {
         super(ctx);
-        disableContextMenu();
     }
 
     public ExtendedEditText(Context ctx, AttributeSet attrs) {
         super(ctx, attrs);
-        disableContextMenu();
     }
 
     public ExtendedEditText(Context ctx, AttributeSet attrs, int defStyle) {
         super(ctx, attrs, defStyle);
-        disableContextMenu();
-    }
-
-    public void disableContextMenu() {
-        this.setCustomSelectionActionModeCallback(new ActionMode.Callback() {
-            @Override
-            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                //to keep the text selection capability available ( selection cursor)
-                return true;
-            }
-
-            @Override
-            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                //to prevent the menu from appearing
-                menu.clear();
-                return false;
-            }
-
-            @Override
-            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-                return false;
-            }
-
-            @Override
-            public void onDestroyActionMode(ActionMode mode) {
-
-            }
-        });
     }
 
     @Override

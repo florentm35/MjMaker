@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 
 import fr.florent.mjmaker.R;
 import fr.florent.mjmaker.component.ExtendedEditText;
+import fr.florent.mjmaker.component.MarkdownEditor;
 import fr.florent.mjmaker.fragment.scenario.ScenarioFragment;
 import fr.florent.mjmaker.service.markdown.EnumMark;
 import fr.florent.mjmaker.service.markdown.MarkDownService;
@@ -96,34 +97,21 @@ public class FieldSetElementAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         Spanned text = Html.fromHtml(markDownService.parseMarkDown(textElement.getText()), Html.FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM);
                         AndroidLayoutUtil.setTextViewText(view, R.id.tv_text, text);
                         view.findViewById(R.id.tv_text).setVisibility(View.VISIBLE);
-                        view.findViewById(R.id.ll_editeur).setVisibility(View.GONE);
-                        view.findViewById(R.id.layout_actions).setVisibility(View.GONE);
+                        view.findViewById(R.id.mde_text).setVisibility(View.GONE);
                         break;
                     case EDIT:
-                        // Clear the text changed listener before init value
-                        AndroidLayoutUtil.clearExtendedEditTextTextChange(view, R.id.et_text);
-                        AndroidLayoutUtil.setTextViewText(view, R.id.et_text, textElement.getText());
-                        AndroidLayoutUtil.setExtendedEditTextTextChange(view, R.id.et_text, (value) -> {
+                        Log.d(TAG, "onBindViewHolder: Edit mode "+textElement);
+                        MarkdownEditor editor = view.findViewById(R.id.mde_text);
+                        editor.setText(textElement.getText());
+                        editor.setOnTextChanged((value) -> {
                             Log.d(TAG, String.format("old value : %s, new value : %s", textElement.getText(), value));
                             textElement.setText(value);
                             handler.update(EnumAction.UPDATE, element);
                         });
+                        editor.setDeleteHandler(() -> handler.update(EnumAction.DELETE, element));
 
-
-                        view.findViewById(R.id.delete).setOnClickListener((v -> handler.update(EnumAction.DELETE, element)));
-
-                        // Markdown editor button
-                        ExtendedEditText editText = view.findViewById(R.id.et_text);
-                        view.findViewById(R.id.bold).setOnClickListener((v -> applyMarkdownTag(EnumMark.BOLD,editText)));
-                        view.findViewById(R.id.italic).setOnClickListener((v -> applyMarkdownTag(EnumMark.ITALIC,editText)));
-                        view.findViewById(R.id.strikethrough).setOnClickListener((v -> applyMarkdownTag(EnumMark.STRICKETHROUGH,editText)));
-
-                        view.findViewById(R.id.info).setOnClickListener((v)-> openModalInfo());
-
-                        view.findViewById(R.id.ll_editeur).setVisibility(View.VISIBLE);
                         view.findViewById(R.id.tv_text).setVisibility(View.GONE);
-                        view.findViewById(R.id.layout_actions).setVisibility(View.VISIBLE);
-
+                        view.findViewById(R.id.mde_text).setVisibility(View.VISIBLE);
                         break;
                 }
 
@@ -134,35 +122,6 @@ public class FieldSetElementAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 throw new RuntimeException("Not implemented");
         }
 
-    }
-
-    private void openModalInfo() {
-
-        Resources res = context.getResources();
-        InputStream is = res.openRawResource(R.raw.markdown_references);
-
-        String text = new BufferedReader(
-                new InputStreamReader(is, StandardCharsets.UTF_8))
-                .lines()
-                .collect(Collectors.joining("\n"));
-
-        AndroidLayoutUtil.openModalInfo(context, text);
-    }
-
-    private void applyMarkdownTag(EnumMark mark, ExtendedEditText editText) {
-        int startSelection=editText.getSelectionStart();
-        int endSelection=editText.getSelectionEnd();
-
-        String text = editText.getText().toString();
-
-        StringBuilder str = new StringBuilder(text.substring(0, startSelection));
-        str.append(mark.getMakdownTag());
-        str.append(text.substring(startSelection, endSelection));
-        str.append(mark.getMakdownTag());
-        str.append(text.substring(endSelection));
-
-        editText.setText(str.toString());
-        editText.setSelection(startSelection+mark.getMakdownTag().length());
     }
 
     @Override
