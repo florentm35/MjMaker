@@ -46,7 +46,6 @@ public class FieldSetElementAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         UPDATE, DELETE;
     }
 
-
     @Setter
     ScenarioFragment.EnumState state;
 

@@ -21,11 +21,13 @@
                 android:id="@+id/et_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textMultiLine"
-                android:minEms="3" />
+                android:inputType="textMultiLine" />
         </LinearLayout>
     </LinearLayout>
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+    <!-- We used a Relative and not a ConstraintLayout because and render error occured
+     on RecyclerView-->
+    <RelativeLayout
         android:id="@+id/layout_actions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,11 +37,10 @@
             android:id="@+id/right_action"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:orientation="horizontal"
             android:paddingStart="5dp"
-            android:paddingEnd="5dp"
-            app:layout_constraintEnd_toEndOf="@id/layout_actions"
-            app:layout_constraintTop_toTopOf="@id/layout_actions">
+            android:paddingEnd="5dp">
 
             <ImageButton
                 android:id="@+id/info"
@@ -62,10 +63,9 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:paddingStart="5dp"
-            android:paddingEnd="5dp"
-            app:layout_constraintStart_toStartOf="@id/layout_actions"
-            app:layout_constraintTop_toTopOf="@id/layout_actions">
+            android:paddingEnd="5dp">
 
             <ImageButton
                 android:id="@+id/bold"
@@ -85,7 +85,6 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/material_strikethrough" />
 
-
         </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 </LinearLayout>
