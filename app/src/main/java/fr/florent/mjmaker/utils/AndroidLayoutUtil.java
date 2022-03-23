@@ -60,6 +60,14 @@ public abstract class AndroidLayoutUtil {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
 
+    public static Spanned createHtmlText(String text) {
+        return Html.fromHtml(text,
+                Html.FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM
+                        | Html.FROM_HTML_SEPARATOR_LINE_BREAK_BLOCKQUOTE
+                        | Html.FROM_HTML_OPTION_USE_CSS_COLORS
+        );
+    }
+
 
     public static void openModalAskText(Context context,
                                         String title,
@@ -110,21 +118,14 @@ public abstract class AndroidLayoutUtil {
         // Set the dialog title
         builder.setTitle(question)
                 // Set the action buttons
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-
-                        if (onValidate.action(true)) {
-                            dialog.cancel();
-                        }
+                .setPositiveButton("OK", (dialog, id) -> {
+                    if (onValidate.action(true)) {
+                        dialog.cancel();
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        if (onValidate.action(false)) {
-                            dialog.cancel();
-                        }
+                .setNegativeButton("Cancel", (dialog, id) -> {
+                    if (onValidate.action(false)) {
+                        dialog.cancel();
                     }
                 });
 
@@ -133,12 +134,12 @@ public abstract class AndroidLayoutUtil {
     }
 
     public static void openModalInfo(Context context,
-                                         String text
+                                     String text
     ) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View view = LayoutInflater.from(context).inflate(R.layout.modal_text, null);
 
-        AndroidLayoutUtil.setTextViewText(view, R.id.tv_text, Html.fromHtml(text, Html.FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM));
+        AndroidLayoutUtil.setTextViewText(view, R.id.tv_text, createHtmlText(text));
 
         builder.setView(view);
 
@@ -175,7 +176,7 @@ public abstract class AndroidLayoutUtil {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(oldText == null || !oldText.equals(charSequence.toString())) {
+                if (oldText == null || !oldText.equals(charSequence.toString())) {
                     onChange.action(charSequence.toString());
                 }
             }

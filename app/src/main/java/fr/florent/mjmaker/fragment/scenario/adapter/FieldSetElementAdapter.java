@@ -93,13 +93,15 @@ public class FieldSetElementAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 TextElement textElement = (TextElement) element.getElement();
                 switch (state) {
                     case VIEW:
-                        Spanned text = Html.fromHtml(markDownService.parseMarkDown(textElement.getText()), Html.FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM);
+                        Spanned text = AndroidLayoutUtil.createHtmlText(
+                                markDownService.parseMarkDown(textElement.getText())
+                        );
                         AndroidLayoutUtil.setTextViewText(view, R.id.tv_text, text);
                         view.findViewById(R.id.tv_text).setVisibility(View.VISIBLE);
                         view.findViewById(R.id.mde_text).setVisibility(View.GONE);
                         break;
                     case EDIT:
-                        Log.d(TAG, "onBindViewHolder: Edit mode "+textElement);
+                        Log.d(TAG, "onBindViewHolder: Edit mode " + textElement);
                         MarkdownEditor editor = view.findViewById(R.id.mde_text);
                         editor.setText(textElement.getText());
                         editor.setOnTextChanged((value) -> {
