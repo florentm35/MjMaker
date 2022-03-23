@@ -54,7 +54,9 @@ public abstract class AbstractLinearAdapter<T> extends RecyclerView.Adapter<Recy
                 LayoutInflater.from(context).inflate(getLayout(viewType), parent, false));
     }
 
-    public abstract void onBindViewHolder(View view, int position);
+    public void onBindViewHolder(View view, int position) {
+        throw new RuntimeException("Not implemented");
+    }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {

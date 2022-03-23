@@ -4,10 +4,12 @@ import android.content.Context;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,8 +29,6 @@ import lombok.Setter;
 
 public class FieldSetAdapter extends AbstractLinearAdapter<FieldSetScenario> {
 
-    FieldSetElementRepositoryService fieldSetElementRepositoryService = FieldSetElementRepositoryService.getInstance();
-
     private static final int ID_MENU_TEXT = View.generateViewId();
     private static final int ID_MENU_ENTITY = View.generateViewId();
 
@@ -37,19 +37,30 @@ public class FieldSetAdapter extends AbstractLinearAdapter<FieldSetScenario> {
         ADD_ELEMENT, UPDATE_ELEMENT, DELETE_ELEMENT;
     }
 
+    public interface IStartDragListener {
+        void requestDrag(RecyclerView.ViewHolder viewHolder);
+    }
+
     public interface IEventAction {
         void action(EnumAction action, FieldSetScenario fieldSetScenario, FieldSetElement element);
     }
 
     private final IEventAction handler;
 
+    private final IStartDragListener dragEvent;
+
     @Setter
     private ScenarioFragment.EnumState state;
 
-    public FieldSetAdapter(Context context, List<FieldSetScenario> values, ScenarioFragment.EnumState state, IEventAction handler) {
+    public FieldSetAdapter(Context context,
+                           List<FieldSetScenario> values,
+                           ScenarioFragment.EnumState state,
+                           IEventAction handler,
+                           IStartDragListener dragEvent) {
         super(context, values);
         this.handler = handler;
         this.state = state;
+        this.dragEvent = dragEvent;
     }
 
     @Override
@@ -58,13 +69,23 @@ public class FieldSetAdapter extends AbstractLinearAdapter<FieldSetScenario> {
     }
 
     @Override
-    public void onBindViewHolder(View view, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        View view = holder.itemView;
+
         FieldSetScenario item = values.get(position);
 
         AndroidLayoutUtil.setTextViewText(view, R.id.tv_title, item.getTitle());
 
-        RecyclerView recyclerView = view.findViewById(R.id.list_element);
+        ConstraintLayout headerLayout = view.findViewById(R.id.header);
 
+        headerLayout.setOnTouchListener((v, event) -> {
+            if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                dragEvent.requestDrag(holder);
+            }
+            return false;
+        });
+
+        RecyclerView recyclerView = view.findViewById(R.id.list_element);
         FieldSetElementAdapter adapter;
         if (recyclerView.getAdapter() == null) {
             recyclerView.setLayoutManager(new LinearLayoutManager(context));

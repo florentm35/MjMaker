@@ -47,6 +47,8 @@ public class ScenarioFragment extends AbstractFragment {
 
     private EnumState state;
 
+    private ItemTouchHelper itemTouchHelper;
+
     public ScenarioFragment(Object[] param) {
         super();
         if (param != null) {
@@ -75,11 +77,21 @@ public class ScenarioFragment extends AbstractFragment {
         RecyclerView recyclerView = view.findViewById(R.id.list_fieldset);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        adapter = new FieldSetAdapter(getContext(), DataBaseUtil.convertForeignCollectionToList(scenario.getLstFieldSet()), state, this::onFieldSetAction);
+        adapter = new FieldSetAdapter(getContext(),
+                DataBaseUtil.convertForeignCollectionToList(scenario.getLstFieldSet()),
+                state,
+                this::onFieldSetAction,
+                this::requestDrag);
         recyclerView.setAdapter(adapter);
 
-        ItemTouchHelper itemTouchHelper = getItemTouchHelper();
-        itemTouchHelper.attachToRecyclerView(recyclerView);
+         itemTouchHelper = getItemTouchHelper();
+         itemTouchHelper.attachToRecyclerView(recyclerView);
+    }
+
+    public void requestDrag(RecyclerView.ViewHolder viewHolder) {
+        if(itemTouchHelper!= null && state == EnumState.EDIT) {
+            itemTouchHelper.startDrag(viewHolder);
+        }
     }
 
     private void onFieldSetAction(FieldSetAdapter.EnumAction action, FieldSetScenario fieldSetScenario, FieldSetElement element) {
@@ -195,6 +207,17 @@ public class ScenarioFragment extends AbstractFragment {
     private ItemTouchHelper getItemTouchHelper() {
         return new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(
                 ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END, 0) {
+
+            @Override
+            public boolean isLongPressDragEnabled() {
+                return false;
+            }
+
+            @Override
+            public boolean isItemViewSwipeEnabled() {
+                return false;
+            }
+
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
 
