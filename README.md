@@ -35,5 +35,5 @@
 - GED One drive ?
 	
 ============================================================
-- Externaliser dans un composant SelectList avec filtre
+- Externaliser dans un composant SelectList avec filtre X
 - Externaliser dans un composant l'éditeur markdown X
