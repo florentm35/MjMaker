@@ -15,7 +15,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(of = "fieldSetElement")
+@EqualsAndHashCode(of = "id")
 @DatabaseTable(tableName = "entity_element")
 public class EntityElement implements FieldSetElement.Element {
 
