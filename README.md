@@ -36,4 +36,4 @@
 	
 ============================================================
 - Externaliser dans un composant SelectList avec filtre
-- Externaliser dans un composant l'éditeur markdown
+- Externaliser dans un composant l'éditeur markdown X
