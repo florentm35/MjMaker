@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MjMaker</string>
+    <string name="show_menu">Afficher menu</string>
+    <string name="settings">Paramètre</string>
+    <string name="name_label">Nom :</string>
+    <string name="name_header">Nom</string>
+    <string name="category_management">Gestion de categorie</string>
+    <string name="theme">Thème</string>
+    <string name="game">Jeu</string>
+    <string name="scenario_manager">Gesionnaire de scénario</string>
+    <string name="title">Titre</string>
+    <string name="level">Niveau</string>
+    <string name="variable">Variable</string>
+    <string name="manage_entity">Gestionnaire d\'entité</string>
+</resources>

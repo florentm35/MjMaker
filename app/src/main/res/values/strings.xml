@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">MjMaker</string>
-    <string name="manage_monster">Monster manager</string>
+    <string name="manage_entity">Entity manager</string>
     <string name="show_menu">Show menu</string>
     <string name="settings">Settings</string>
     <string name="name_label">Name :</string>
@@ -11,4 +11,5 @@
     <string name="scenario_manager">Scenario manager</string>
     <string name="title">Title</string>
     <string name="level">Level</string>
+    <string name="variable">Variable</string>
 </resources>
