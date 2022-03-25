@@ -22,6 +22,9 @@ import fr.florent.mjmaker.R;
 import fr.florent.mjmaker.service.markdown.EnumMark;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 
+/**
+ * Markdown editor component
+ */
 public class MarkdownEditor extends LinearLayout  {
 
     public interface IDeleteEvent {

@@ -11,7 +11,7 @@ import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
 import lombok.Setter;
 
 /**
- * Abstract fragment app
+ * Abstract app fragment
  */
 public abstract class AbstractFragment extends Fragment {
 
@@ -23,12 +23,21 @@ public abstract class AbstractFragment extends Fragment {
         void updateToolBar();
     }
 
+    /**
+     * Return to the previous screen
+     */
     @Setter
     protected IBackHandler backHandler;
 
+    /**
+     * Notify to update the toolbar
+     */
     @Setter
     protected IUpdateToolBarHandler updateToolBarHandler;
-    
+
+    /**
+     * Perform to redirect to the given screen
+     */
     @Setter
     protected BiFunction<EnumScreen, Object[], Void> redirect;
 
@@ -41,6 +50,11 @@ public abstract class AbstractFragment extends Fragment {
         return Collections.EMPTY_LIST;
     }
 
+    /**
+     * If true replace the button menu, by back button in toolbar
+     *
+     * @return True show back action
+     */
     public boolean showBack() {
         return false;
     }

@@ -7,4 +7,9 @@ public class EditTemplateFragment extends AbstractFragment {
     public EditTemplateFragment(Object... params) {
 
     }
+
+    @Override
+    public boolean showBack() {
+        return true;
+    }
 }

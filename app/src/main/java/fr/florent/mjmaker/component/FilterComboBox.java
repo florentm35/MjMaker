@@ -21,6 +21,10 @@ import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+/**
+ * Filter combo box component
+ * @param <T>
+ */
 public class FilterComboBox<T> extends androidx.appcompat.widget.AppCompatAutoCompleteTextView{
 
     public interface IEventSelect<T> {
@@ -40,6 +44,11 @@ public class FilterComboBox<T> extends androidx.appcompat.widget.AppCompatAutoCo
     }
 
 
+    /**
+     * Affect the items to the list
+     *
+     * @param lstItem The items
+     */
    public void setItems(List<ItemSelect<T>> lstItem) {
        AutoCompleteAdapter<T> adapter = new AutoCompleteAdapter<T>(getContext(),
                R.layout.item_string_row,
@@ -54,6 +63,11 @@ public class FilterComboBox<T> extends androidx.appcompat.widget.AppCompatAutoCo
         super.setOnItemClickListener(l);
     }
 
+    /**
+     * Set the select callback item
+     *
+     * @param event The callback
+     */
     public void setOnItemClickListener(IEventSelect<T> event) {
         this.setOnItemClickListener((adapterView, view1, i, l) -> {
             ItemSelect<T> item = (ItemSelect<T>) adapterView.getItemAtPosition(i);
@@ -84,8 +98,11 @@ public class FilterComboBox<T> extends androidx.appcompat.widget.AppCompatAutoCo
         private final String label;
     }
 
-
-    private class AutoCompleteAdapter<T> extends ArrayAdapter<ItemSelect<T>> {
+    /**
+     * Simple text adapter
+     * @param <T>
+     */
+    private static class AutoCompleteAdapter<T> extends ArrayAdapter<ItemSelect<T>> {
 
         private final Context context;
         private final int resourceId;
@@ -100,9 +117,8 @@ public class FilterComboBox<T> extends androidx.appcompat.widget.AppCompatAutoCo
             suggestions = new ArrayList<>();
         }
 
-        @NonNull
         @Override
-        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        public View getView(int position, View convertView, ViewGroup parent) {
             View view = convertView;
             if (convertView == null) {
                 LayoutInflater inflater = LayoutInflater.from(context);
@@ -114,7 +130,6 @@ public class FilterComboBox<T> extends androidx.appcompat.widget.AppCompatAutoCo
             return view;
         }
 
-        @Nullable
         @Override
         public ItemSelect<T> getItem(int position) {
             return items.get(position);
@@ -130,7 +145,6 @@ public class FilterComboBox<T> extends androidx.appcompat.widget.AppCompatAutoCo
             return position;
         }
 
-        @NonNull
         @Override
         public Filter getFilter() {
             return filter;

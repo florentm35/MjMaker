@@ -30,29 +30,27 @@ import fr.florent.mjmaker.fragment.entity.template.ListTemplateFragment;
 import fr.florent.mjmaker.fragment.scenario.ListScenarioFragment;
 import fr.florent.mjmaker.fragment.scenario.ScenarioFragment;
 
+/**
+ * Main application controller
+ */
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getName();
 
-    private Stack<AbstractFragment> callStack = new Stack<>();
+    private final Stack<AbstractFragment> callStack = new Stack<>();
 
     private AbstractFragment currentFragment;
 
     private Map<Integer, ToolBarItem> menuItem;
 
-    private boolean isBack = false;
-
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_main);
-            // Load the side menu
-            loadFragment(R.id.menu, new MenuFragment(m -> switchScreen(m, true)));
-            // Load the default toolbar
-            loadToolBar();
+        setContentView(R.layout.activity_main);
+        // Load the side menu
+        loadFragment(R.id.menu, new MenuFragment(m -> switchScreen(m, true)));
+        // Load the default toolbar
+        loadToolBar();
     }
 
     /**
@@ -125,25 +123,11 @@ public class MainActivity extends AppCompatActivity {
         // Add fragment to the stack
         callStack.push(fragment);
 
-
         // Load the fragment
         loadFragment(R.id.body, fragment);
     }
 
-    private void updateToolBar(AbstractFragment fragment) {
-        // Add toolbar item from fragment
-        menuItem = fragment.getToolbarItem()
-                .stream()
-                .collect(Collectors.toMap(t -> View.generateViewId(), Function.identity()));
 
-        if(!fragment.showBack()) {
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.material_menu);
-        } else {
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.material_back);
-        }
-        // Update the toolbar item
-        invalidateOptionsMenu();
-    }
 
     /**
      * Call the previous fragment
@@ -197,13 +181,33 @@ public class MainActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-            if(currentFragment == null || !currentFragment.showBack()) {
+            if (currentFragment == null || !currentFragment.showBack()) {
                 getSupportActionBar().setHomeAsUpIndicator(R.drawable.material_menu);
             } else {
                 getSupportActionBar().setHomeAsUpIndicator(R.drawable.material_back);
             }
             getSupportActionBar().setTitle("");
         }
+    }
+
+    /**
+     * Refresh the menu toolbar from the configuration of given fragment
+     *
+     * @param fragment The fragment
+     */
+    private void updateToolBar(AbstractFragment fragment) {
+        // Add toolbar item from fragment
+        menuItem = fragment.getToolbarItem()
+                .stream()
+                .collect(Collectors.toMap(t -> View.generateViewId(), Function.identity()));
+
+        if (!fragment.showBack()) {
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.material_menu);
+        } else {
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.material_back);
+        }
+        // Update the toolbar item
+        invalidateOptionsMenu();
     }
 
     /**
@@ -234,7 +238,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                if(currentFragment == null || !currentFragment.showBack()) {
+                if (currentFragment == null || !currentFragment.showBack()) {
                     changeMenuVisibility();
                 } else {
                     back();

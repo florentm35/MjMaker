@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 
 /**
- * Extended edit text for better event text change manager
+ * Extended edit text for better event text change management
  */
 public class ExtendedEditText extends androidx.appcompat.widget.AppCompatEditText {
     private ArrayList<TextWatcher> mListeners = null;
@@ -49,6 +49,9 @@ public class ExtendedEditText extends androidx.appcompat.widget.AppCompatEditTex
         super.removeTextChangedListener(watcher);
     }
 
+    /**
+     * Remove all text listener
+     */
     public void clearTextChangedListeners() {
         if (mListeners != null) {
             for (TextWatcher watcher : mListeners) {

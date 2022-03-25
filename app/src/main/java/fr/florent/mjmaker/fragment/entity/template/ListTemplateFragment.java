@@ -92,4 +92,9 @@ public class ListTemplateFragment extends AbstractFragment {
         redirectToDetailScenario(template);
         return true;
     }
+
+    @Override
+    public boolean showBack() {
+        return true;
+    }
 }
