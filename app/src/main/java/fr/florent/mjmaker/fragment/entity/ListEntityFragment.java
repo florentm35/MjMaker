@@ -29,12 +29,12 @@ public class ListEntityFragment extends AbstractFragment {
     public List<ToolBarItem> getToolbarItem() {
         return Arrays.asList(
                 ToolBarItem.builder()
-                        .label("add_monster")
+                        .label(R.string.label_add_entity)
                         .handler(this::redirectToEditMonster)
                         .icone(R.drawable.material_add)
                         .build(),
                 ToolBarItem.builder()
-                        .label("Template")
+                        .label(R.string.label_template)
                         .handler(this::redirectToListTemplate)
                         .build()
         );
@@ -43,6 +43,7 @@ public class ListEntityFragment extends AbstractFragment {
     public void redirectToEditMonster() {
         redirect.apply(EnumScreen.EDIT_MONSTER, null);
     }
+
     public void redirectToListTemplate() {
         redirect.apply(EnumScreen.LIST_ENTITY_TEMPLATE, null);
     }

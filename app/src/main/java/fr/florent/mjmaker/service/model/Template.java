@@ -27,6 +27,8 @@ public class Template {
     private String name;
     @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Game game;
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
+    private Theme theme;
     @DatabaseField(columnName = "text")
     private String text;
 

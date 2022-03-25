@@ -10,8 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 
-import androidx.annotation.Nullable;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -25,7 +23,7 @@ import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 /**
  * Markdown editor component
  */
-public class MarkdownEditor extends LinearLayout  {
+public class MarkdownEditor extends LinearLayout {
 
     public interface IDeleteEvent {
         void action();
@@ -54,28 +52,30 @@ public class MarkdownEditor extends LinearLayout  {
 
         // Clear the text changed listener before init value
         AndroidLayoutUtil.clearExtendedEditTextTextChange(this, R.id.et_text);
-        Log.d(TAG, "onCreate: "+this);
+        Log.d(TAG, "onCreate: " + this);
         AndroidLayoutUtil.setTextViewText(this, R.id.et_text, "");
 
         // Markdown editor button
         ExtendedEditText editText = this.findViewById(R.id.et_text);
-        this.findViewById(R.id.bold).setOnClickListener((v -> applyMarkdownTag(EnumMark.BOLD,editText)));
-        this.findViewById(R.id.italic).setOnClickListener((v -> applyMarkdownTag(EnumMark.ITALIC,editText)));
-        this.findViewById(R.id.strikethrough).setOnClickListener((v -> applyMarkdownTag(EnumMark.STRICKETHROUGH,editText)));
+        this.findViewById(R.id.bold).setOnClickListener((v -> applyMarkdownTag(EnumMark.BOLD, editText)));
+        this.findViewById(R.id.italic).setOnClickListener((v -> applyMarkdownTag(EnumMark.ITALIC, editText)));
+        this.findViewById(R.id.strikethrough).setOnClickListener((v -> applyMarkdownTag(EnumMark.STRICKETHROUGH, editText)));
 
-        this.findViewById(R.id.info).setOnClickListener((v)-> openModalInfo());
-
+        this.findViewById(R.id.info).setOnClickListener(v -> openModalInfo());
+        boolean showDeleteBtn = true;
         if (attrs != null) {
-            boolean showDeleteBtn = attrs.getBoolean(R.styleable.MarkdownEditor_showDelete, true);
-            this.findViewById(R.id.delete).setVisibility(showDeleteBtn ? VISIBLE : GONE);
+            showDeleteBtn = attrs.getBoolean(R.styleable.MarkdownEditor_showDelete, true);
         }
+
+        this.findViewById(R.id.delete).setVisibility(showDeleteBtn ? VISIBLE : GONE);
+        this.findViewById(R.id.action_delimiter).setVisibility(showDeleteBtn ? VISIBLE : GONE);
 
     }
 
 
     private void applyMarkdownTag(EnumMark mark, ExtendedEditText editText) {
-        int startSelection=editText.getSelectionStart();
-        int endSelection=editText.getSelectionEnd();
+        int startSelection = editText.getSelectionStart();
+        int endSelection = editText.getSelectionEnd();
 
         String text = editText.getText().toString();
 
@@ -86,7 +86,7 @@ public class MarkdownEditor extends LinearLayout  {
         str.append(text.substring(endSelection));
 
         editText.setText(str.toString());
-        editText.setSelection(startSelection+mark.getMakdownTag().length());
+        editText.setSelection(startSelection + mark.getMakdownTag().length());
     }
 
     private void openModalInfo() {
@@ -110,8 +110,8 @@ public class MarkdownEditor extends LinearLayout  {
     public void setOnTextChanged(AndroidLayoutUtil.ITextEvent handler) {
         this.handlerTextChanged = handler;
         AndroidLayoutUtil.clearExtendedEditTextTextChange(this, R.id.et_text);
-        if(handler != null) {
-            AndroidLayoutUtil.setExtendedEditTextTextChange(this, R.id.et_text, handler::action);
+        if (handler != null) {
+            AndroidLayoutUtil.setExtendedEditTextTextChange(this, R.id.et_text, handler);
         }
     }
 
@@ -122,8 +122,8 @@ public class MarkdownEditor extends LinearLayout  {
     public void setText(String text) {
         AndroidLayoutUtil.clearExtendedEditTextTextChange(this, R.id.et_text);
         AndroidLayoutUtil.setTextViewText(this, R.id.et_text, text);
-        if(handlerTextChanged != null) {
-            AndroidLayoutUtil.setExtendedEditTextTextChange(this, R.id.et_text, handlerTextChanged::action);
+        if (handlerTextChanged != null) {
+            AndroidLayoutUtil.setExtendedEditTextTextChange(this, R.id.et_text, handlerTextChanged);
         }
     }
 }

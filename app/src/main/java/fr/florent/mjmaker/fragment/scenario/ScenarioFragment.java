@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import fr.florent.mjmaker.R;
@@ -25,7 +24,6 @@ import fr.florent.mjmaker.service.model.FieldSetScenario;
 import fr.florent.mjmaker.service.model.Scenario;
 import fr.florent.mjmaker.service.repository.FieldSetElementRepositoryService;
 import fr.florent.mjmaker.service.repository.FieldSetScenarioRepositoryService;
-import fr.florent.mjmaker.service.repository.ScenarioRepositoryService;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 import fr.florent.mjmaker.utils.DataBaseUtil;
 
@@ -104,12 +102,12 @@ public class ScenarioFragment extends AbstractFragment {
                 break;
             case DELETE:
                 AndroidLayoutUtil.openModalQuestion(getContext(),
-                        "Did you want really delete this fieldset ?",
+                        getString(R.string.msg_ask_delete_fieldset),
                         (choice) -> {
                             if (choice) {
                                 fieldSetScenarioRepositoryService.delete(fieldSetScenario);
                                 adapter.removeItem(fieldSetScenario);
-                                AndroidLayoutUtil.showToast(getContext(), "Fieldset deleted");
+                                AndroidLayoutUtil.showToast(getContext(), getString(R.string.msg_fieldset_deleted));
                             }
                             return true;
                         });
@@ -126,13 +124,13 @@ public class ScenarioFragment extends AbstractFragment {
                 break;
             case DELETE_ELEMENT:
                 AndroidLayoutUtil.openModalQuestion(getContext(),
-                        "Did you want really delete this element ?",
+                        getString(R.string.msg_ask_delete_element),
                         (choice) -> {
                             if (choice) {
                                 fieldSetElementRepositoryService.delete(element);
                                 fieldSetScenarioRepositoryService.refresh(fieldSetScenario);
                                 adapter.updateItem(fieldSetScenario);
-                                AndroidLayoutUtil.showToast(getContext(), "Element deleted");
+                                AndroidLayoutUtil.showToast(getContext(), getString(R.string.msg_element_deleted));
                             }
                             return true;
                         });
@@ -146,19 +144,19 @@ public class ScenarioFragment extends AbstractFragment {
 
         if (state == EnumState.EDIT) {
             lstItem.add(ToolBarItem.builder()
-                    .label("New fieldset")
+                    .label(R.string.label_fieldset_new)
                     .handler(() -> editFieldSet(null))
                     .icone(R.drawable.material_add)
                     .build()
             );
 
             lstItem.add(ToolBarItem.builder()
-                    .label("View mode")
+                    .label(R.string.label_view_mode)
                     .handler(this::switchMode)
                     .build());
         } else {
             lstItem.add(ToolBarItem.builder()
-                    .label("Edit mode")
+                    .label(R.string.label_edit_mode)
                     .handler(this::switchMode)
                     .build());
         }
@@ -175,7 +173,7 @@ public class ScenarioFragment extends AbstractFragment {
     }
 
     private void editFieldSet(FieldSetScenario fieldSetScenario) {
-        AndroidLayoutUtil.openModalAskText(getContext(), "Set the name",
+        AndroidLayoutUtil.openModalAskText(getContext(), getString(R.string.msg_set_the_name),
                 fieldSetScenario != null ? fieldSetScenario.getTitle() : null,
                 (v) -> saveFieldSet(v, fieldSetScenario));
     }
@@ -194,7 +192,7 @@ public class ScenarioFragment extends AbstractFragment {
             fieldSetScenario.setOrder(scenario.getNextFieldSetScenarioOrder());
             fieldSetScenarioRepositoryService.save(fieldSetScenario);
             adapter.addItem(fieldSetScenario);
-            AndroidLayoutUtil.showToast(getContext(), "Fieldset created");
+            AndroidLayoutUtil.showToast(getContext(), getString(R.string.msg_fieldset_created));
         } else {
             fieldSetScenarioRepositoryService.update(fieldSetScenario);
             adapter.updateItem(fieldSetScenario);

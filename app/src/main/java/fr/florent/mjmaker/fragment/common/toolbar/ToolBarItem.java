@@ -24,10 +24,11 @@ public class ToolBarItem {
         void action();
     }
 
+
     /**
-     * The label toolbar
+     * The label
      */
-    String label;
+    int label;
 
     /**
      * The drawable ressource id

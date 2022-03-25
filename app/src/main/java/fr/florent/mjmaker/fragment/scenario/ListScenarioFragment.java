@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import fr.florent.mjmaker.R;
@@ -50,12 +51,12 @@ public class ListScenarioFragment extends AbstractFragment {
                 break;
             case DELETE:
                 AndroidLayoutUtil.openModalQuestion(getContext(),
-                        "Did you want really delete this scenario ?",
+                        getString(R.string.msg_ask_delete_scenario),
                         (choice) -> {
                             if (choice) {
                                 scenarioRepositoryService.delete(scenario);
                                 scenarioAdapter.removeItem(scenario);
-                                AndroidLayoutUtil.showToast(getContext(), "Scenario deleted");
+                                AndroidLayoutUtil.showToast(getContext(), getString(R.string.msg_scenario_deleted));
                             }
                             return true;
                         });
@@ -66,9 +67,9 @@ public class ListScenarioFragment extends AbstractFragment {
 
     @Override
     public List<ToolBarItem> getToolbarItem() {
-        return Arrays.asList(
+        return Collections.singletonList(
                 ToolBarItem.builder()
-                        .label("New scenario")
+                        .label(R.string.label_new_scenario)
                         .handler(this::initScenario)
                         .icone(R.drawable.material_add)
                         .build()
@@ -87,7 +88,7 @@ public class ListScenarioFragment extends AbstractFragment {
 
     private boolean saveScenario(Scenario scenario) {
         scenarioRepositoryService.save(scenario);
-        AndroidLayoutUtil.showToast(getContext(), "Scenario created");
+        AndroidLayoutUtil.showToast(getContext(), getString(R.string.msg_scenario_created));
         redirectToDetailScenario(scenario, ScenarioFragment.EnumState.EDIT);
         return true;
     }

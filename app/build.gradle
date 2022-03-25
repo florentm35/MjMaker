@@ -29,7 +29,6 @@ android {
     sourceSets {
         main {
             res.srcDirs = ['src/main/res',
-                           'src/main/res/values',
                            'src/main/res/layouts/component',
                            'src/main/res/layouts/category',
                            'src/main/res/layouts/common',
@@ -53,7 +52,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
 
     // ORMLite
-    implementation group: 'com.j256.ormlite', name: 'ormlite-android', version: '4.45'
+    implementation group: 'com.j256.ormlite', name: 'ormlite-android', version: '6.1'
 
     // Markdown
     implementation 'org.commonmark:commonmark:0.18.2'

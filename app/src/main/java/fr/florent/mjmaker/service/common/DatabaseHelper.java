@@ -53,7 +53,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase, com.j256.ormlite.support.ConnectionSource connectionSource) {
         try {
-            for (Class entityClass : EntityHelper.ENTITY_LIST) {
+            for (Class<?> entityClass : EntityHelper.ENTITY_LIST) {
                 TableUtils.createTable(connectionSource, entityClass);
             }
         } catch (SQLException e) {
@@ -66,7 +66,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, com.j256.ormlite.support.ConnectionSource connectionSource, int i, int i2) {
 
         try {
-            for (Class entityClass : EntityHelper.ENTITY_LIST) {
+            for (Class<?> entityClass : EntityHelper.ENTITY_LIST) {
                 TableUtils.dropTable(connectionSource, entityClass, true);
             }
         } catch (SQLException e) {
@@ -90,6 +90,5 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             throw new SQLRuntimeException(e);
         }
     }
-
 
 }

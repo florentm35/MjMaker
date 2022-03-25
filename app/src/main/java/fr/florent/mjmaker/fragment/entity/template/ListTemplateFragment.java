@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import fr.florent.mjmaker.R;
@@ -29,7 +30,6 @@ public class ListTemplateFragment extends AbstractFragment {
 
     private TemplateAdapter templateAdapter;
 
-    @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.list_layout, container, false);
@@ -51,12 +51,12 @@ public class ListTemplateFragment extends AbstractFragment {
                 break;
             case DELETE:
                 AndroidLayoutUtil.openModalQuestion(getContext(),
-                        "Did you want really delete this scenario ?",
+                        getString(R.string.msg_ask_delete_scenario),
                         (choice) -> {
                             if (choice) {
                                 templateRepositoryService.delete(template);
                                 templateAdapter.removeItem(template);
-                                AndroidLayoutUtil.showToast(getContext(), "Scenario deleted");
+                                AndroidLayoutUtil.showToast(getContext(), getString(R.string.msg_scenario_deleted));
                             }
                             return true;
                         });
@@ -67,9 +67,9 @@ public class ListTemplateFragment extends AbstractFragment {
 
     @Override
     public List<ToolBarItem> getToolbarItem() {
-        return Arrays.asList(
+        return Collections.singletonList(
                 ToolBarItem.builder()
-                        .label("New template")
+                        .label(R.string.msg_new_template)
                         .handler(this::initTemplate)
                         .icone(R.drawable.material_add)
                         .build()
@@ -88,7 +88,7 @@ public class ListTemplateFragment extends AbstractFragment {
 
     private boolean saveTemplate(Template template) {
         templateRepositoryService.save(template);
-        AndroidLayoutUtil.showToast(getContext(), "Template created");
+        AndroidLayoutUtil.showToast(getContext(), getString(R.string.msg_template_created));
         redirectToDetailScenario(template);
         return true;
     }

@@ -11,15 +11,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Filter;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.florent.mjmaker.R;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import fr.florent.mjmaker.utils.ItemSelect;
 
 /**
  * Filter combo box component
@@ -89,13 +87,6 @@ public class FilterComboBox<T> extends androidx.appcompat.widget.AppCompatAutoCo
         if (focused && getFilter()!=null) {
             performFiltering(getText(), 0);
         }
-    }
-
-    @AllArgsConstructor
-    @Getter
-    public static class ItemSelect<T> {
-        private final T value;
-        private final String label;
     }
 
     /**

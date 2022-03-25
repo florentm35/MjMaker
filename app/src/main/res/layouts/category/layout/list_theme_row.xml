@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="5dp"/>
+        android:layout_marginStart="@dimen/default_margin"/>
 
     <LinearLayout
         android:id="@+id/layout_actions"

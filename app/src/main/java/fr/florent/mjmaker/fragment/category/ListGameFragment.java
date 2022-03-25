@@ -48,12 +48,12 @@ public class ListGameFragment extends AbstractFragment {
     private void onDataAction(GameAdapter.EnumAction action, Game game) {
         if (action == GameAdapter.EnumAction.EDIT) {
             AndroidLayoutUtil.openModalAskText(getContext(),
-                    "Set the name ?",
+                    getString(R.string.msg_set_the_name),
                     game.getName(), v -> this.onValidateModalAskText(v, game));
         } else {
             gameRepositoryService.delete(game);
             gameAdapter.removeItem(game);
-            AndroidLayoutUtil.showToast(getContext(), "Category removed");
+            AndroidLayoutUtil.showToast(getContext(), getString(R.string.msg_category_removed));
         }
 
     }
@@ -62,7 +62,7 @@ public class ListGameFragment extends AbstractFragment {
     public List<ToolBarItem> getToolbarItem() {
         return Arrays.asList(
                 ToolBarItem.builder()
-                        .label("Add category")
+                        .label(R.string.label_add_category)
                         .handler(this::showPopup)
                         .icone(R.drawable.material_add)
                         .build()
@@ -71,45 +71,45 @@ public class ListGameFragment extends AbstractFragment {
 
     public void showPopup() {
         AndroidLayoutUtil.openModalAskText(getContext(),
-                "Set the name ?",
+                getString(R.string.msg_set_the_name),
                 null, v -> this.onValidateModalAskText(v, null));
     }
 
     private boolean onValidateModalAskText(String value, Game game) {
         boolean isCreation = false;
 
-        if(game == null) {
+        if (game == null) {
             game = new Game();
             isCreation = true;
         }
 
         if (value == null || value.isEmpty()) {
-            AndroidLayoutUtil.showToast(getContext(), "Game name can not be empty");
+            AndroidLayoutUtil.showToast(getContext(), getString(R.string.err_game_name_empty));
             return false;
         }
 
         Game existGame = gameRepositoryService.findByName(value);
 
         if (existGame != null && !existGame.getId().equals(game.getId())) {
-            AndroidLayoutUtil.showToast(getContext(), "A game named " + value + " exist");
+            AndroidLayoutUtil.showToast(getContext(), getString(R.string.err_game_already_exists, value));
             return false;
         }
 
         game.setName(value);
 
-        String message ;
-        if(isCreation) {
+        int message;
+        if (isCreation) {
             gameRepositoryService.save(game);
             gameAdapter.addItem(game);
 
-            message = "Game created";
+            message = R.string.msg_game_created;
         } else {
             gameRepositoryService.update(game);
             gameAdapter.updateItem(game);
-            message = "Game modified";
+            message = R.string.msg_game_modified;
         }
 
-        AndroidLayoutUtil.showToast(getContext(), message);
+        AndroidLayoutUtil.showToast(getContext(), getString(message));
 
         return true;
     }
