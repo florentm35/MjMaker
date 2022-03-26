@@ -19,7 +19,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="30"
-            android:text="@string/game"
+            android:text="@string/label_game"
             android:textStyle="bold" />
 
         <TextView
@@ -27,7 +27,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="50"
-            android:text="@string/title"
+            android:text="@string/label_title"
             android:textStyle="bold" />
 
         <TextView
@@ -35,7 +35,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="20"
-            android:text="@string/level"
+            android:text="@string/label_level"
             android:textStyle="bold" />
 
     </LinearLayout>

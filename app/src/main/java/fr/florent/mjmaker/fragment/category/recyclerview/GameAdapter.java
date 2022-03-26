@@ -124,7 +124,9 @@ public class GameAdapter extends AbstractLinearWithHeaderAdapter<Game> {
         }
 
         try {
-            game.getLstTheme().refreshCollection();
+            if(game.getLstTheme() != null) {
+                game.getLstTheme().refreshCollection();
+            }
         } catch (SQLException exception) {
             Log.e(TAG, "Can not be refresh game entity", exception);
             throw new SQLRuntimeException(exception);
@@ -157,7 +159,7 @@ public class GameAdapter extends AbstractLinearWithHeaderAdapter<Game> {
 
         String message;
         if (isCreation) {
-
+            subcategory.setGame(game);
             themeRepositoryService.save(subcategory);
             adapter.addItem(subcategory);
             message = "Theme created";

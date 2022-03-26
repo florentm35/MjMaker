@@ -85,21 +85,12 @@ public abstract class AndroidLayoutUtil {
         // Set the dialog title
         builder.setTitle(title)
                 // Set the action buttons
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-
-                        if (onValidate.action(AndroidLayoutUtil.getTextViewText(view, R.id.value))) {
-                            dialog.cancel();
-                        }
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
+                .setPositiveButton("OK", (dialog, id) -> {
+                    if (onValidate.action(AndroidLayoutUtil.getTextViewText(view, R.id.value))) {
                         dialog.cancel();
                     }
-                });
+                })
+                .setNegativeButton("Cancel", (dialog, id) -> dialog.cancel());
 
         builder.create()
                 .show();

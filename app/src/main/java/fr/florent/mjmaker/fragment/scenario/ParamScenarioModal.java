@@ -34,7 +34,7 @@ public class ParamScenarioModal extends DialogFragment {
     private View getView(Context context) {
         View view = LayoutInflater.from(context).inflate(R.layout.param_scenario_modal, null);
 
-        FilterComboBox<Game> filterComboBoxTextView = view.findViewById(R.id.ac_game);
+        FilterComboBox<Game> filterComboBoxTextView = view.findViewById(R.id.fbc_game);
         filterComboBoxTextView.setText(scenario.getGame() != null ? scenario.getGame().getName() : "");
         filterComboBoxTextView.setItems(
                 gameRepositoryService.getAll().stream()

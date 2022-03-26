@@ -5,6 +5,7 @@ import android.util.Log;
 import com.j256.ormlite.stmt.QueryBuilder;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import fr.florent.mjmaker.service.common.AbstractRepositoryService;
 import fr.florent.mjmaker.service.common.SQLRuntimeException;
@@ -18,7 +19,7 @@ public class ThemeRepositoryService extends AbstractRepositoryService<Theme, Int
 
     private static ThemeRepositoryService instance;
 
-    private GameRepositoryService gameRepositoryService = GameRepositoryService.getInstance();
+    private final GameRepositoryService gameRepositoryService = GameRepositoryService.getInstance();
 
     private ThemeRepositoryService() {
         super();
@@ -26,7 +27,7 @@ public class ThemeRepositoryService extends AbstractRepositoryService<Theme, Int
 
     /**
      * Get service instance
-     * 
+     *
      * @return Service instance
      */
     public static ThemeRepositoryService getInstance() {
@@ -36,6 +37,14 @@ public class ThemeRepositoryService extends AbstractRepositoryService<Theme, Int
         return instance;
     }
 
+
+    /**
+     * Search theme by game and name
+     *
+     * @param idGame The game id
+     * @param name The theme name
+     * @return The theme if found or else null
+     */
     public Theme findByIdGameAndName(Integer idGame, String name) {
         try {
 

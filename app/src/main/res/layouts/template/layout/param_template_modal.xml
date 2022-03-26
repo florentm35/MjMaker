@@ -14,7 +14,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/name_header" />
+            android:text="@string/label_name" />
 
         <EditText
             android:id="@+id/et_name"
@@ -34,16 +34,38 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/game" />
+            android:text="@string/label_game" />
 
         <fr.florent.mjmaker.component.FilterComboBox
-            android:id="@+id/ac_game"
+            android:id="@+id/fbc_game"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text=""
             android:focusableInTouchMode="true"
-            android:hint="@string/game"/>
+            android:hint="@string/label_game"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/label_theme" />
+
+        <fr.florent.mjmaker.component.FilterComboBox
+            android:id="@+id/fbc_theme"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=""
+            android:focusableInTouchMode="true"
+            android:hint="@string/label_theme"/>
     </LinearLayout>
 
 </LinearLayout>

@@ -19,7 +19,7 @@
 
             <TextView
                 style="@style/label_150dp"
-                android:text="@string/name_label" />
+                android:text="@string/label_name" />
 
             <EditText
                 android:id="@+id/et_name"

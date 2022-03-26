@@ -21,9 +21,10 @@ import fr.florent.mjmaker.utils.ItemSelect;
 
 /**
  * Filter combo box component
+ *
  * @param <T>
  */
-public class FilterComboBox<T> extends androidx.appcompat.widget.AppCompatAutoCompleteTextView{
+public class FilterComboBox<T> extends androidx.appcompat.widget.AppCompatAutoCompleteTextView {
 
     public interface IEventSelect<T> {
         void action(T value);
@@ -31,35 +32,42 @@ public class FilterComboBox<T> extends androidx.appcompat.widget.AppCompatAutoCo
 
     public FilterComboBox(Context context) {
         super(context);
+        init();
     }
 
     public FilterComboBox(Context arg0, AttributeSet arg1) {
         super(arg0, arg1);
+        init();
     }
 
     public FilterComboBox(Context arg0, AttributeSet arg1, int arg2) {
         super(arg0, arg1, arg2);
+        init();
     }
 
+    private IEventSelect<T> event;
+
+    private void init() {
+        this.setOnClickListener(v -> {
+            this.showDropDown();
+        });
+    }
 
     /**
      * Affect the items to the list
      *
      * @param lstItem The items
      */
-   public void setItems(List<ItemSelect<T>> lstItem) {
-       AutoCompleteAdapter<T> adapter = new AutoCompleteAdapter<T>(getContext(),
-               R.layout.item_string_row,
-               lstItem
-       );
+    public void setItems(List<ItemSelect<T>> lstItem) {
+        lstItem.add(0, new ItemSelect<>(null, ""));
+        AutoCompleteAdapter<T> adapter = new AutoCompleteAdapter<T>(getContext(),
+                R.layout.item_string_row,
+                lstItem
+        );
 
-       this.setAdapter(adapter);
-   }
-
-    @Override
-    public void setOnItemClickListener(AdapterView.OnItemClickListener l) {
-        super.setOnItemClickListener(l);
+        this.setAdapter(adapter);
     }
+
 
     /**
      * Set the select callback item
@@ -67,12 +75,22 @@ public class FilterComboBox<T> extends androidx.appcompat.widget.AppCompatAutoCo
      * @param event The callback
      */
     public void setOnItemClickListener(IEventSelect<T> event) {
+        this.event = event;
         this.setOnItemClickListener((adapterView, view1, i, l) -> {
             ItemSelect<T> item = (ItemSelect<T>) adapterView.getItemAtPosition(i);
             if (item != null) {
                 event.action(item.getValue());
             }
+            getFilter().filter("");
         });
+    }
+
+    public void setText(String text) {
+        super.setText(text);
+        if ((text == null || text.isEmpty())
+                && event != null) {
+            event.action(null);
+        }
     }
 
     @Override
@@ -84,13 +102,14 @@ public class FilterComboBox<T> extends androidx.appcompat.widget.AppCompatAutoCo
     protected void onFocusChanged(boolean focused, int direction,
                                   Rect previouslyFocusedRect) {
         super.onFocusChanged(focused, direction, previouslyFocusedRect);
-        if (focused && getFilter()!=null) {
+        if (focused && getFilter() != null) {
             performFiltering(getText(), 0);
         }
     }
 
     /**
      * Simple text adapter
+     *
      * @param <T>
      */
     private static class AutoCompleteAdapter<T> extends ArrayAdapter<ItemSelect<T>> {
@@ -154,7 +173,7 @@ public class FilterComboBox<T> extends androidx.appcompat.widget.AppCompatAutoCo
                     suggestions.clear();
                     String value = charSequence.toString();
                     for (ItemSelect<T> item : tempItems) {
-                        if (value.isEmpty() || item.getLabel().toLowerCase().startsWith(value.toLowerCase())) {
+                        if (item.getValue() == null || value.isEmpty() || item.getLabel().toLowerCase().startsWith(value.toLowerCase())) {
                             suggestions.add(item);
                         }
                     }

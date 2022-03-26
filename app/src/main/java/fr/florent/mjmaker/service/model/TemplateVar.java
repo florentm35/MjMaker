@@ -24,7 +24,7 @@ public class TemplateVar {
     @DatabaseField(columnName = "label")
     private String label;
     @DatabaseField(columnName = "type")
-    private String type;
+    private EnumTemplateVarType type;
     @DatabaseField(foreign = true)
     private Template template;
 }

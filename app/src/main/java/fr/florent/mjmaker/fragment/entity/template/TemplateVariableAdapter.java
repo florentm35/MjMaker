@@ -41,7 +41,7 @@ public class TemplateVariableAdapter extends AbstractLinearAdapter<TemplateVar> 
 
         TemplateVar templateVar = getItem(position);
 
-        AndroidLayoutUtil.clearExtendedEditTextTextChange(view, R.id.et_text);
+        AndroidLayoutUtil.clearExtendedEditTextTextChange(view, R.id.et_name);
         AndroidLayoutUtil.setTextViewText(view, R.id.et_name, templateVar.getLabel());
         AndroidLayoutUtil.setExtendedEditTextTextChange(view, R.id.et_name, t -> onNameChange(templateVar, t));
 

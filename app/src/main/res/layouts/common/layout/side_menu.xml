@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/black"
-        android:text="@string/manage_entity"
+        android:text="@string/menu_manage_entity"
         android:textColor="@color/white" />
 
     <Button
@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/black"
-        android:text="@string/category_management"
+        android:text="@string/menu_category_management"
         android:textColor="@color/white" />
 
     <Button
@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/black"
-        android:text="@string/scenario_manager"
+        android:text="@string/menu_scenario_manager"
         android:textColor="@color/white" />
 
 </LinearLayout>
