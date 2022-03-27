@@ -18,15 +18,23 @@
             android:id="@+id/tv_header_game"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="30"
+            android:layout_weight="20"
             android:text="@string/label_game"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_header_theme"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:text="@string/label_theme"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_header_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="70"
+            android:layout_weight="60"
             android:text="@string/label_name"
             android:textStyle="bold" />
 

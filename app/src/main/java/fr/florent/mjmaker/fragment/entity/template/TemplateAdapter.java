@@ -53,6 +53,7 @@ public class TemplateAdapter extends AbstractLinearWithHeaderAdapter<Template> {
             Template template = values.get(position - 1);
 
             AndroidLayoutUtil.setTextViewText(view, R.id.tv_game, template.getGame() != null ? template.getGame().getName() : "");
+            AndroidLayoutUtil.setTextViewText(view, R.id.tv_theme, template.getTheme() != null ? template.getTheme().getName() : "");
             AndroidLayoutUtil.setTextViewText(view, R.id.tv_name, template.getName());
 
             view.findViewById(R.id.view).setOnClickListener(v -> handler.action(EnumAction.VIEW, template));

@@ -40,8 +40,18 @@ public class ParamTemplateModal extends DialogFragment {
 
 
     private View initView(Context context) {
-        View view = LayoutInflater.from(context).inflate(R.layout.param_template_modal, null);
+        view = LayoutInflater.from(context).inflate(R.layout.param_template_modal, null);
 
+        lodeGameList(view);
+
+        loadThemeList(view);
+
+        AndroidLayoutUtil.setTextViewText(view, R.id.et_name, template.getName());
+
+        return view;
+    }
+
+    private void lodeGameList(View view) {
         // Init game combo box
         FilterComboBox<Game> fbcGame = view.findViewById(R.id.fbc_game);
         fbcGame.setText(template.getGame() != null ? template.getGame().getName() : "");
@@ -51,49 +61,35 @@ public class ParamTemplateModal extends DialogFragment {
                         .collect(Collectors.toList())
         );
         fbcGame.setOnItemClickListener(this::onGameSelectionChanged);
+    }
 
+    private void loadThemeList(View view) {
         // Init theme combo box
         FilterComboBox<Theme> fbcTheme = view.findViewById(R.id.fbc_theme);
-        fbcTheme.setText(template.getTheme() != null ? template.getTheme().getName() : "");
+        List<Theme> lstThemeAvailable;
+        if (gameSelection != null) {
+            lstThemeAvailable = DataBaseUtil.convertForeignCollectionToList(gameSelection.getLstTheme());
+            if (!lstThemeAvailable.contains(themeSelection)) {
+                themeSelection = null;
+            }
+        } else {
+            lstThemeAvailable = themeRepositoryService.getAll();
+        }
+
         fbcTheme.setItems(
-                themeRepositoryService.getAll().stream()
+                lstThemeAvailable.stream()
                         .map(t -> new ItemSelect<>(t, t.getName()))
                         .collect(Collectors.toList())
         );
-        fbcTheme.setOnItemClickListener(t -> themeSelection = t);
 
+        fbcTheme.setText(themeSelection != null ? themeSelection.getName() : "");
 
-        AndroidLayoutUtil.setTextViewText(view, R.id.et_name, template.getName());
-
-        return view;
+        fbcTheme.setOnItemClickListener(theme -> themeSelection = theme);
     }
 
     private void onGameSelectionChanged(Game g) {
         gameSelection = g;
-
-        FilterComboBox<Theme> fbcTheme = view.findViewById(R.id.fbc_theme);
-        if(gameSelection != null) {
-            List<Theme> lstThemeAvailable = DataBaseUtil.convertForeignCollectionToList(gameSelection.getLstTheme());
-
-            fbcTheme.setItems(
-                    lstThemeAvailable.stream()
-                            .map(t -> new ItemSelect<>(t, t.getName()))
-                            .collect(Collectors.toList())
-            );
-
-            if(!lstThemeAvailable.contains(themeSelection)) {
-                fbcTheme.setText("");
-            }
-
-        } else {
-            fbcTheme.setItems(
-                    themeRepositoryService.getAll().stream()
-                            .map(t -> new ItemSelect<>(t, t.getName()))
-                            .collect(Collectors.toList())
-            );
-        }
-
-
+        loadThemeList(view);
     }
 
     public void show(Context context,
@@ -104,6 +100,7 @@ public class ParamTemplateModal extends DialogFragment {
             template = new Template();
         }
         gameSelection = template.getGame();
+        themeSelection = template.getTheme();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         view = initView(context);
@@ -111,6 +108,7 @@ public class ParamTemplateModal extends DialogFragment {
                 .setPositiveButton("OK", (dialog, id) -> {
                     template.setName(AndroidLayoutUtil.getTextViewText(view, R.id.et_name));
                     template.setGame(gameSelection);
+                    template.setTheme(themeSelection);
                     if (onValidate.action(template)) {
                         dialog.cancel();
                     }

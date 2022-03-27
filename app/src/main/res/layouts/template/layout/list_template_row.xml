@@ -19,13 +19,19 @@
             android:id="@+id/tv_game"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="30" />
+            android:layout_weight="20" />
+
+        <TextView
+            android:id="@+id/tv_theme"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="20" />
 
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="70" />
+            android:layout_weight="60" />
 
 
     </LinearLayout>
