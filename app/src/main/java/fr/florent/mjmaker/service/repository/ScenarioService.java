@@ -1,29 +1,25 @@
 package fr.florent.mjmaker.service.repository;
 
-import java.util.Collections;
-import java.util.List;
-
-import fr.florent.mjmaker.service.common.AbstractRepositoryService;
-import fr.florent.mjmaker.service.model.Game;
+import fr.florent.mjmaker.service.common.AbstractRepository;
 import fr.florent.mjmaker.service.model.Scenario;
 
 /**
  * Scenario service repository
  */
-public class ScenarioRepositoryService extends AbstractRepositoryService<Scenario, Integer> {
+public class ScenarioService extends AbstractRepository<Scenario, Integer> {
 
-    FieldSetScenarioRepositoryService fieldSetScenarioRepositoryService = FieldSetScenarioRepositoryService.getInstance();
+    FieldSetScenarioService fieldSetScenarioService = FieldSetScenarioService.getInstance();
 
-    private ScenarioRepositoryService() {
+    private ScenarioService() {
         super();
     }
 
-    private static ScenarioRepositoryService instance;
+    private static ScenarioService instance;
 
     @Override
     public void delete(Scenario entity) {
         if (entity.getLstFieldSet() != null) {
-            entity.getLstFieldSet().forEach(fieldSetScenario -> fieldSetScenarioRepositoryService.delete(fieldSetScenario));
+            entity.getLstFieldSet().forEach(fieldSetScenario -> fieldSetScenarioService.delete(fieldSetScenario));
         }
         super.delete(entity);
     }
@@ -39,9 +35,9 @@ public class ScenarioRepositoryService extends AbstractRepositoryService<Scenari
      *
      * @return Service instance
      */
-    public static ScenarioRepositoryService getInstance() {
+    public static ScenarioService getInstance() {
         if (instance == null) {
-            instance = new ScenarioRepositoryService();
+            instance = new ScenarioService();
         }
 
         return instance;
@@ -59,6 +55,6 @@ public class ScenarioRepositoryService extends AbstractRepositoryService<Scenari
 
     @Override
     protected String getTag() {
-        return ScenarioRepositoryService.class.getName();
+        return ScenarioService.class.getName();
     }
 }

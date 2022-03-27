@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -20,12 +19,12 @@ import fr.florent.mjmaker.fragment.common.menu.EnumScreen;
 import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
 import fr.florent.mjmaker.fragment.scenario.adapter.ScenarioAdapter;
 import fr.florent.mjmaker.service.model.Scenario;
-import fr.florent.mjmaker.service.repository.ScenarioRepositoryService;
+import fr.florent.mjmaker.service.repository.ScenarioService;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 
 public class ListScenarioFragment extends AbstractFragment {
 
-    private final ScenarioRepositoryService scenarioRepositoryService = ScenarioRepositoryService.getInstance();
+    private final ScenarioService scenarioService = ScenarioService.getInstance();
 
     private ScenarioAdapter scenarioAdapter;
 
@@ -37,7 +36,7 @@ public class ListScenarioFragment extends AbstractFragment {
         RecyclerView recyclerView = view.findViewById(R.id.list_element);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        scenarioAdapter = new ScenarioAdapter(getContext(), scenarioRepositoryService.getAll(), this::onAction);
+        scenarioAdapter = new ScenarioAdapter(getContext(), scenarioService.getAll(), this::onAction);
         recyclerView.setAdapter(scenarioAdapter);
 
         return view;
@@ -54,7 +53,7 @@ public class ListScenarioFragment extends AbstractFragment {
                         getString(R.string.msg_ask_delete_scenario),
                         (choice) -> {
                             if (choice) {
-                                scenarioRepositoryService.delete(scenario);
+                                scenarioService.delete(scenario);
                                 scenarioAdapter.removeItem(scenario);
                                 AndroidLayoutUtil.showToast(getContext(), getString(R.string.msg_scenario_deleted));
                             }
@@ -87,7 +86,7 @@ public class ListScenarioFragment extends AbstractFragment {
     }
 
     private boolean saveScenario(Scenario scenario) {
-        scenarioRepositoryService.save(scenario);
+        scenarioService.save(scenario);
         AndroidLayoutUtil.showToast(getContext(), getString(R.string.msg_scenario_created));
         redirectToDetailScenario(scenario, ScenarioFragment.EnumState.EDIT);
         return true;

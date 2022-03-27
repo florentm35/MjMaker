@@ -4,29 +4,29 @@ import android.util.Log;
 
 import java.sql.SQLException;
 
-import fr.florent.mjmaker.service.common.AbstractRepositoryService;
+import fr.florent.mjmaker.service.common.AbstractRepository;
 import fr.florent.mjmaker.service.common.SQLRuntimeException;
 import fr.florent.mjmaker.service.model.Game;
 
 /**
  * Game service repository
  */
-public class GameRepositoryService extends AbstractRepositoryService<Game, Integer> {
+public class GameService extends AbstractRepository<Game, Integer> {
 
-    private GameRepositoryService() {
+    private GameService() {
         super();
     }
 
-    private static GameRepositoryService instance;
+    private static GameService instance;
 
     /**
      * Get service instance
      *
      * @return Service instance
      */
-    public static GameRepositoryService getInstance() {
+    public static GameService getInstance() {
         if (instance == null) {
-            instance = new GameRepositoryService();
+            instance = new GameService();
         }
         return instance;
     }
@@ -63,6 +63,6 @@ public class GameRepositoryService extends AbstractRepositoryService<Game, Integ
 
     @Override
     protected String getTag() {
-        return GameRepositoryService.class.getName();
+        return GameService.class.getName();
     }
 }

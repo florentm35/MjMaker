@@ -1,30 +1,29 @@
 package fr.florent.mjmaker.service.repository;
 
-import fr.florent.mjmaker.service.common.AbstractRepositoryService;
+import fr.florent.mjmaker.service.common.AbstractRepository;
 import fr.florent.mjmaker.service.model.FieldSetScenario;
-import fr.florent.mjmaker.service.model.Scenario;
 
 /**
  * FieldSetScenario service repository
  */
-public class FieldSetScenarioRepositoryService extends AbstractRepositoryService<FieldSetScenario, Integer> {
+public class FieldSetScenarioService extends AbstractRepository<FieldSetScenario, Integer> {
 
-    private final FieldSetElementRepositoryService fieldSetElementRepositoryService = FieldSetElementRepositoryService.getInstance();
+    private final FieldSetElementService fieldSetElementService = FieldSetElementService.getInstance();
 
-    private FieldSetScenarioRepositoryService() {
+    private FieldSetScenarioService() {
         super();
     }
 
-    private static FieldSetScenarioRepositoryService instance;
+    private static FieldSetScenarioService instance;
 
     /**
      * Get service instance
      *
      * @return Service instance
      */
-    public static FieldSetScenarioRepositoryService getInstance() {
+    public static FieldSetScenarioService getInstance() {
         if (instance == null) {
-            instance = new FieldSetScenarioRepositoryService();
+            instance = new FieldSetScenarioService();
         }
 
         return instance;
@@ -33,7 +32,7 @@ public class FieldSetScenarioRepositoryService extends AbstractRepositoryService
     @Override
     public void delete(FieldSetScenario entity) {
         if (entity.getLstElement() != null) {
-            entity.getLstElement().forEach(fieldSetElementRepositoryService::delete);
+            entity.getLstElement().forEach(fieldSetElementService::delete);
         }
         super.delete(entity);
     }
@@ -55,6 +54,6 @@ public class FieldSetScenarioRepositoryService extends AbstractRepositoryService
 
     @Override
     protected String getTag() {
-        return FieldSetScenarioRepositoryService.class.getName();
+        return FieldSetScenarioService.class.getName();
     }
 }

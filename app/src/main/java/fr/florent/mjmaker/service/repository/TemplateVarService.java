@@ -1,28 +1,27 @@
 package fr.florent.mjmaker.service.repository;
 
-import fr.florent.mjmaker.service.common.AbstractRepositoryService;
-import fr.florent.mjmaker.service.model.Template;
+import fr.florent.mjmaker.service.common.AbstractRepository;
 import fr.florent.mjmaker.service.model.TemplateVar;
 
 /**
- * Game service repository
+ * TemplateVar service repository
  */
-public class TemplateVarRepositoryService extends AbstractRepositoryService<TemplateVar, Integer> {
+public class TemplateVarService extends AbstractRepository<TemplateVar, Integer> {
 
-    private TemplateVarRepositoryService() {
+    private TemplateVarService() {
         super();
     }
 
-    private static TemplateVarRepositoryService instance;
+    private static TemplateVarService instance;
 
     /**
      * Get service instance
      *
      * @return Service instance
      */
-    public static TemplateVarRepositoryService getInstance() {
+    public static TemplateVarService getInstance() {
         if (instance == null) {
-            instance = new TemplateVarRepositoryService();
+            instance = new TemplateVarService();
         }
         return instance;
     }
@@ -40,6 +39,6 @@ public class TemplateVarRepositoryService extends AbstractRepositoryService<Temp
 
     @Override
     protected String getTag() {
-        return TemplateVarRepositoryService.class.getName();
+        return TemplateVarService.class.getName();
     }
 }

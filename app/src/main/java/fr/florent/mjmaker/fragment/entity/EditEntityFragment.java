@@ -12,21 +12,21 @@ import androidx.annotation.Nullable;
 import fr.florent.mjmaker.R;
 import fr.florent.mjmaker.fragment.common.AbstractFragment;
 import fr.florent.mjmaker.service.model.Entity;
-import fr.florent.mjmaker.service.repository.EntityRepositoryService;
+import fr.florent.mjmaker.service.repository.EntityService;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 
 public class EditEntityFragment extends AbstractFragment {
 
     private static final String TAG = EditEntityFragment.class.getName();
 
-    private final EntityRepositoryService entityRepositoryService = EntityRepositoryService.getInstance();
+    private final EntityService entityService = EntityService.getInstance();
 
 
     private Entity entity;
 
     public EditEntityFragment(Object... params) {
         if (params != null && params.length > 0) {
-            entity = entityRepositoryService.findBydId((Integer) params[0]);
+            entity = entityService.findBydId((Integer) params[0]);
         }
     }
 
@@ -60,10 +60,10 @@ public class EditEntityFragment extends AbstractFragment {
         String message;
 
         if (entity.getId() == null) {
-            entityRepositoryService.save(entity);
+            entityService.save(entity);
             message = "Monster create";
         } else {
-            entityRepositoryService.update(entity);
+            entityService.update(entity);
             message = "Monster update";
         }
 

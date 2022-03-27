@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import fr.florent.mjmaker.service.model.EntityElement;
+import fr.florent.mjmaker.service.model.EntityVar;
 import fr.florent.mjmaker.service.model.FieldSetElement;
 import fr.florent.mjmaker.service.model.FieldSetScenario;
 import fr.florent.mjmaker.service.model.Game;
@@ -23,6 +24,7 @@ public abstract class EntityHelper {
      */
     public static final List<Class<?>> ENTITY_LIST = Arrays.asList(
             Entity.class,
+            EntityVar.class,
             Game.class,
             Theme.class,
             Scenario.class,

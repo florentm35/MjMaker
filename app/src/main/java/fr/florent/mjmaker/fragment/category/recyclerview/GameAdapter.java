@@ -17,7 +17,7 @@ import fr.florent.mjmaker.R;
 import fr.florent.mjmaker.service.common.SQLRuntimeException;
 import fr.florent.mjmaker.service.model.Game;
 import fr.florent.mjmaker.service.model.Theme;
-import fr.florent.mjmaker.service.repository.ThemeRepositoryService;
+import fr.florent.mjmaker.service.repository.ThemeService;
 import fr.florent.mjmaker.utils.AbstractLinearWithHeaderAdapter;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 import fr.florent.mjmaker.utils.DataBaseUtil;
@@ -26,7 +26,7 @@ public class GameAdapter extends AbstractLinearWithHeaderAdapter<Game> {
 
     private static String TAG = GameAdapter.class.getName();
 
-    private ThemeRepositoryService themeRepositoryService = ThemeRepositoryService.getInstance();
+    private ThemeService themeService = ThemeService.getInstance();
 
     public enum EnumAction {
         EDIT, DELETE;
@@ -118,7 +118,7 @@ public class GameAdapter extends AbstractLinearWithHeaderAdapter<Game> {
                         theme.getName(), v -> this.onValidateModalAskText(v, game, theme, themeAdapter));
                 break;
             case DELETE:
-                themeRepositoryService.delete(theme);
+                themeService.delete(theme);
                 themeAdapter.removeItem(theme);
                 break;
         }
@@ -147,7 +147,7 @@ public class GameAdapter extends AbstractLinearWithHeaderAdapter<Game> {
             return false;
         }
 
-        Theme existCategory = themeRepositoryService.findByIdGameAndName(game.getId(), value);
+        Theme existCategory = themeService.findByIdGameAndName(game.getId(), value);
 
         if (existCategory != null && !existCategory.getId().equals(subcategory.getId())) {
             AndroidLayoutUtil.showToast(context.getApplicationContext(),
@@ -160,11 +160,11 @@ public class GameAdapter extends AbstractLinearWithHeaderAdapter<Game> {
         String message;
         if (isCreation) {
             subcategory.setGame(game);
-            themeRepositoryService.save(subcategory);
+            themeService.save(subcategory);
             adapter.addItem(subcategory);
             message = "Theme created";
         } else {
-            themeRepositoryService.update(subcategory);
+            themeService.update(subcategory);
             adapter.updateItem(subcategory);
             message = "Theme modified";
         }

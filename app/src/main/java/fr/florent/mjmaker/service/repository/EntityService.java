@@ -1,27 +1,27 @@
 package fr.florent.mjmaker.service.repository;
 
-import fr.florent.mjmaker.service.common.AbstractRepositoryService;
+import fr.florent.mjmaker.service.common.AbstractRepository;
 import fr.florent.mjmaker.service.model.Entity;
 
 /**
- * Monster service repository
+ * Entity service repository
  */
-public class EntityRepositoryService extends AbstractRepositoryService<Entity, Integer> {
+public class EntityService extends AbstractRepository<Entity, Integer> {
 
-    private EntityRepositoryService() {
+    private EntityService() {
         super();
     }
 
-    private static EntityRepositoryService instance;
+    private static EntityService instance;
 
     /**
      * Get service instance
      *
      * @return Service instance
      */
-    public static EntityRepositoryService getInstance() {
+    public static EntityService getInstance() {
         if (instance == null) {
-            instance = new EntityRepositoryService();
+            instance = new EntityService();
         }
 
         return instance;
@@ -39,6 +39,6 @@ public class EntityRepositoryService extends AbstractRepositoryService<Entity, I
 
     @Override
     protected String getTag() {
-        return EntityRepositoryService.class.getName();
+        return EntityService.class.getName();
     }
 }

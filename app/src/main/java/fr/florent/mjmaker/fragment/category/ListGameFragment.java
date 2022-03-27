@@ -12,20 +12,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.BiFunction;
 
 import fr.florent.mjmaker.R;
 import fr.florent.mjmaker.fragment.category.recyclerview.GameAdapter;
 import fr.florent.mjmaker.fragment.common.AbstractFragment;
-import fr.florent.mjmaker.fragment.common.menu.EnumScreen;
 import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
 import fr.florent.mjmaker.service.model.Game;
-import fr.florent.mjmaker.service.repository.GameRepositoryService;
+import fr.florent.mjmaker.service.repository.GameService;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 
 public class ListGameFragment extends AbstractFragment {
 
-    private final GameRepositoryService gameRepositoryService = GameRepositoryService.getInstance();
+    private final GameService gameService = GameService.getInstance();
 
     private GameAdapter gameAdapter;
 
@@ -38,7 +36,7 @@ public class ListGameFragment extends AbstractFragment {
 
         listCategory.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        gameAdapter = new GameAdapter(getContext(), gameRepositoryService.getAll(), this::onDataAction);
+        gameAdapter = new GameAdapter(getContext(), gameService.getAll(), this::onDataAction);
 
         listCategory.setAdapter(gameAdapter);
 
@@ -51,7 +49,7 @@ public class ListGameFragment extends AbstractFragment {
                     getString(R.string.msg_set_the_name),
                     game.getName(), v -> this.onValidateModalAskText(v, game));
         } else {
-            gameRepositoryService.delete(game);
+            gameService.delete(game);
             gameAdapter.removeItem(game);
             AndroidLayoutUtil.showToast(getContext(), getString(R.string.msg_category_removed));
         }
@@ -88,7 +86,7 @@ public class ListGameFragment extends AbstractFragment {
             return false;
         }
 
-        Game existGame = gameRepositoryService.findByName(value);
+        Game existGame = gameService.findByName(value);
 
         if (existGame != null && !existGame.getId().equals(game.getId())) {
             AndroidLayoutUtil.showToast(getContext(), getString(R.string.err_game_already_exists, value));
@@ -99,12 +97,12 @@ public class ListGameFragment extends AbstractFragment {
 
         int message;
         if (isCreation) {
-            gameRepositoryService.save(game);
+            gameService.save(game);
             gameAdapter.addItem(game);
 
             message = R.string.msg_game_created;
         } else {
-            gameRepositoryService.update(game);
+            gameService.update(game);
             gameAdapter.updateItem(game);
             message = R.string.msg_game_modified;
         }

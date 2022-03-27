@@ -15,16 +15,16 @@ import fr.florent.mjmaker.component.FilterComboBox;
 import fr.florent.mjmaker.service.model.Game;
 import fr.florent.mjmaker.service.model.Template;
 import fr.florent.mjmaker.service.model.Theme;
-import fr.florent.mjmaker.service.repository.GameRepositoryService;
-import fr.florent.mjmaker.service.repository.ThemeRepositoryService;
+import fr.florent.mjmaker.service.repository.GameService;
+import fr.florent.mjmaker.service.repository.ThemeService;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 import fr.florent.mjmaker.utils.DataBaseUtil;
 import fr.florent.mjmaker.utils.ItemSelect;
 
 public class ParamTemplateModal extends DialogFragment {
 
-    private final GameRepositoryService gameRepositoryService = GameRepositoryService.getInstance();
-    private final ThemeRepositoryService themeRepositoryService = ThemeRepositoryService.getInstance();
+    private final GameService gameService = GameService.getInstance();
+    private final ThemeService themeService = ThemeService.getInstance();
 
     private Game gameSelection;
 
@@ -56,7 +56,7 @@ public class ParamTemplateModal extends DialogFragment {
         FilterComboBox<Game> fbcGame = view.findViewById(R.id.fbc_game);
         fbcGame.setText(template.getGame() != null ? template.getGame().getName() : "");
         fbcGame.setItems(
-                gameRepositoryService.getAll().stream()
+                gameService.getAll().stream()
                         .map(g -> new ItemSelect<>(g, g.getName()))
                         .collect(Collectors.toList())
         );
@@ -73,7 +73,7 @@ public class ParamTemplateModal extends DialogFragment {
                 themeSelection = null;
             }
         } else {
-            lstThemeAvailable = themeRepositoryService.getAll();
+            lstThemeAvailable = themeService.getAll();
         }
 
         fbcTheme.setItems(

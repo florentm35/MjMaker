@@ -13,13 +13,13 @@ import fr.florent.mjmaker.R;
 import fr.florent.mjmaker.component.FilterComboBox;
 import fr.florent.mjmaker.service.model.Game;
 import fr.florent.mjmaker.service.model.Scenario;
-import fr.florent.mjmaker.service.repository.GameRepositoryService;
+import fr.florent.mjmaker.service.repository.GameService;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 import fr.florent.mjmaker.utils.ItemSelect;
 
 public class ParamScenarioModal extends DialogFragment {
 
-    private GameRepositoryService gameRepositoryService = GameRepositoryService.getInstance();
+    private GameService gameService = GameService.getInstance();
 
     private Game gameSelection;
 
@@ -37,7 +37,7 @@ public class ParamScenarioModal extends DialogFragment {
         FilterComboBox<Game> filterComboBoxTextView = view.findViewById(R.id.fbc_game);
         filterComboBoxTextView.setText(scenario.getGame() != null ? scenario.getGame().getName() : "");
         filterComboBoxTextView.setItems(
-                gameRepositoryService.getAll().stream()
+                gameService.getAll().stream()
                         .map(g -> new ItemSelect<>(g, g.getName()))
                         .collect(Collectors.toList())
         );

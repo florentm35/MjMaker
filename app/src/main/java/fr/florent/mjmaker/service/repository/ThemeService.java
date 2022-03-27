@@ -5,9 +5,8 @@ import android.util.Log;
 import com.j256.ormlite.stmt.QueryBuilder;
 
 import java.sql.SQLException;
-import java.util.List;
 
-import fr.florent.mjmaker.service.common.AbstractRepositoryService;
+import fr.florent.mjmaker.service.common.AbstractRepository;
 import fr.florent.mjmaker.service.common.SQLRuntimeException;
 import fr.florent.mjmaker.service.model.Game;
 import fr.florent.mjmaker.service.model.Theme;
@@ -15,13 +14,13 @@ import fr.florent.mjmaker.service.model.Theme;
 /**
  * Theme service repository
  */
-public class ThemeRepositoryService extends AbstractRepositoryService<Theme, Integer> {
+public class ThemeService extends AbstractRepository<Theme, Integer> {
 
-    private static ThemeRepositoryService instance;
+    private static ThemeService instance;
 
-    private final GameRepositoryService gameRepositoryService = GameRepositoryService.getInstance();
+    private final GameService gameService = GameService.getInstance();
 
-    private ThemeRepositoryService() {
+    private ThemeService() {
         super();
     }
 
@@ -30,9 +29,9 @@ public class ThemeRepositoryService extends AbstractRepositoryService<Theme, Int
      *
      * @return Service instance
      */
-    public static ThemeRepositoryService getInstance() {
+    public static ThemeService getInstance() {
         if (instance == null) {
-            instance = new ThemeRepositoryService();
+            instance = new ThemeService();
         }
         return instance;
     }
@@ -48,7 +47,7 @@ public class ThemeRepositoryService extends AbstractRepositoryService<Theme, Int
     public Theme findByIdGameAndName(Integer idGame, String name) {
         try {
 
-            QueryBuilder<Game, Integer> gameQueryBuilder = gameRepositoryService.getRepository()
+            QueryBuilder<Game, Integer> gameQueryBuilder = gameService.getRepository()
                     .queryBuilder();
             gameQueryBuilder
                     .where()
@@ -79,6 +78,6 @@ public class ThemeRepositoryService extends AbstractRepositoryService<Theme, Int
 
     @Override
     protected String getTag() {
-        return ThemeRepositoryService.class.getName();
+        return ThemeService.class.getName();
     }
 }

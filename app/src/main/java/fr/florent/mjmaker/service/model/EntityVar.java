@@ -1,8 +1,6 @@
 package fr.florent.mjmaker.service.model;
 
-import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import lombok.AllArgsConstructor;
@@ -18,19 +16,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id")
-@DatabaseTable(tableName = "entity")
-public class Entity {
-
+@DatabaseTable(tableName = "entity_var")
+public class EntityVar {
     @DatabaseField(generatedId = true)
     private Integer id;
-    @DatabaseField(columnName = "name")
-    private String name;
-    @DatabaseField(columnName = "level")
-    private String level;
-    @DatabaseField(columnName = "idCategory")
-    private Integer idCategory;
+    @DatabaseField(columnName = "value")
+    private String value;
     @DatabaseField(foreign = true, foreignAutoRefresh = true)
-    private Template template;
-    @ForeignCollectionField
-    private ForeignCollection<EntityVar> lstVar;
+    private TemplateVar templateVar;
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
+    private Entity entity;
 }

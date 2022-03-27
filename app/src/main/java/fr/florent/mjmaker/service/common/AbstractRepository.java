@@ -17,7 +17,7 @@ import fr.florent.mjmaker.service.model.TextElement;
  * @param <T>  The entity class
  * @param <ID> The id class
  */
-public abstract class AbstractRepositoryService<T, ID> {
+public abstract class AbstractRepository<T, ID> {
 
     /**
      * Datasource sqlite
@@ -29,7 +29,7 @@ public abstract class AbstractRepositoryService<T, ID> {
      */
     protected Dao<T, ID> repository;
 
-    protected AbstractRepositoryService() {
+    protected AbstractRepository() {
         databaseHelper = DatabaseHelper.getInstance();
         repository = databaseHelper.createDao(getTableClass(), getTableId());
     }

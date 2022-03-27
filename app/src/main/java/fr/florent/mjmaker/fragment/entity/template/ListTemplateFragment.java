@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -18,15 +17,13 @@ import fr.florent.mjmaker.R;
 import fr.florent.mjmaker.fragment.common.AbstractFragment;
 import fr.florent.mjmaker.fragment.common.menu.EnumScreen;
 import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
-import fr.florent.mjmaker.fragment.scenario.ParamScenarioModal;
-import fr.florent.mjmaker.fragment.scenario.ScenarioFragment;
 import fr.florent.mjmaker.service.model.Template;
-import fr.florent.mjmaker.service.repository.TemplateRepositoryService;
+import fr.florent.mjmaker.service.repository.TemplateService;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 
 public class ListTemplateFragment extends AbstractFragment {
 
-    private final TemplateRepositoryService templateRepositoryService = TemplateRepositoryService.getInstance();
+    private final TemplateService templateService = TemplateService.getInstance();
 
     private TemplateAdapter templateAdapter;
 
@@ -37,7 +34,7 @@ public class ListTemplateFragment extends AbstractFragment {
         RecyclerView recyclerView = view.findViewById(R.id.list_element);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        templateAdapter = new TemplateAdapter(getContext(), templateRepositoryService.getAll(), this::onAction);
+        templateAdapter = new TemplateAdapter(getContext(), templateService.getAll(), this::onAction);
         recyclerView.setAdapter(templateAdapter);
 
         return view;
@@ -54,7 +51,7 @@ public class ListTemplateFragment extends AbstractFragment {
                         getString(R.string.msg_ask_delete_scenario),
                         (choice) -> {
                             if (choice) {
-                                templateRepositoryService.delete(template);
+                                templateService.delete(template);
                                 templateAdapter.removeItem(template);
                                 AndroidLayoutUtil.showToast(getContext(), getString(R.string.msg_scenario_deleted));
                             }
@@ -87,7 +84,7 @@ public class ListTemplateFragment extends AbstractFragment {
     }
 
     private boolean saveTemplate(Template template) {
-        templateRepositoryService.save(template);
+        templateService.save(template);
         AndroidLayoutUtil.showToast(getContext(), getString(R.string.msg_template_created));
         redirectToDetailScenario(template);
         return true;

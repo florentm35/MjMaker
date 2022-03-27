@@ -6,37 +6,36 @@ import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
 
-import fr.florent.mjmaker.service.common.AbstractRepositoryService;
-import fr.florent.mjmaker.service.model.Entity;
+import fr.florent.mjmaker.service.common.AbstractRepository;
 import fr.florent.mjmaker.service.model.EntityElement;
 import fr.florent.mjmaker.service.model.FieldSetElement;
 import fr.florent.mjmaker.service.model.TextElement;
 
 /**
- * TextScenario service repository
+ * FieldSetElement service repository
  */
-public class FieldSetElementRepositoryService extends AbstractRepositoryService<FieldSetElement, Integer> {
+public class FieldSetElementService extends AbstractRepository<FieldSetElement, Integer> {
 
-    private static final String TAG = FieldSetElementRepositoryService.class.getName();
+    private static final String TAG = FieldSetElementService.class.getName();
 
     private final Dao<TextElement, FieldSetElement> textElementRepository = databaseHelper.createDao(TextElement.class, FieldSetElement.class);
     private final Dao<EntityElement, FieldSetElement> entityElementRepository = databaseHelper.createDao(EntityElement.class, FieldSetElement.class);
 
 
-    private FieldSetElementRepositoryService() {
+    private FieldSetElementService() {
         super();
     }
 
-    private static FieldSetElementRepositoryService instance;
+    private static FieldSetElementService instance;
 
     /**
      * Get service instance
      *
      * @return Service instance
      */
-    public static FieldSetElementRepositoryService getInstance() {
+    public static FieldSetElementService getInstance() {
         if (instance == null) {
-            instance = new FieldSetElementRepositoryService();
+            instance = new FieldSetElementService();
         }
 
         return instance;
@@ -95,6 +94,6 @@ public class FieldSetElementRepositoryService extends AbstractRepositoryService<
 
     @Override
     protected String getTag() {
-        return FieldSetElementRepositoryService.class.getName();
+        return FieldSetElementService.class.getName();
     }
 }

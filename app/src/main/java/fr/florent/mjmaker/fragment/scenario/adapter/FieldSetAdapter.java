@@ -21,7 +21,6 @@ import fr.florent.mjmaker.service.model.EntityElement;
 import fr.florent.mjmaker.service.model.FieldSetElement;
 import fr.florent.mjmaker.service.model.FieldSetScenario;
 import fr.florent.mjmaker.service.model.TextElement;
-import fr.florent.mjmaker.service.repository.FieldSetElementRepositoryService;
 import fr.florent.mjmaker.utils.AbstractLinearAdapter;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 import fr.florent.mjmaker.utils.DataBaseUtil;

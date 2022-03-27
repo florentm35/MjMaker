@@ -12,11 +12,11 @@ import fr.florent.mjmaker.R;
 import fr.florent.mjmaker.fragment.common.AbstractFragment;
 import fr.florent.mjmaker.fragment.common.menu.EnumScreen;
 import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
-import fr.florent.mjmaker.service.repository.EntityRepositoryService;
+import fr.florent.mjmaker.service.repository.EntityService;
 
 public class ListEntityFragment extends AbstractFragment {
 
-    private final EntityRepositoryService monsterService = EntityRepositoryService.getInstance();
+    private final EntityService monsterService = EntityService.getInstance();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
