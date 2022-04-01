@@ -43,6 +43,24 @@ public class ParamEntityModal extends DialogFragment {
         boolean action(Entity dialog);
     }
 
+    public void show(Context context,
+                     Entity value,
+                     IActionOK onValidate) {
+        entity = value;
+        if (entity == null) {
+            entity = new Entity();
+        }
+        templateSelection = entity.getTemplate();
+        if (templateSelection != null) {
+            gameSelection = templateSelection.getGame();
+            themeSelection = templateSelection.getTheme();
+        }
+
+        view = initView(context);
+
+        AndroidLayoutUtil.openSimpleDialog(view,
+                (dialog -> onValidateDialog(dialog, onValidate)));
+    }
 
     private View initView(Context context) {
         view = LayoutInflater.from(context).inflate(R.layout.param_entity_modal, null);
@@ -126,24 +144,6 @@ public class ParamEntityModal extends DialogFragment {
         loadTemplateList(view);
     }
 
-    public void show(Context context,
-                     Entity value,
-                     IActionOK onValidate) {
-        entity = value;
-        if (entity == null) {
-            entity = new Entity();
-        }
-        templateSelection = entity.getTemplate();
-        if (templateSelection != null) {
-            gameSelection = templateSelection.getGame();
-            themeSelection = templateSelection.getTheme();
-        }
-
-        view = initView(context);
-
-        AndroidLayoutUtil.openSimpleDialog(view,
-                (dialog -> onValidateDialog(dialog, onValidate)));
-    }
 
     private void onValidateDialog(Dialog dialog, IActionOK onValidate) {
         entity.setName(AndroidLayoutUtil.getTextViewText(view, R.id.et_name));

@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/black"
-        android:text="@string/menu_category_management"
+        android:text="@string/menu_game_management"
         android:textColor="@color/white" />
 
     <Button

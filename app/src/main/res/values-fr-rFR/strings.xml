@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">MjMaker</string>
-    <string name="menu_category_management">Gestion de categorie</string>
+    <string name="menu_game_management">Gestion de categorie</string>
     <string name="err_game_already_exists">Un jeu avec le nom %1s existe déjà</string>
     <string name="err_game_name_empty">Le nom du jeu ne peux pas être vide</string>
     <string name="label_game">Jeu</string>
@@ -18,7 +18,7 @@
     <string name="msg_ask_delete_element">Voulez vous vraiment supprimé cette élément ?</string>
     <string name="msg_ask_delete_fieldset">Voulez vous vraiment supprimer ce chapitre ?</string>
     <string name="msg_ask_delete_scenario">Voulez vous vraiment supprimez ce sénario ?</string>
-    <string name="msg_category_removed">Catégorie supprimé</string>
+    <string name="msg_game_deleted">Catégorie supprimé</string>
     <string name="msg_element_deleted">Elément supprimé</string>
     <string name="msg_fieldset_created">Chapitre créé</string>
     <string name="msg_fieldset_deleted">Chapitre supprimé</string>
@@ -41,4 +41,7 @@
     <string name="msg_entity_created">Entité créée</string>
     <string name="msg_entity_deleted">Entité supprimée</string>
     <string name="msg_ask_delete_entity">Voulez vous vraiment supprimé cette entité ?</string>
+    <string name="msg_entity_updated">Entité mise à jour</string>
+    <string name="msg_template_deleted">Modèle supprimé</string>
+    <string name="msg_ask_delete_template">Voulez vous vraiment supprimer ce modèle ?</string>
 </resources>

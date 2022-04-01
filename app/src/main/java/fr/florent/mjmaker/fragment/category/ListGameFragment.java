@@ -50,7 +50,7 @@ public class ListGameFragment extends AbstractFragment {
         } else {
             gameService.delete(game);
             gameAdapter.removeItem(game);
-            AndroidLayoutUtil.showToast(getContext(), getString(R.string.msg_category_removed));
+            AndroidLayoutUtil.showToast(getContext(), getString(R.string.msg_game_deleted));
         }
 
     }

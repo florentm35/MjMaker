@@ -50,12 +50,12 @@ public class ListTemplateFragment extends AbstractFragment {
                 break;
             case DELETE:
                 AndroidLayoutUtil.openModalQuestion(getContext(),
-                        getString(R.string.msg_ask_delete_scenario),
+                        getString(R.string.msg_ask_delete_template),
                         (choice) -> {
                             if (choice) {
                                 templateService.delete(template);
                                 templateAdapter.removeItem(template);
-                                AndroidLayoutUtil.showToast(getContext(), getString(R.string.msg_scenario_deleted));
+                                AndroidLayoutUtil.showToast(getContext(), getString(R.string.msg_template_deleted));
                             }
                             return true;
                         });

@@ -9,9 +9,16 @@ import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.util.Collections;
+import java.util.List;
+
 import fr.florent.mjmaker.R;
 import fr.florent.mjmaker.fragment.common.AbstractFragment;
+import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
+import fr.florent.mjmaker.fragment.entity.modal.ParamEntityModal;
+import fr.florent.mjmaker.fragment.entity.modal.ParamTemplateModal;
 import fr.florent.mjmaker.service.model.Entity;
+import fr.florent.mjmaker.service.model.Template;
 import fr.florent.mjmaker.service.repository.EntityService;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 
@@ -35,42 +42,42 @@ public class EditEntityFragment extends AbstractFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.edit_entity, container, false);
 
-        ImageButton saveButton = view.findViewById(R.id.valide);
-
-        if (entity == null) {
-            saveButton.setImageResource(R.drawable.material_add);
-        } else {
-            saveButton.setImageResource(R.drawable.material_done);
-        }
-
-        saveButton.setOnClickListener(this::save);
-
         return view;
     }
 
-
-    private void save(View view) {
-
-        if (entity == null) {
-            entity = new Entity();
-        }
-
-        entity.setName(AndroidLayoutUtil.getTextViewText(getView(), R.id.et_name));
-
-        String message;
-
-        if (entity.getId() == null) {
-            entityService.save(entity);
-            message = "Monster create";
-        } else {
-            entityService.update(entity);
-            message = "Monster update";
-        }
-
-        AndroidLayoutUtil.showToast(view.getContext(), message);
-
-        backHandler.back();
+    @Override
+    public List<ToolBarItem> getToolbarItem() {
+        return Collections.singletonList(
+                ToolBarItem.builder()
+                        .label(R.string.label_rename_template)
+                        .handler(this::changeParamTemplate)
+                        .icone(R.drawable.material_setting)
+                        .build()
+        );
     }
+
+    private void changeParamTemplate() {
+        ParamEntityModal dialog = new ParamEntityModal();
+        dialog.show(getContext(), entity, this::saveTemplate);
+    }
+
+
+    private boolean saveTemplate(Entity entity) {
+        if (entity.getName() == null || entity.getName().isEmpty()) {
+            AndroidLayoutUtil.showToast(getContext(), getString(R.string.err_entity_name_empty));
+            return false;
+        }
+
+        if (entity.getTemplate() == null) {
+            AndroidLayoutUtil.showToast(getContext(), getString(R.string.err_entity_template_empty));
+            return false;
+        }
+
+        entityService.update(entity);
+        AndroidLayoutUtil.showToast(getContext(), getString(R.string.msg_entity_updated));
+        return true;
+    }
+
 
     @Override
     public boolean showBack() {
