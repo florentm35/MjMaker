@@ -46,7 +46,6 @@ public class ListGameFragment extends AbstractFragment {
     private void onDataAction(GameAdapter.EnumAction action, Game game) {
         if (action == GameAdapter.EnumAction.EDIT) {
             AndroidLayoutUtil.openModalAskText(getContext(),
-                    getString(R.string.msg_set_the_name),
                     game.getName(), v -> this.onValidateModalAskText(v, game));
         } else {
             gameService.delete(game);
@@ -69,7 +68,6 @@ public class ListGameFragment extends AbstractFragment {
 
     public void showPopup() {
         AndroidLayoutUtil.openModalAskText(getContext(),
-                getString(R.string.msg_set_the_name),
                 null, v -> this.onValidateModalAskText(v, null));
     }
 

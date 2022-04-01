@@ -1,4 +1,4 @@
-package fr.florent.mjmaker.fragment.entity.template;
+package fr.florent.mjmaker.fragment.entity;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,6 +16,8 @@ import fr.florent.mjmaker.R;
 import fr.florent.mjmaker.component.MarkdownEditor;
 import fr.florent.mjmaker.fragment.common.AbstractFragment;
 import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
+import fr.florent.mjmaker.fragment.entity.adapter.TemplateVariableAdapter;
+import fr.florent.mjmaker.fragment.entity.modal.ParamTemplateModal;
 import fr.florent.mjmaker.service.model.EnumTemplateVarType;
 import fr.florent.mjmaker.service.model.Template;
 import fr.florent.mjmaker.service.model.TemplateVar;

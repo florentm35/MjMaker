@@ -25,8 +25,8 @@ import fr.florent.mjmaker.fragment.common.menu.MenuFragment;
 import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
 import fr.florent.mjmaker.fragment.entity.EditEntityFragment;
 import fr.florent.mjmaker.fragment.entity.ListEntityFragment;
-import fr.florent.mjmaker.fragment.entity.template.EditTemplateFragment;
-import fr.florent.mjmaker.fragment.entity.template.ListTemplateFragment;
+import fr.florent.mjmaker.fragment.entity.EditTemplateFragment;
+import fr.florent.mjmaker.fragment.entity.ListTemplateFragment;
 import fr.florent.mjmaker.fragment.scenario.ListScenarioFragment;
 import fr.florent.mjmaker.fragment.scenario.ScenarioFragment;
 
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
             case LIST_ENTITY:
                 fragment = new ListEntityFragment();
                 break;
-            case EDIT_MONSTER:
+            case EDIT_ENTITY:
                 fragment = new EditEntityFragment(param);
                 break;
             case LIST_CATEGORY:

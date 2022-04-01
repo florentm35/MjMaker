@@ -1,4 +1,4 @@
-package fr.florent.mjmaker.fragment.entity.template;
+package fr.florent.mjmaker.fragment.entity.adapter;
 
 import android.content.Context;
 import android.view.View;
@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import fr.florent.mjmaker.R;
-import fr.florent.mjmaker.component.ExtendedEditText;
 import fr.florent.mjmaker.service.model.TemplateVar;
 import fr.florent.mjmaker.utils.AbstractLinearAdapter;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;

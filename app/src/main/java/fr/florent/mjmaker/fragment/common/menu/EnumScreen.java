@@ -13,7 +13,7 @@ public enum EnumScreen {
     LIST_CATEGORY(R.id.menu_category),
     LIST_SCENARIO(R.id.menu_scenario),
     // Sub screen
-    EDIT_MONSTER,
+    EDIT_ENTITY,
     DETAIL_SCENARIO,
     LIST_ENTITY_TEMPLATE,
     EDIT_ENTITY_TEMPLATE;

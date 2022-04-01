@@ -27,7 +27,6 @@
     <string name="msg_new_template">Nouveau modèle</string>
     <string name="msg_scenario_created">Scénario créé</string>
     <string name="msg_scenario_deleted">Scénario supprimé</string>
-    <string name="msg_set_the_name">Veuillez saisir le nom</string>
     <string name="msg_template_created">Modèle créé</string>
     <string name="msg_template_updated">Modèle mis à jour</string>
     <string name="label_name">Nom</string>
@@ -37,4 +36,9 @@
     <string name="label_theme">Thème</string>
     <string name="label_title">Titre</string>
     <string name="label_variable">Variable</string>
+    <string name="err_entity_name_empty">Le nom est obligatoire</string>
+    <string name="err_entity_template_empty">Le modèle est obligatoire</string>
+    <string name="msg_entity_created">Entité créée</string>
+    <string name="msg_entity_deleted">Entité supprimée</string>
+    <string name="msg_ask_delete_entity">Voulez vous vraiment supprimé cette entité ?</string>
 </resources>

@@ -1,6 +1,7 @@
 package fr.florent.mjmaker.utils;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.text.Editable;
@@ -19,7 +20,11 @@ import fr.florent.mjmaker.component.ExtendedEditText;
 /**
  * Util class for Android binding data
  */
-public abstract class AndroidLayoutUtil {
+public class AndroidLayoutUtil {
+
+    public interface IValidationParamDialog {
+        void action(Dialog dialog);
+    }
 
     public interface ITextWithBooleanReturnEvent {
         boolean action(String value);
@@ -70,30 +75,21 @@ public abstract class AndroidLayoutUtil {
 
 
     public static void openModalAskText(Context context,
-                                        String title,
                                         String value,
                                         ITextWithBooleanReturnEvent onValidate
     ) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
         View view = LayoutInflater.from(context).inflate(R.layout.modal_ask_text, null);
-
         if (value != null) {
-            AndroidLayoutUtil.setTextViewText(view, R.id.value, value);
+            AndroidLayoutUtil.setTextViewText(view, R.id.et_name, value);
         }
-        builder.setView(view);
 
-        // Set the dialog title
-        builder.setTitle(title)
-                // Set the action buttons
-                .setPositiveButton("OK", (dialog, id) -> {
-                    if (onValidate.action(AndroidLayoutUtil.getTextViewText(view, R.id.value))) {
-                        dialog.cancel();
-                    }
-                })
-                .setNegativeButton("Cancel", (dialog, id) -> dialog.cancel());
+        openSimpleDialog(view, dialog -> {
+            if (onValidate.action(AndroidLayoutUtil.getTextViewText(view, R.id.et_name))) {
+                dialog.cancel();
+            }
+        });
 
-        builder.create()
-                .show();
     }
 
 
@@ -137,15 +133,20 @@ public abstract class AndroidLayoutUtil {
         // Set the dialog title
         builder.setTitle("")
                 // Set the action buttons
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
+                .setPositiveButton("OK", (dialog, id) -> dialog.cancel());
 
         builder.create()
                 .show();
+    }
+
+    public static void openSimpleDialog(View view, IValidationParamDialog handler) {
+        AlertDialog dialog = new AlertDialog.Builder(view.getContext()).setView(view)
+                .setPositiveButton("OK", null)
+                .setNegativeButton("Cancel", (d, id) -> d.cancel())
+                .show();
+
+        dialog.getButton(DialogInterface.BUTTON_POSITIVE)
+                .setOnClickListener(v -> handler.action(dialog));
     }
 
     public static void clearExtendedEditTextTextChange(View view, int id) {
@@ -178,5 +179,7 @@ public abstract class AndroidLayoutUtil {
             }
         });
     }
+
+
 
 }

@@ -109,12 +109,10 @@ public class GameAdapter extends AbstractLinearWithHeaderAdapter<Game> {
 
             case ADD:
                 AndroidLayoutUtil.openModalAskText(view.getContext(),
-                        "Set the name ?",
                         null, v -> this.onValidateModalAskText(v, game, null, themeAdapter));
                 break;
             case EDIT:
                 AndroidLayoutUtil.openModalAskText(view.getContext(),
-                        "Set the name ?",
                         theme.getName(), v -> this.onValidateModalAskText(v, game, theme, themeAdapter));
                 break;
             case DELETE:

@@ -1,4 +1,4 @@
-package fr.florent.mjmaker.fragment.entity.template;
+package fr.florent.mjmaker.fragment.entity;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,6 +17,8 @@ import fr.florent.mjmaker.R;
 import fr.florent.mjmaker.fragment.common.AbstractFragment;
 import fr.florent.mjmaker.fragment.common.menu.EnumScreen;
 import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
+import fr.florent.mjmaker.fragment.entity.adapter.TemplateAdapter;
+import fr.florent.mjmaker.fragment.entity.modal.ParamTemplateModal;
 import fr.florent.mjmaker.service.model.Template;
 import fr.florent.mjmaker.service.repository.TemplateService;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;
@@ -43,7 +45,7 @@ public class ListTemplateFragment extends AbstractFragment {
     private void onAction(TemplateAdapter.EnumAction action, Template template) {
         switch (action) {
 
-            case VIEW:
+            case EDIT:
                 this.redirectToDetailScenario(template);
                 break;
             case DELETE:

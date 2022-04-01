@@ -1,4 +1,4 @@
-package fr.florent.mjmaker.fragment.entity.template;
+package fr.florent.mjmaker.fragment.entity.adapter;
 
 import android.content.Context;
 import android.view.View;
@@ -17,7 +17,7 @@ public class TemplateAdapter extends AbstractLinearWithHeaderAdapter<Template> {
     private static String TAG = TemplateAdapter.class.getName();
 
     public enum EnumAction {
-        VIEW, DELETE;
+        EDIT, DELETE;
     }
 
     public interface IEventAction {
@@ -56,7 +56,7 @@ public class TemplateAdapter extends AbstractLinearWithHeaderAdapter<Template> {
             AndroidLayoutUtil.setTextViewText(view, R.id.tv_theme, template.getTheme() != null ? template.getTheme().getName() : "");
             AndroidLayoutUtil.setTextViewText(view, R.id.tv_name, template.getName());
 
-            view.findViewById(R.id.view).setOnClickListener(v -> handler.action(EnumAction.VIEW, template));
+            view.findViewById(R.id.view).setOnClickListener(v -> handler.action(EnumAction.EDIT, template));
             view.findViewById(R.id.delete).setOnClickListener(v -> handler.action(EnumAction.DELETE, template));
         }
     }

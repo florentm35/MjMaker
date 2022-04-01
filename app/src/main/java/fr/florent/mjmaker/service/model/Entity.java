@@ -27,8 +27,6 @@ public class Entity {
     private String name;
     @DatabaseField(columnName = "level")
     private String level;
-    @DatabaseField(columnName = "idCategory")
-    private Integer idCategory;
     @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Template template;
     @ForeignCollectionField

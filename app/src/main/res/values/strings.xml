@@ -16,6 +16,7 @@
     <string name="msg_ask_delete_element">Did you want really delete this element ?</string>
     <string name="msg_ask_delete_fieldset">Did you want really delete this fieldset ?</string>
     <string name="msg_ask_delete_scenario">Did you want really delete this scenario ?</string>
+    <string name="msg_ask_delete_entity">Did you want really delete this entity ?</string>
     <string name="msg_category_removed">Category removed</string>
     <string name="msg_element_deleted">Element deleted</string>
     <string name="msg_fieldset_created">Fieldset created</string>
@@ -23,9 +24,10 @@
     <string name="msg_game_created">Game created</string>
     <string name="msg_game_modified">Game modified</string>
     <string name="msg_new_template">New template</string>
+    <string name="msg_entity_created">Entity created</string>
+    <string name="msg_entity_deleted">Entity deleted</string>
     <string name="msg_scenario_created">Scenario created</string>
     <string name="msg_scenario_deleted">Scenario deleted</string>
-    <string name="msg_set_the_name">Set the name ?</string>
     <string name="msg_template_created">Template created</string>
     <string name="msg_template_updated">Template updated</string>
     <string name="label_name">Name</string>
@@ -36,4 +38,6 @@
     <string name="label_title">Title</string>
     <string name="label_variable">Variable</string>
     <string name="label_game">Game</string>
+    <string name="err_entity_name_empty">The name is mandatory</string>
+    <string name="err_entity_template_empty">The template is mandatory</string>
 </resources>

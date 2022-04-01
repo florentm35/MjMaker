@@ -26,14 +26,14 @@ public class EditEntityFragment extends AbstractFragment {
 
     public EditEntityFragment(Object... params) {
         if (params != null && params.length > 0) {
-            entity = entityService.findBydId((Integer) params[0]);
+            entity = (Entity) params[0];
         }
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.edit_monster, container, false);
+        View view = inflater.inflate(R.layout.edit_entity, container, false);
 
         ImageButton saveButton = view.findViewById(R.id.valide);
 

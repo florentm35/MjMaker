@@ -82,12 +82,12 @@ public class ScenarioFragment extends AbstractFragment {
                 this::requestDrag);
         recyclerView.setAdapter(adapter);
 
-         itemTouchHelper = getItemTouchHelper();
-         itemTouchHelper.attachToRecyclerView(recyclerView);
+        itemTouchHelper = getItemTouchHelper();
+        itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
     public void requestDrag(RecyclerView.ViewHolder viewHolder) {
-        if(itemTouchHelper!= null && state == EnumState.EDIT) {
+        if (itemTouchHelper != null && state == EnumState.EDIT) {
             itemTouchHelper.startDrag(viewHolder);
         }
     }
@@ -173,7 +173,7 @@ public class ScenarioFragment extends AbstractFragment {
     }
 
     private void editFieldSet(FieldSetScenario fieldSetScenario) {
-        AndroidLayoutUtil.openModalAskText(getContext(), getString(R.string.msg_set_the_name),
+        AndroidLayoutUtil.openModalAskText(getContext(),
                 fieldSetScenario != null ? fieldSetScenario.getTitle() : null,
                 (v) -> saveFieldSet(v, fieldSetScenario));
     }

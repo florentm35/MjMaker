@@ -1,6 +1,6 @@
-package fr.florent.mjmaker.fragment.entity.template;
+package fr.florent.mjmaker.fragment.entity.modal;
 
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,7 +54,7 @@ public class ParamTemplateModal extends DialogFragment {
     private void lodeGameList(View view) {
         // Init game combo box
         FilterComboBox<Game> fbcGame = view.findViewById(R.id.fbc_game);
-        fbcGame.setText(template.getGame() != null ? template.getGame().getName() : "");
+        fbcGame.setText(gameSelection != null ? gameSelection.getName() : "");
         fbcGame.setItems(
                 gameService.getAll().stream()
                         .map(g -> new ItemSelect<>(g, g.getName()))
@@ -102,20 +102,19 @@ public class ParamTemplateModal extends DialogFragment {
         gameSelection = template.getGame();
         themeSelection = template.getTheme();
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        view = initView(context);
-        builder.setView(view)
-                .setPositiveButton("OK", (dialog, id) -> {
-                    template.setName(AndroidLayoutUtil.getTextViewText(view, R.id.et_name));
-                    template.setGame(gameSelection);
-                    template.setTheme(themeSelection);
-                    if (onValidate.action(template)) {
-                        dialog.cancel();
-                    }
-                })
-                .setNegativeButton("Cancel", (dialog, id) -> dialog.cancel());
+        initView(context);
 
-        builder.create()
-                .show();
+        AndroidLayoutUtil.openSimpleDialog(view,
+                (dialog -> onValidateDialog(dialog, onValidate)));
+
+    }
+
+    private void onValidateDialog(Dialog dialog, IActionOK onValidate) {
+        template.setName(AndroidLayoutUtil.getTextViewText(view, R.id.et_name));
+        template.setGame(gameSelection);
+        template.setTheme(themeSelection);
+        if (onValidate.action(template)) {
+            dialog.cancel();
+        }
     }
 }
