@@ -15,6 +15,7 @@
     <string name="label_fieldset_new">New fieldset</string>
     <string name="label_new_scenario">New scenario</string>
     <string name="label_rename_template">Rename template</string>
+    <string name="label_view">View</string>
     <string name="label_template">Template</string>
     <string name="label_view_mode">View mode</string>
     <string name="label_level">Level</string>

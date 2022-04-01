@@ -128,7 +128,7 @@ public class ParamEntityModal extends DialogFragment {
                         .collect(Collectors.toList())
         );
 
-        fbcTemplate.setText(themeSelection != null ? themeSelection.getName() : "");
+        fbcTemplate.setText(templateSelection != null ? templateSelection.getName() : "");
 
         fbcTemplate.setOnItemClickListener(template -> templateSelection = template);
     }

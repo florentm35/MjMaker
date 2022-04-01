@@ -9,6 +9,9 @@ import org.commonmark.renderer.html.HtmlRenderer;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -37,6 +40,43 @@ public class MarkDownService {
                 .extensions(extensions)
                 .build();
         return renderer.render(document);
+    }
+
+    public String processVariable(Map<String, String> values, String text) {
+
+        StringBuilder str = new StringBuilder();
+
+        Integer beginExpression = null;
+        StringBuilder buffer = new StringBuilder();
+
+        for (int i = 0; i < text.length(); i++) {
+            char currentChar = text.charAt(i);
+
+            if (currentChar == '$') {
+                beginExpression = i;
+            } else if (currentChar != '{' && beginExpression != null && i - beginExpression == 1) {
+                // it's not an expression
+                buffer.append("$")
+                        .append(currentChar);
+                beginExpression = null;
+            } else if (currentChar == '{' && beginExpression != null && i - beginExpression == 1) {
+                str.append(buffer);
+                buffer.setLength(0);
+            } else if (currentChar == '}' && beginExpression != null && i - beginExpression > 1) {
+                String variable = buffer.toString().trim();
+                String value = "";
+                if(values.containsKey(variable)) {
+                    value = values.get(variable);
+                }
+                str.append(value);
+                buffer.setLength(0);
+            } else {
+                buffer.append(currentChar);
+            }
+
+        }
+        return str.append(buffer).toString();
+
     }
 
 }

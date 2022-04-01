@@ -44,4 +44,5 @@
     <string name="msg_entity_updated">Entité mise à jour</string>
     <string name="msg_template_deleted">Modèle supprimé</string>
     <string name="msg_ask_delete_template">Voulez vous vraiment supprimer ce modèle ?</string>
+    <string name="label_view">Voir</string>
 </resources>

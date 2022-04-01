@@ -16,7 +16,7 @@ import fr.florent.mjmaker.R;
 import fr.florent.mjmaker.component.MarkdownEditor;
 import fr.florent.mjmaker.fragment.common.AbstractFragment;
 import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
-import fr.florent.mjmaker.fragment.entity.adapter.TemplateVariableAdapter;
+import fr.florent.mjmaker.fragment.entity.adapter.TemplateVarAdapter;
 import fr.florent.mjmaker.fragment.entity.modal.ParamTemplateModal;
 import fr.florent.mjmaker.service.model.EnumTemplateVarType;
 import fr.florent.mjmaker.service.model.Template;
@@ -33,7 +33,7 @@ public class EditTemplateFragment extends AbstractFragment {
 
     private final Template template;
 
-    private TemplateVariableAdapter templateVariableAdapter;
+    private TemplateVarAdapter templateVarAdapter;
 
     public EditTemplateFragment(Object... params) {
         template = (Template) params[0];
@@ -48,13 +48,13 @@ public class EditTemplateFragment extends AbstractFragment {
         editor.setOnTextChanged(this::onTextChange);
 
 
-        templateVariableAdapter = new TemplateVariableAdapter(getContext(),
+        templateVarAdapter = new TemplateVarAdapter(getContext(),
                 DataBaseUtil.convertForeignCollectionToList(template.getLstVar()),
                 this::onVariableChanged);
 
         RecyclerView listVariable = view.findViewById(R.id.list_variable);
         listVariable.setLayoutManager(new LinearLayoutManager(getContext()));
-        listVariable.setAdapter(templateVariableAdapter);
+        listVariable.setAdapter(templateVarAdapter);
 
         ImageButton expendBtn = view.findViewById(R.id.expend);
         expendBtn.setOnClickListener(v -> onExpend(expendBtn, listVariable));
@@ -82,9 +82,9 @@ public class EditTemplateFragment extends AbstractFragment {
                 .type(EnumTemplateVarType.TEXT)
                 .build();
         templateVarService.save(templateVar);
-        templateVariableAdapter.addItem(templateVar);
+        templateVarAdapter.addItem(templateVar);
         // FIXME : See why the recycler not update without update the item
-        templateVariableAdapter.updateItem(templateVar);
+        templateVarAdapter.updateItem(templateVar);
     }
 
     private void changeParamTemplate() {
@@ -99,14 +99,14 @@ public class EditTemplateFragment extends AbstractFragment {
         return true;
     }
 
-    private void onVariableChanged(TemplateVariableAdapter.EnumAction action, TemplateVar templateVar) {
+    private void onVariableChanged(TemplateVarAdapter.EnumAction action, TemplateVar templateVar) {
         switch (action) {
             case UPDATE:
                 templateVarService.update(templateVar);
                 break;
             case DELETE:
                 templateVarService.delete(templateVar);
-                templateVariableAdapter.removeItem(templateVar);
+                templateVarAdapter.removeItem(templateVar);
                 break;
             default:
                 throw new RuntimeException("Not implemented : "+action);

@@ -12,7 +12,7 @@ import fr.florent.mjmaker.service.model.TemplateVar;
 import fr.florent.mjmaker.utils.AbstractLinearAdapter;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 
-public class TemplateVariableAdapter extends AbstractLinearAdapter<TemplateVar> {
+public class TemplateVarAdapter extends AbstractLinearAdapter<TemplateVar> {
 
     public enum EnumAction {
         UPDATE, DELETE;
@@ -24,7 +24,7 @@ public class TemplateVariableAdapter extends AbstractLinearAdapter<TemplateVar> 
 
     private final IEventAction handler;
 
-    public TemplateVariableAdapter(Context context, List<TemplateVar> values, IEventAction handler) {
+    public TemplateVarAdapter(Context context, List<TemplateVar> values, IEventAction handler) {
         super(context, values);
         this.handler = handler;
     }
