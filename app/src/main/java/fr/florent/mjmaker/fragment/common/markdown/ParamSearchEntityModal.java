@@ -1,4 +1,4 @@
-package fr.florent.mjmaker.fragment.entity.modal;
+package fr.florent.mjmaker.fragment.common.markdown;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -16,6 +16,7 @@ import fr.florent.mjmaker.service.model.Entity;
 import fr.florent.mjmaker.service.model.Game;
 import fr.florent.mjmaker.service.model.Template;
 import fr.florent.mjmaker.service.model.Theme;
+import fr.florent.mjmaker.service.repository.EntityService;
 import fr.florent.mjmaker.service.repository.GameService;
 import fr.florent.mjmaker.service.repository.TemplateService;
 import fr.florent.mjmaker.service.repository.ThemeService;
@@ -23,11 +24,12 @@ import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 import fr.florent.mjmaker.utils.DataBaseUtil;
 import fr.florent.mjmaker.utils.ItemSelect;
 
-public class ParamEntityModal extends DialogFragment {
+public class ParamSearchEntityModal extends DialogFragment {
 
     private final GameService gameService = GameService.getInstance();
     private final ThemeService themeService = ThemeService.getInstance();
     private final TemplateService templateService = TemplateService.getInstance();
+    private final EntityService entityService = EntityService.getInstance();
 
     private Game gameSelection;
 
@@ -35,7 +37,7 @@ public class ParamEntityModal extends DialogFragment {
 
     private Template templateSelection;
 
-    private Entity entity;
+    private Entity entitySelection;
 
     private View view;
 
@@ -44,17 +46,7 @@ public class ParamEntityModal extends DialogFragment {
     }
 
     public void show(Context context,
-                     Entity value,
                      IActionOK onValidate) {
-        entity = value;
-        if (entity == null) {
-            entity = new Entity();
-        }
-        templateSelection = entity.getTemplate();
-        if (templateSelection != null) {
-            gameSelection = templateSelection.getGame();
-            themeSelection = templateSelection.getTheme();
-        }
 
         view = initView(context);
 
@@ -63,7 +55,7 @@ public class ParamEntityModal extends DialogFragment {
     }
 
     private View initView(Context context) {
-        view = LayoutInflater.from(context).inflate(R.layout.param_entity_modal, null);
+        view = LayoutInflater.from(context).inflate(R.layout.param_search_entity_modal, null);
 
         lodeGameList(view);
 
@@ -71,21 +63,12 @@ public class ParamEntityModal extends DialogFragment {
 
         loadTemplateList(view);
 
-        AndroidLayoutUtil.setTextViewText(view, R.id.et_name, entity.getName());
-        AndroidLayoutUtil.setTextViewText(view, R.id.et_level, entity.getLevel());
-
-        if(entity.getId() != null) {
-            AndroidLayoutUtil.setTextViewText(view, R.id.tv_id, entity.getId());
-            view.findViewById(R.id.layout_id).setVisibility(View.VISIBLE);
-        } else {
-            view.findViewById(R.id.layout_id).setVisibility(View.GONE);
-        }
+        loadEntityList(view);
 
         return view;
     }
 
     private void lodeGameList(View view) {
-        // Init game combo box
         FilterComboBox<Game> fbcGame = view.findViewById(R.id.fbc_game);
         fbcGame.setText(gameSelection != null ? gameSelection.getName() : "");
         fbcGame.setItems(
@@ -97,7 +80,6 @@ public class ParamEntityModal extends DialogFragment {
     }
 
     private void loadThemeList(View view) {
-        // Init theme combo box
         FilterComboBox<Theme> fbcTheme = view.findViewById(R.id.fbc_theme);
         List<Theme> lstThemeAvailable;
         if (gameSelection != null) {
@@ -121,7 +103,6 @@ public class ParamEntityModal extends DialogFragment {
     }
 
     private void loadTemplateList(View view) {
-        // Init theme combo box
         FilterComboBox<Template> fbcTemplate = view.findViewById(R.id.fbc_template);
         List<Template> lstTemplateAvailable = templateService.getAll().stream()
                 .filter(t -> gameSelection == null || gameSelection.equals(t.getGame()))
@@ -140,27 +121,54 @@ public class ParamEntityModal extends DialogFragment {
 
         fbcTemplate.setText(templateSelection != null ? templateSelection.getName() : "");
 
-        fbcTemplate.setOnItemClickListener(template -> templateSelection = template);
+        fbcTemplate.setOnItemClickListener(this::onTemplateSelectionChanged);
     }
+
+    private void loadEntityList(View view) {
+        FilterComboBox<Entity> fbcEntity = view.findViewById(R.id.fbc_entity);
+        List<Entity> lstEntityAvailable = entityService.getAll().stream()
+                .filter(e -> templateSelection == null || templateSelection.equals(e.getTemplate()))
+                .filter(e -> gameSelection == null || gameSelection.equals(e.getTemplate().getGame()))
+                .filter(e -> themeSelection == null || themeSelection.equals(e.getTemplate().getTheme()))
+                .collect(Collectors.toList());
+
+        if(!lstEntityAvailable.contains(entitySelection)) {
+            entitySelection = null;
+        }
+
+        fbcEntity.setItems(
+                lstEntityAvailable.stream()
+                        .map(t -> new ItemSelect<>(t, t.getName()))
+                        .collect(Collectors.toList())
+        );
+
+        fbcEntity.setText(entitySelection != null ? entitySelection.getName() : "");
+
+        fbcEntity.setOnItemClickListener(entity -> entitySelection = entity);
+    }
+
 
     private void onGameSelectionChanged(Game g) {
         gameSelection = g;
         loadThemeList(view);
         loadTemplateList(view);
+        loadEntityList(view);
     }
 
     private void onThemeSelectionChanged(Theme theme) {
         themeSelection = theme;
         loadTemplateList(view);
+        loadEntityList(view);
+    }
+
+    private void onTemplateSelectionChanged(Template template) {
+        templateSelection = template;
+        loadEntityList(view);
     }
 
 
     private void onValidateDialog(Dialog dialog, IActionOK onValidate) {
-        entity.setName(AndroidLayoutUtil.getTextViewText(view, R.id.et_name));
-        entity.setLevel(AndroidLayoutUtil.getTextViewText(view, R.id.et_level));
-        entity.setTemplate(templateSelection);
-
-        if (onValidate.action(entity)) {
+        if (onValidate.action(entitySelection)) {
             dialog.cancel();
         }
     }

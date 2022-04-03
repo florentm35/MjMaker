@@ -87,6 +87,12 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/material_strikethrough" />
 
+            <ImageButton
+                android:id="@+id/link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/material_link" />
+
         </LinearLayout>
     </RelativeLayout>
 </LinearLayout>

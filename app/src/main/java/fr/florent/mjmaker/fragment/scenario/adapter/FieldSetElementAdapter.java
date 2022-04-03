@@ -1,33 +1,28 @@
 package fr.florent.mjmaker.fragment.scenario.adapter;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import fr.florent.mjmaker.R;
-import fr.florent.mjmaker.component.ExtendedEditText;
 import fr.florent.mjmaker.component.MarkdownEditor;
+import fr.florent.mjmaker.fragment.common.markdown.InternalLinkMovementMethod;
 import fr.florent.mjmaker.fragment.scenario.ScenarioFragment;
-import fr.florent.mjmaker.service.markdown.EnumMark;
 import fr.florent.mjmaker.service.markdown.MarkDownService;
+import fr.florent.mjmaker.service.model.Entity;
 import fr.florent.mjmaker.service.model.FieldSetElement;
 import fr.florent.mjmaker.service.model.TextElement;
+import fr.florent.mjmaker.service.repository.EntityService;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,6 +30,8 @@ import lombok.Setter;
 public class FieldSetElementAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final MarkDownService markDownService = MarkDownService.getInstance();
+
+    private final EntityService entityService = EntityService.getInstance();
 
     private static final String TAG = FieldSetElementAdapter.class.getName();
 
@@ -93,26 +90,10 @@ public class FieldSetElementAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 TextElement textElement = (TextElement) element.getElement();
                 switch (state) {
                     case VIEW:
-                        Spanned text = AndroidLayoutUtil.createHtmlText(
-                                markDownService.parseMarkDown(textElement.getText())
-                        );
-                        AndroidLayoutUtil.setTextViewText(view, R.id.tv_text, text);
-                        view.findViewById(R.id.tv_text).setVisibility(View.VISIBLE);
-                        view.findViewById(R.id.mde_text).setVisibility(View.GONE);
+                        proccesTextViewMode(view, textElement);
                         break;
                     case EDIT:
-                        Log.d(TAG, "onBindViewHolder: Edit mode " + textElement);
-                        MarkdownEditor editor = view.findViewById(R.id.mde_text);
-                        editor.setText(textElement.getText());
-                        editor.setOnTextChanged((value) -> {
-                            Log.d(TAG, String.format("old value : %s, new value : %s", textElement.getText(), value));
-                            textElement.setText(value);
-                            handler.update(EnumAction.UPDATE, element);
-                        });
-                        editor.setDeleteHandler(() -> handler.update(EnumAction.DELETE, element));
-
-                        view.findViewById(R.id.tv_text).setVisibility(View.GONE);
-                        view.findViewById(R.id.mde_text).setVisibility(View.VISIBLE);
+                        processTextEditMode(element, view, textElement);
                         break;
                 }
 
@@ -123,6 +104,47 @@ public class FieldSetElementAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 throw new RuntimeException("Not implemented");
         }
 
+    }
+
+    private void processTextEditMode(FieldSetElement element, View view, TextElement textElement) {
+        Log.d(TAG, "onBindViewHolder: Edit mode " + textElement);
+        MarkdownEditor editor = view.findViewById(R.id.mde_text);
+        editor.setText(textElement.getText());
+        editor.setOnTextChanged((value) -> {
+            Log.d(TAG, String.format("old value : %s, new value : %s", textElement.getText(), value));
+            textElement.setText(value);
+            handler.update(EnumAction.UPDATE, element);
+        });
+        editor.setDeleteHandler(() -> handler.update(EnumAction.DELETE, element));
+
+        view.findViewById(R.id.tv_text).setVisibility(View.GONE);
+        view.findViewById(R.id.mde_text).setVisibility(View.VISIBLE);
+    }
+
+    private void proccesTextViewMode(View view, TextElement textElement) {
+        Spanned text = AndroidLayoutUtil.createHtmlText(
+                markDownService.parseMarkDown(textElement.getText())
+        );
+        AndroidLayoutUtil.setTextViewText(view, R.id.tv_text, text);
+
+        TextView textView = view.findViewById(R.id.tv_text);
+        textView.setMovementMethod(new InternalLinkMovementMethod(link -> {
+
+            if (link.startsWith("entity://")) {
+                String id = link.replace("entity://", "");
+                try {
+                    Entity entityRefresh = entityService.findBydId(Integer.parseInt(id));
+                    AndroidLayoutUtil.openModalInfo(context, entityService.renderEntity(entityRefresh));
+                } catch (Exception ex) {
+                    AndroidLayoutUtil.showToast(context, context.getString(R.string.msg_entity_not_found));
+                }
+                return true;
+            }
+
+            return false;
+        }));
+        view.findViewById(R.id.tv_text).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.mde_text).setVisibility(View.GONE);
     }
 
     @Override

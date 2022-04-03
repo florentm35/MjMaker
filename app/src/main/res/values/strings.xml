@@ -2,6 +2,7 @@
     <string name="app_name">MjMaker</string>
 
     <!-- Common -->
+    <string name="label_id">Id</string>
     <string name="label_name">Name</string>
     <string name="label_settings">Settings</string>
     <string name="label_show_menu">Show menu</string>
@@ -17,6 +18,7 @@
     <string name="label_rename_template">Rename template</string>
     <string name="label_view">View</string>
     <string name="label_template">Template</string>
+    <string name="label_entity">Entity</string>
     <string name="label_view_mode">View mode</string>
     <string name="label_level">Level</string>
 
@@ -58,5 +60,7 @@
     <string name="msg_template_updated">Template updated</string>
     <string name="msg_template_deleted">Template deleted</string>
     <string name="msg_ask_delete_template">Did you want really delete this template ?</string>
+    <string name="msg_entity_not_found">Entity can not be found</string>
+    <string name="msg_pick_entity">Pick an entity</string>
 
 </resources>

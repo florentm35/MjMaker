@@ -8,6 +8,7 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import java.io.BufferedReader;
@@ -17,7 +18,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.stream.Collectors;
 
 import fr.florent.mjmaker.R;
+import fr.florent.mjmaker.fragment.common.markdown.ParamSearchEntityModal;
 import fr.florent.mjmaker.service.markdown.EnumMark;
+import fr.florent.mjmaker.service.model.Entity;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 
 /**
@@ -60,6 +63,7 @@ public class MarkdownEditor extends LinearLayout {
         this.findViewById(R.id.bold).setOnClickListener((v -> applyMarkdownTag(EnumMark.BOLD, editText)));
         this.findViewById(R.id.italic).setOnClickListener((v -> applyMarkdownTag(EnumMark.ITALIC, editText)));
         this.findViewById(R.id.strikethrough).setOnClickListener((v -> applyMarkdownTag(EnumMark.STRICKETHROUGH, editText)));
+        this.findViewById(R.id.link).setOnClickListener((v -> showSearchEntity()));
 
         this.findViewById(R.id.info).setOnClickListener(v -> openModalInfo());
         boolean showDeleteBtn = true;
@@ -72,17 +76,53 @@ public class MarkdownEditor extends LinearLayout {
 
     }
 
+    private void showSearchEntity() {
+        ParamSearchEntityModal dialog = new ParamSearchEntityModal();
+        dialog.show(getContext(), this::processEntityLink);
+    }
+    
+    private boolean processEntityLink(Entity entity) {
+        if(entity == null) {
+            AndroidLayoutUtil.showToast(getContext(), getContext().getString(R.string.msg_pick_entity));
+            return false;
+        }
 
-    private void applyMarkdownTag(EnumMark mark, ExtendedEditText editText) {
+        String[] params = new String[3];
+        ExtendedEditText editText = this.findViewById(R.id.et_text);
+        int startSelection = editText.getSelectionStart();
+        int endSelection = editText.getSelectionEnd();
+        if(startSelection == endSelection) {
+            params[0] = entity.getName();
+        } else {
+            params[0] = editText.getText().subSequence(startSelection, endSelection).toString();
+        }
+        params[1] = "entity://";
+        params[2] = entity.getId().toString();
+
+        applyMarkdownTag(EnumMark.LINK, editText, params);
+
+        return true;
+    }
+
+    private void applyMarkdownTag(EnumMark mark, ExtendedEditText editText, String... params) {
         int startSelection = editText.getSelectionStart();
         int endSelection = editText.getSelectionEnd();
 
         String text = editText.getText().toString();
-
         StringBuilder str = new StringBuilder(text.substring(0, startSelection));
-        str.append(mark.getMakdownTag());
-        str.append(text.substring(startSelection, endSelection));
-        str.append(mark.getMakdownTag());
+        if(!mark.isPattern()) {
+            str.append(mark.getMakdownTag());
+            str.append(text.substring(startSelection, endSelection));
+            str.append(mark.getMakdownTag());
+        } else {
+            String textMark = mark.getMakdownTag();
+
+            for (int i = 0; i < params.length; i++) {
+                textMark = textMark.replace("%"+i, params[i]);
+            }
+            str.append(textMark);
+        }
+
         str.append(text.substring(endSelection));
 
         editText.setText(str.toString());
