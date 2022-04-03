@@ -7,7 +7,14 @@ import lombok.Getter;
 public enum EnumMark {
     BOLD("**", false),
     ITALIC("*", false),
-    STRICKETHROUGH("~~", false),
+    STRIKETHROUGH("~~", false),
+    /**
+     * <ul>
+     *      <li>%0 : Label</li>
+     *      <li>%1 : Protocol</li>
+     *      <li>%2 : URI</li>
+     * </ul>
+     */
     LINK("[%0](%1%2)", true);
 
     @Getter

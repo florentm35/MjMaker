@@ -8,7 +8,6 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import java.io.BufferedReader;
@@ -62,7 +61,7 @@ public class MarkdownEditor extends LinearLayout {
         ExtendedEditText editText = this.findViewById(R.id.et_text);
         this.findViewById(R.id.bold).setOnClickListener((v -> applyMarkdownTag(EnumMark.BOLD, editText)));
         this.findViewById(R.id.italic).setOnClickListener((v -> applyMarkdownTag(EnumMark.ITALIC, editText)));
-        this.findViewById(R.id.strikethrough).setOnClickListener((v -> applyMarkdownTag(EnumMark.STRICKETHROUGH, editText)));
+        this.findViewById(R.id.strikethrough).setOnClickListener((v -> applyMarkdownTag(EnumMark.STRIKETHROUGH, editText)));
         this.findViewById(R.id.link).setOnClickListener((v -> showSearchEntity()));
 
         this.findViewById(R.id.info).setOnClickListener(v -> openModalInfo());
