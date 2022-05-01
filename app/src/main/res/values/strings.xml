@@ -62,5 +62,12 @@
     <string name="msg_ask_delete_template">Did you want really delete this template ?</string>
     <string name="msg_entity_not_found">Entity can not be found</string>
     <string name="msg_pick_entity">Pick an entity</string>
+    <string name="tooltip_btn_link">Add entity link</string>
+    <string name="tooltip_btn_line_break">Add double line break</string>
+    <string name="tooltip_btn_strikethrough">Set the text strikethrough</string>
+    <string name="tooltip_btn_italic">Set the text in italic</string>
+    <string name="tooltip_btn_bold">Set the text in bold</string>
+    <string name="tooltip_btn_markdown_help">Markdown help</string>
+    <string name="tooltip_btn_delete">Delete</string>
 
 </resources>

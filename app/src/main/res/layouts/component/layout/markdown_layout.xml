@@ -46,7 +46,8 @@
                 android:id="@+id/info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/material_info" />
+                android:src="@drawable/material_info"
+                android:tooltipText="@string/tooltip_btn_markdown_help" />
 
             <LinearLayout
                 android:id="@+id/action_delimiter"
@@ -59,7 +60,8 @@
                 android:id="@+id/delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/material_delete" />
+                android:src="@drawable/material_delete"
+                android:tooltipText="@string/tooltip_btn_delete" />
         </LinearLayout>
 
         <LinearLayout
@@ -73,31 +75,36 @@
                 android:id="@+id/bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/material_bold" />
+                android:src="@drawable/material_bold"
+                android:tooltipText="@string/tooltip_btn_bold" />
 
             <ImageButton
                 android:id="@+id/italic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/material_italic" />
+                android:src="@drawable/material_italic"
+                android:tooltipText="@string/tooltip_btn_italic" />
 
             <ImageButton
                 android:id="@+id/strikethrough"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/material_strikethrough" />
+                android:src="@drawable/material_strikethrough"
+                android:tooltipText="@string/tooltip_btn_strikethrough" />
 
             <ImageButton
                 android:id="@+id/linebreak"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/material_linebreak" />
+                android:src="@drawable/material_linebreak"
+                android:tooltipText="@string/tooltip_btn_line_break" />
 
             <ImageButton
                 android:id="@+id/link"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/material_link" />
+                android:src="@drawable/material_link"
+                android:tooltipText="@string/tooltip_btn_link" />
 
         </LinearLayout>
     </RelativeLayout>

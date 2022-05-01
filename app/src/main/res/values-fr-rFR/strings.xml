@@ -49,4 +49,11 @@
     <string name="msg_entity_not_found">Entité non trouvée</string>
     <string name="label_entity">Entité</string>
     <string name="msg_pick_entity">Choisissez une entité</string>
+    <string name="tooltip_btn_link">Ajouter un lien vers une entitée</string>
+    <string name="tooltip_btn_line_break">Ajouter un double retour à la ligne</string>
+    <string name="tooltip_btn_strikethrough">Barrer le texte</string>
+    <string name="tooltip_btn_italic">Mettre le texte en italique</string>
+    <string name="tooltip_btn_bold">Mettre le texte en gras</string>
+    <string name="tooltip_btn_markdown_help">Aide markdown</string>
+    <string name="tooltip_btn_delete">Supprimer</string>
 </resources>
