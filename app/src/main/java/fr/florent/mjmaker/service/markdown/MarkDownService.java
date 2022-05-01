@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import fr.florent.mjmaker.service.markdown.custom.linebreak.LineBreakExtension;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -30,7 +31,8 @@ public class MarkDownService {
 
     public String parseMarkDown(String text) {
         List<Extension> extensions = Arrays.asList(StrikethroughExtension.create(),
-                InsExtension.create()
+                InsExtension.create(),
+                LineBreakExtension.create()
         );
         Parser parser = Parser.builder()
                 .extensions(extensions)
@@ -51,27 +53,35 @@ public class MarkDownService {
 
         for (int i = 0; i < text.length(); i++) {
             char currentChar = text.charAt(i);
-
+            // If is the first character before $
+            boolean isFirstExpressionCaracter = beginExpression != null && i - beginExpression == 1;
             if (currentChar == '$') {
+                if(isFirstExpressionCaracter) {
+                    // if double $ characters (for line break)
+                    buffer.append("$");
+                }
                 beginExpression = i;
-            } else if (currentChar != '{' && beginExpression != null && i - beginExpression == 1) {
+            } else if (currentChar != '{' && isFirstExpressionCaracter) {
                 // it's not an expression
                 buffer.append("$")
                         .append(currentChar);
                 beginExpression = null;
-            } else if (currentChar == '{' && beginExpression != null && i - beginExpression == 1) {
-                str.append(buffer);
-                buffer.setLength(0);
-            } else if (currentChar == '}' && beginExpression != null && i - beginExpression > 1) {
-                String variable = buffer.toString().trim();
-                String value = "";
-                if(values.containsKey(variable)) {
-                    value = values.get(variable);
-                }
-                str.append(value);
-                buffer.setLength(0);
             } else {
-                buffer.append(currentChar);
+
+                if (currentChar == '{' && isFirstExpressionCaracter) {
+                    str.append(buffer);
+                    buffer.setLength(0);
+                } else if (currentChar == '}' && beginExpression != null && i - beginExpression > 1) {
+                    String variable = buffer.toString().trim();
+                    String value = "";
+                    if(values.containsKey(variable)) {
+                        value = values.get(variable);
+                    }
+                    str.append(value);
+                    buffer.setLength(0);
+                } else {
+                    buffer.append(currentChar);
+                }
             }
 
         }

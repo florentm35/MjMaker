@@ -62,6 +62,7 @@ public class MarkdownEditor extends LinearLayout {
         this.findViewById(R.id.bold).setOnClickListener((v -> applyMarkdownTag(EnumMark.BOLD, editText)));
         this.findViewById(R.id.italic).setOnClickListener((v -> applyMarkdownTag(EnumMark.ITALIC, editText)));
         this.findViewById(R.id.strikethrough).setOnClickListener((v -> applyMarkdownTag(EnumMark.STRIKETHROUGH, editText)));
+        this.findViewById(R.id.linebreak).setOnClickListener((v -> applyMarkdownTag(EnumMark.LINE_BREAK, editText)));
         this.findViewById(R.id.link).setOnClickListener((v -> showSearchEntity()));
 
         this.findViewById(R.id.info).setOnClickListener(v -> openModalInfo());
@@ -109,19 +110,24 @@ public class MarkdownEditor extends LinearLayout {
 
         String text = editText.getText().toString();
         StringBuilder str = new StringBuilder(text.substring(0, startSelection));
-        if(!mark.isPattern()) {
-            str.append(mark.getMakdownTag());
-            str.append(text.substring(startSelection, endSelection));
-            str.append(mark.getMakdownTag());
-        } else {
-            String textMark = mark.getMakdownTag();
 
+        // Get default mark
+        String textMark = mark.getMakdownTag();
+        // if need pattern processor
+        if(mark.isPattern()) {
             for (int i = 0; i < params.length; i++) {
                 textMark = textMark.replace("%"+i, params[i]);
             }
             str.append(textMark);
         }
-
+        // Add mark
+        str.append(textMark);
+        // If need to group mark
+        if(mark.isGroup()) {
+            str.append(text.substring(startSelection, endSelection));
+            str.append(textMark);
+        }
+        // Add the last text
         str.append(text.substring(endSelection));
 
         editText.setText(str.toString());
