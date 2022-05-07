@@ -28,13 +28,14 @@ android {
 
     sourceSets {
         main {
-            res.srcDirs = ['src/main/res',
-                           'src/main/res/layouts/component',
+            res.srcDirs = ['src/main/res/layouts/component',
                            'src/main/res/layouts/category',
                            'src/main/res/layouts/common',
                            'src/main/res/layouts/entity',
                            'src/main/res/layouts/scenario',
-                           'src/main/res/layouts/template'
+                           'src/main/res/layouts/template',
+                           'src/main/res/layouts/map',
+                           'src/main/res'
             ]
         }
     }

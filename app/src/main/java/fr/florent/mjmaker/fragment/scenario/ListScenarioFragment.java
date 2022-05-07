@@ -76,7 +76,7 @@ public class ListScenarioFragment extends AbstractFragment {
     }
 
     private void redirectToDetailScenario(Scenario scenario, ScenarioFragment.EnumState state) {
-        redirect.apply(EnumScreen.DETAIL_SCENARIO, new Object[]{scenario, state});
+        redirect.apply(EnumScreen.EDIT_SCENARIO, new Object[]{scenario, state});
     }
 
     private void initScenario() {

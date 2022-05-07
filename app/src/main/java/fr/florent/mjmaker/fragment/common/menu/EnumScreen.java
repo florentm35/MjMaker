@@ -9,14 +9,17 @@ import fr.florent.mjmaker.R;
  */
 public enum EnumScreen {
     // Screen menu
-    LIST_ENTITY(R.id.menu_monster),
+    LIST_ENTITY(R.id.menu_entity),
     LIST_CATEGORY(R.id.menu_category),
     LIST_SCENARIO(R.id.menu_scenario),
+    LIST_MAP(R.id.menu_map),
     // Sub screen
     EDIT_ENTITY,
-    DETAIL_SCENARIO,
+    EDIT_SCENARIO,
+    EDIT_MAP,
     LIST_ENTITY_TEMPLATE,
     EDIT_ENTITY_TEMPLATE;
+
 
     private final Integer id;
 

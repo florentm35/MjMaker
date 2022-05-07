@@ -2,6 +2,7 @@ package fr.florent.mjmaker.service.common;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.util.Pair;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
@@ -25,7 +26,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     /**
      * Database version
      */
-    private static final int DB_VERSION = 8;
+    private static final int DB_VERSION = 9;
 
     /**
      * The instance
@@ -53,7 +54,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase, com.j256.ormlite.support.ConnectionSource connectionSource) {
         try {
-            for (Class<?> entityClass : EntityHelper.ENTITY_LIST) {
+            for (Pair<Class<?>, Integer> pairClassVersion : EntityHelper.ENTITY_LIST) {
+                Class<?> entityClass = pairClassVersion.first;
                 TableUtils.createTable(connectionSource, entityClass);
             }
         } catch (SQLException e) {
@@ -66,9 +68,12 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, com.j256.ormlite.support.ConnectionSource connectionSource, int i, int i2) {
 
         try {
-            for (Class<?> entityClass : EntityHelper.ENTITY_LIST) {
-                TableUtils.dropTable(connectionSource, entityClass, true);
-                TableUtils.createTable(connectionSource, entityClass);
+            for (Pair<Class<?>, Integer> pairClassVersion : EntityHelper.ENTITY_LIST) {
+                Class<?> entityClass = pairClassVersion.first;
+                if (DB_VERSION >= pairClassVersion.second) {
+                    TableUtils.dropTable(connectionSource, entityClass, true);
+                    TableUtils.createTable(connectionSource, entityClass);
+                }
             }
         } catch (SQLException e) {
             Log.e(TAG, "Database can not be init", e);

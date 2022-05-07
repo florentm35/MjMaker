@@ -1,5 +1,7 @@
 package fr.florent.mjmaker.service.common;
 
+import android.util.Pair;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -9,30 +11,39 @@ import fr.florent.mjmaker.service.model.FieldSetElement;
 import fr.florent.mjmaker.service.model.FieldSetScenario;
 import fr.florent.mjmaker.service.model.Game;
 import fr.florent.mjmaker.service.model.Entity;
+import fr.florent.mjmaker.service.model.Map;
+import fr.florent.mjmaker.service.model.MapLegend;
 import fr.florent.mjmaker.service.model.Scenario;
 import fr.florent.mjmaker.service.model.Template;
 import fr.florent.mjmaker.service.model.TemplateVar;
 import fr.florent.mjmaker.service.model.TextElement;
 import fr.florent.mjmaker.service.model.Theme;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 /**
  * Helper class for reference all entity
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public abstract class EntityHelper {
+
     /**
      * List of all entity
      */
-    public static final List<Class<?>> ENTITY_LIST = Arrays.asList(
-            Entity.class,
-            EntityVar.class,
-            Game.class,
-            Theme.class,
-            Scenario.class,
-            FieldSetScenario.class,
-            FieldSetElement.class,
-            EntityElement.class,
-            TextElement.class,
-            Template.class,
-            TemplateVar.class
+    // TODO : create a real migrate process or use flyway like
+    public static final List<Pair<Class<?>, Integer>> ENTITY_LIST = Arrays.asList(
+            Pair.create(Entity.class, 0),
+            Pair.create(EntityVar.class, 0),
+            Pair.create(Game.class, 0),
+            Pair.create(Theme.class, 0),
+            Pair.create(Scenario.class, 0),
+            Pair.create(FieldSetScenario.class, 0),
+            Pair.create(FieldSetElement.class, 0),
+            Pair.create(EntityElement.class, 0),
+            Pair.create(TextElement.class, 0),
+            Pair.create(Template.class, 0),
+            Pair.create(TemplateVar.class, 0),
+            Pair.create(Map.class, 9),
+            Pair.create(MapLegend.class, 9)
     );
 }

@@ -12,8 +12,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Map;
-import java.util.Stack;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -24,9 +25,10 @@ import fr.florent.mjmaker.fragment.common.menu.EnumScreen;
 import fr.florent.mjmaker.fragment.common.menu.MenuFragment;
 import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
 import fr.florent.mjmaker.fragment.entity.EditEntityFragment;
-import fr.florent.mjmaker.fragment.entity.ListEntityFragment;
 import fr.florent.mjmaker.fragment.entity.EditTemplateFragment;
+import fr.florent.mjmaker.fragment.entity.ListEntityFragment;
 import fr.florent.mjmaker.fragment.entity.ListTemplateFragment;
+import fr.florent.mjmaker.fragment.map.ListMapFragment;
 import fr.florent.mjmaker.fragment.scenario.ListScenarioFragment;
 import fr.florent.mjmaker.fragment.scenario.ScenarioFragment;
 
@@ -37,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getName();
 
-    private final Stack<AbstractFragment> callStack = new Stack<>();
+    private final Deque<AbstractFragment> callStack = new ArrayDeque<>();
 
     private AbstractFragment currentFragment;
 
@@ -78,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
             case LIST_SCENARIO:
                 fragment = new ListScenarioFragment();
                 break;
-            case DETAIL_SCENARIO:
+            case EDIT_SCENARIO:
                 fragment = new ScenarioFragment(param);
                 break;
             case LIST_ENTITY_TEMPLATE:
@@ -86,6 +88,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case EDIT_ENTITY_TEMPLATE:
                 fragment = new EditTemplateFragment(param);
+                break;
+            case LIST_MAP:
+                fragment = new ListMapFragment();
                 break;
             default:
                 Log.e(TAG, "Actions not found for " + screen.name());

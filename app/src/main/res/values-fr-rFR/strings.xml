@@ -56,4 +56,6 @@
     <string name="tooltip_btn_bold">Mettre le texte en gras</string>
     <string name="tooltip_btn_markdown_help">Aide markdown</string>
     <string name="tooltip_btn_delete">Supprimer</string>
+    <string name="menu_manage_map">Géstion carte</string>
+    <string name="msg_new_map">Ajouter  map</string>
 </resources>

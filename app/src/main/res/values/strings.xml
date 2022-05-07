@@ -48,6 +48,7 @@
     <string name="err_entity_name_empty">The name is mandatory</string>
     <string name="err_entity_template_empty">The template is mandatory</string>
 
+
     <!-- Scenario-->
     <string name="menu_scenario_manager">Scenario manager</string>
     <string name="msg_scenario_created">Scenario created</string>
@@ -60,8 +61,12 @@
     <string name="msg_template_updated">Template updated</string>
     <string name="msg_template_deleted">Template deleted</string>
     <string name="msg_ask_delete_template">Did you want really delete this template ?</string>
-    <string name="msg_entity_not_found">Entity can not be found</string>
-    <string name="msg_pick_entity">Pick an entity</string>
+
+    <!-- Map -->
+    <string name="menu_manage_map">Map manager</string>
+    <string name="msg_new_map">New map</string>
+
+    <!-- Markdown -->
     <string name="tooltip_btn_link">Add entity link</string>
     <string name="tooltip_btn_line_break">Add double line break</string>
     <string name="tooltip_btn_strikethrough">Set the text strikethrough</string>
@@ -69,5 +74,7 @@
     <string name="tooltip_btn_bold">Set the text in bold</string>
     <string name="tooltip_btn_markdown_help">Markdown help</string>
     <string name="tooltip_btn_delete">Delete</string>
+    <string name="msg_entity_not_found">Entity can not be found</string>
+    <string name="msg_pick_entity">Pick an entity</string>
 
 </resources>

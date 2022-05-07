@@ -6,13 +6,7 @@
     android:background="@color/han_purple"
     android:orientation="vertical">
 
-    <Button
-        android:id="@+id/menu_monster"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/black"
-        android:text="@string/menu_manage_entity"
-        android:textColor="@color/white" />
+
 
     <Button
         android:id="@+id/menu_category"
@@ -28,6 +22,20 @@
         android:layout_height="wrap_content"
         android:background="@color/black"
         android:text="@string/menu_scenario_manager"
+        android:textColor="@color/white" />
+    <Button
+        android:id="@+id/menu_map"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:text="@string/menu_manage_map"
+        android:textColor="@color/white" />
+    <Button
+        android:id="@+id/menu_entity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:text="@string/menu_manage_entity"
         android:textColor="@color/white" />
 
 </LinearLayout>
