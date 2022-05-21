@@ -6,10 +6,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 /**
  * Database util
  */
-public abstract class DataBaseUtil {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public class DataBaseUtil {
 
     /**
      * Convert a {@link ForeignCollection} to {@link List}

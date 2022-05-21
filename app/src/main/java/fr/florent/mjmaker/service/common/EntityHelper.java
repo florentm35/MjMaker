@@ -11,8 +11,8 @@ import fr.florent.mjmaker.service.model.FieldSetElement;
 import fr.florent.mjmaker.service.model.FieldSetScenario;
 import fr.florent.mjmaker.service.model.Game;
 import fr.florent.mjmaker.service.model.Entity;
-import fr.florent.mjmaker.service.model.Map;
-import fr.florent.mjmaker.service.model.MapLegend;
+import fr.florent.mjmaker.service.model.MapGame;
+import fr.florent.mjmaker.service.model.MapGameLegend;
 import fr.florent.mjmaker.service.model.Scenario;
 import fr.florent.mjmaker.service.model.Template;
 import fr.florent.mjmaker.service.model.TemplateVar;
@@ -43,7 +43,7 @@ public abstract class EntityHelper {
             Pair.create(TextElement.class, 0),
             Pair.create(Template.class, 0),
             Pair.create(TemplateVar.class, 0),
-            Pair.create(Map.class, 9),
-            Pair.create(MapLegend.class, 9)
+            Pair.create(MapGame.class, 9),
+            Pair.create(MapGameLegend.class, 9)
     );
 }

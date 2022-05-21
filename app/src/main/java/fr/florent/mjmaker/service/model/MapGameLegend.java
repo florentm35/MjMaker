@@ -17,7 +17,7 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode(of = "id")
 @DatabaseTable(tableName = "map_legend")
-public class MapLegend {
+public class MapGameLegend {
 
     @DatabaseField(generatedId = true)
     private Integer id;
@@ -31,5 +31,5 @@ public class MapLegend {
     private Integer y;
 
     @DatabaseField(canBeNull = false, foreign = true)
-    private Map map;
+    private MapGame mapGame;
 }

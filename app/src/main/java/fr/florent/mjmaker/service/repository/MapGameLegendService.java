@@ -1,28 +1,27 @@
 package fr.florent.mjmaker.service.repository;
 
 import fr.florent.mjmaker.service.common.AbstractRepository;
-import fr.florent.mjmaker.service.model.Map;
-import fr.florent.mjmaker.service.model.MapLegend;
+import fr.florent.mjmaker.service.model.MapGameLegend;
 
 /**
  * MapLegend service repository
  */
-public class MapLegendService extends AbstractRepository<MapLegend, Integer> {
+public class MapGameLegendService extends AbstractRepository<MapGameLegend, Integer> {
 
-    private MapLegendService() {
+    private MapGameLegendService() {
         super();
     }
 
-    private static MapLegendService instance;
+    private static MapGameLegendService instance;
 
     /**
      * Get service instance
      *
      * @return Service instance
      */
-    public static MapLegendService getInstance() {
+    public static MapGameLegendService getInstance() {
         if (instance == null) {
-            instance = new MapLegendService();
+            instance = new MapGameLegendService();
         }
 
         return instance;
@@ -30,8 +29,8 @@ public class MapLegendService extends AbstractRepository<MapLegend, Integer> {
 
 
     @Override
-    public Class<MapLegend> getTableClass() {
-        return MapLegend.class;
+    public Class<MapGameLegend> getTableClass() {
+        return MapGameLegend.class;
     }
 
     @Override
@@ -41,6 +40,6 @@ public class MapLegendService extends AbstractRepository<MapLegend, Integer> {
 
     @Override
     protected String getTag() {
-        return MapLegendService.class.getName();
+        return MapGameLegendService.class.getName();
     }
 }

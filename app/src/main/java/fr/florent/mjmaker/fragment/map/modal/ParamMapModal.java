@@ -13,8 +13,7 @@ import java.util.stream.Collectors;
 import fr.florent.mjmaker.R;
 import fr.florent.mjmaker.component.FilterComboBox;
 import fr.florent.mjmaker.service.model.Game;
-import fr.florent.mjmaker.service.model.Map;
-import fr.florent.mjmaker.service.model.Template;
+import fr.florent.mjmaker.service.model.MapGame;
 import fr.florent.mjmaker.service.model.Theme;
 import fr.florent.mjmaker.service.repository.GameService;
 import fr.florent.mjmaker.service.repository.ThemeService;
@@ -31,12 +30,12 @@ public class ParamMapModal extends DialogFragment {
 
     private Theme themeSelection;
 
-    private Map map;
+    private MapGame mapGame;
 
     private View view;
 
     public interface IActionOK {
-        boolean action(Map dialog);
+        boolean action(MapGame dialog);
     }
 
 
@@ -47,7 +46,7 @@ public class ParamMapModal extends DialogFragment {
 
         loadThemeList(view);
 
-        AndroidLayoutUtil.setTextViewText(view, R.id.et_name, map.getName());
+        AndroidLayoutUtil.setTextViewText(view, R.id.et_name, mapGame.getName());
 
         return view;
     }
@@ -94,14 +93,14 @@ public class ParamMapModal extends DialogFragment {
     }
 
     public void show(Context context,
-                     Map value,
+                     MapGame value,
                      IActionOK onValidate) {
-        map = value;
-        if (map == null) {
-            map = new Map();
+        mapGame = value;
+        if (mapGame == null) {
+            mapGame = new MapGame();
         }
-        gameSelection = map.getGame();
-        themeSelection = map.getTheme();
+        gameSelection = mapGame.getGame();
+        themeSelection = mapGame.getTheme();
 
         initView(context);
 
@@ -111,10 +110,10 @@ public class ParamMapModal extends DialogFragment {
     }
 
     private void onValidateDialog(Dialog dialog, IActionOK onValidate) {
-        map.setName(AndroidLayoutUtil.getTextViewText(view, R.id.et_name));
-        map.setGame(gameSelection);
-        map.setTheme(themeSelection);
-        if (onValidate.action(map)) {
+        mapGame.setName(AndroidLayoutUtil.getTextViewText(view, R.id.et_name));
+        mapGame.setGame(gameSelection);
+        mapGame.setTheme(themeSelection);
+        if (onValidate.action(mapGame)) {
             dialog.cancel();
         }
     }

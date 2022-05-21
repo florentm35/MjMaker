@@ -19,13 +19,13 @@ import fr.florent.mjmaker.fragment.common.menu.EnumScreen;
 import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
 import fr.florent.mjmaker.fragment.map.adapter.MapAdapter;
 import fr.florent.mjmaker.fragment.map.modal.ParamMapModal;
-import fr.florent.mjmaker.service.model.Map;
-import fr.florent.mjmaker.service.repository.MapService;
+import fr.florent.mjmaker.service.model.MapGame;
+import fr.florent.mjmaker.service.repository.MapGameService;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 
 public class ListMapFragment extends AbstractFragment {
 
-    private final MapService mapService = MapService.getInstance();
+    private final MapGameService mapGameService = MapGameService.getInstance();
 
     private MapAdapter mapAdapter;
 
@@ -36,24 +36,24 @@ public class ListMapFragment extends AbstractFragment {
         RecyclerView recyclerView = view.findViewById(R.id.list_element);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        mapAdapter = new MapAdapter(getContext(), mapService.getAll(), this::onAction);
+        mapAdapter = new MapAdapter(getContext(), mapGameService.getAll(), this::onAction);
         recyclerView.setAdapter(mapAdapter);
 
         return view;
     }
 
-    private void onAction(MapAdapter.EnumAction action, Map map) {
+    private void onAction(MapAdapter.EnumAction action, MapGame mapGame) {
         switch (action) {
             case EDIT:
-                this.redirectToDetailMap(map);
+                this.redirectToDetailMap(mapGame);
                 break;
             case DELETE:
                 AndroidLayoutUtil.openModalQuestion(getContext(),
                         getString(R.string.msg_ask_delete_template),
                         choice -> {
                             if (choice) {
-                                mapService.delete(map);
-                                mapAdapter.removeItem(map);
+                                mapGameService.delete(mapGame);
+                                mapAdapter.removeItem(mapGame);
                                 AndroidLayoutUtil.showToast(getContext(), getString(R.string.msg_template_deleted));
                             }
                             return true;
@@ -74,8 +74,8 @@ public class ListMapFragment extends AbstractFragment {
         );
     }
 
-    private void redirectToDetailMap(Map map) {
-        redirect.apply(EnumScreen.EDIT_MAP, new Object[]{map});
+    private void redirectToDetailMap(MapGame mapGame) {
+        redirect.apply(EnumScreen.EDIT_MAP, new Object[]{mapGame});
     }
 
     private void initMap() {
@@ -84,10 +84,10 @@ public class ListMapFragment extends AbstractFragment {
         dialog.show(getContext(), null, this::saveMap);
     }
 
-    private boolean saveMap(Map map) {
-        mapService.save(map);
+    private boolean saveMap(MapGame mapGame) {
+        mapGameService.save(mapGame);
         AndroidLayoutUtil.showToast(getContext(), getString(R.string.msg_template_created));
-        redirectToDetailMap(map);
+        redirectToDetailMap(mapGame);
         return true;
     }
 

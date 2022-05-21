@@ -16,10 +16,8 @@ import fr.florent.mjmaker.fragment.common.AbstractFragment;
 import fr.florent.mjmaker.fragment.common.menu.EnumScreen;
 import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
 import fr.florent.mjmaker.fragment.entity.adapter.EntityAdapter;
-import fr.florent.mjmaker.fragment.entity.adapter.TemplateAdapter;
 import fr.florent.mjmaker.fragment.entity.modal.ParamEntityModal;
 import fr.florent.mjmaker.service.model.Entity;
-import fr.florent.mjmaker.service.model.Template;
 import fr.florent.mjmaker.service.repository.EntityService;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 
