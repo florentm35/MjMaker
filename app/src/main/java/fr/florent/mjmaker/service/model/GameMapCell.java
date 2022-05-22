@@ -16,20 +16,25 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id")
-@DatabaseTable(tableName = "map_legend")
-public class MapGameLegend {
+@DatabaseTable(tableName = "map_cell")
+public class GameMapCell {
 
     @DatabaseField(generatedId = true)
     private Integer id;
-    @DatabaseField(columnName = "name")
-    private String name;
-    @DatabaseField(columnName = "text")
-    private String text;
+
     @DatabaseField(columnName = "x")
     private Integer x;
     @DatabaseField(columnName = "y")
     private Integer y;
 
+    @DatabaseField(columnName = "r")
+    private Integer r;
+    @DatabaseField(columnName = "g")
+    private Integer g;
+    @DatabaseField(columnName = "b")
+    private Integer b;
+
     @DatabaseField(canBeNull = false, foreign = true)
-    private MapGame mapGame;
+    private GameMap gameMap;
+
 }

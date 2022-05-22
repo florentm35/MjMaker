@@ -8,25 +8,25 @@ import androidx.core.content.ContextCompat;
 import java.util.List;
 
 import fr.florent.mjmaker.R;
-import fr.florent.mjmaker.service.model.MapGame;
+import fr.florent.mjmaker.service.model.GameMap;
 import fr.florent.mjmaker.utils.AbstractLinearWithHeaderAdapter;
 
-public class MapAdapter extends AbstractLinearWithHeaderAdapter<MapGame> {
+public class GameMapAdapter extends AbstractLinearWithHeaderAdapter<GameMap> {
 
-    private final static String TAG = MapAdapter.class.getName();
+    private final static String TAG = GameMapAdapter.class.getName();
 
     public enum EnumAction {
         EDIT, DELETE;
     }
 
     public interface IEventAction {
-        void action(EnumAction action, MapGame mapGame);
+        void action(EnumAction action, GameMap gameMap);
     }
 
     private final IEventAction handler;
 
-    public MapAdapter(Context context, List<MapGame> mapGames, IEventAction handler) {
-        super(context, mapGames);
+    public GameMapAdapter(Context context, List<GameMap> gameMaps, IEventAction handler) {
+        super(context, gameMaps);
         this.handler = handler;
     }
 
@@ -49,14 +49,14 @@ public class MapAdapter extends AbstractLinearWithHeaderAdapter<MapGame> {
                 view.setBackgroundColor(ContextCompat.getColor(context, R.color.light_purple));
             }
 
-            MapGame mapGame = values.get(position - 1);
+            GameMap gameMap = values.get(position - 1);
 
             /*AndroidLayoutUtil.setTextViewText(view, R.id.tv_game, template.getGame() != null ? template.getGame().getName() : "");
             AndroidLayoutUtil.setTextViewText(view, R.id.tv_theme, template.getTheme() != null ? template.getTheme().getName() : "");
             AndroidLayoutUtil.setTextViewText(view, R.id.tv_name, template.getName());*/
 
-            view.findViewById(R.id.view).setOnClickListener(v -> handler.action(EnumAction.EDIT, mapGame));
-            view.findViewById(R.id.delete).setOnClickListener(v -> handler.action(EnumAction.DELETE, mapGame));
+            view.findViewById(R.id.view).setOnClickListener(v -> handler.action(EnumAction.EDIT, gameMap));
+            view.findViewById(R.id.delete).setOnClickListener(v -> handler.action(EnumAction.DELETE, gameMap));
         }
     }
 }

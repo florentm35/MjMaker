@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Map;
@@ -19,18 +20,10 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import fr.florent.mjmaker.R;
-import fr.florent.mjmaker.fragment.category.ListGameFragment;
 import fr.florent.mjmaker.fragment.common.AbstractFragment;
 import fr.florent.mjmaker.fragment.common.menu.EnumScreen;
 import fr.florent.mjmaker.fragment.common.menu.MenuFragment;
 import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
-import fr.florent.mjmaker.fragment.entity.EditEntityFragment;
-import fr.florent.mjmaker.fragment.entity.EditTemplateFragment;
-import fr.florent.mjmaker.fragment.entity.ListEntityFragment;
-import fr.florent.mjmaker.fragment.entity.ListTemplateFragment;
-import fr.florent.mjmaker.fragment.map.ListMapFragment;
-import fr.florent.mjmaker.fragment.scenario.ListScenarioFragment;
-import fr.florent.mjmaker.fragment.scenario.ScenarioFragment;
 
 /**
  * Main application controller
@@ -66,35 +59,24 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "Call menu : " + screen.name());
 
         // init the Fragment
-        AbstractFragment fragment = null;
-        switch (screen) {
-            case LIST_ENTITY:
-                fragment = new ListEntityFragment();
-                break;
-            case EDIT_ENTITY:
-                fragment = new EditEntityFragment(param);
-                break;
-            case LIST_CATEGORY:
-                fragment = new ListGameFragment();
-                break;
-            case LIST_SCENARIO:
-                fragment = new ListScenarioFragment();
-                break;
-            case EDIT_SCENARIO:
-                fragment = new ScenarioFragment(param);
-                break;
-            case LIST_ENTITY_TEMPLATE:
-                fragment = new ListTemplateFragment();
-                break;
-            case EDIT_ENTITY_TEMPLATE:
-                fragment = new EditTemplateFragment(param);
-                break;
-            case LIST_MAP:
-                fragment = new ListMapFragment();
-                break;
-            default:
+        AbstractFragment fragment;
+
+        Class<? extends AbstractFragment> fragmentClass = screen.getFragment();
+
+        try {
+            // Search constructor with parameters
+            Constructor<? extends AbstractFragment> constructor = fragmentClass.getConstructor(Object[].class);
+            // Do not remove the object array wrapper
+            fragment = constructor.newInstance(new Object[]{param});
+        } catch (Exception ex) {
+            try {
+                // Search constructor without parameters
+                Constructor<? extends AbstractFragment> constructor = fragmentClass.getConstructor();
+                fragment = constructor.newInstance();
+            } catch (Exception e) {
                 Log.e(TAG, "Actions not found for " + screen.name());
                 throw new RuntimeException("Not implemented");
+            }
         }
 
         if (fromMenu) {
@@ -131,7 +113,6 @@ public class MainActivity extends AppCompatActivity {
         // Load the fragment
         loadFragment(R.id.body, fragment);
     }
-
 
 
     /**

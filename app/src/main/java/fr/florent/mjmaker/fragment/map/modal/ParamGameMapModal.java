@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 import fr.florent.mjmaker.R;
 import fr.florent.mjmaker.component.FilterComboBox;
 import fr.florent.mjmaker.service.model.Game;
-import fr.florent.mjmaker.service.model.MapGame;
+import fr.florent.mjmaker.service.model.GameMap;
 import fr.florent.mjmaker.service.model.Theme;
 import fr.florent.mjmaker.service.repository.GameService;
 import fr.florent.mjmaker.service.repository.ThemeService;
@@ -21,7 +21,7 @@ import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 import fr.florent.mjmaker.utils.DataBaseUtil;
 import fr.florent.mjmaker.utils.ItemSelect;
 
-public class ParamMapModal extends DialogFragment {
+public class ParamGameMapModal extends DialogFragment {
 
     private final GameService gameService = GameService.getInstance();
     private final ThemeService themeService = ThemeService.getInstance();
@@ -30,12 +30,12 @@ public class ParamMapModal extends DialogFragment {
 
     private Theme themeSelection;
 
-    private MapGame mapGame;
+    private GameMap gameMap;
 
     private View view;
 
     public interface IActionOK {
-        boolean action(MapGame dialog);
+        boolean action(GameMap dialog);
     }
 
 
@@ -46,7 +46,7 @@ public class ParamMapModal extends DialogFragment {
 
         loadThemeList(view);
 
-        AndroidLayoutUtil.setTextViewText(view, R.id.et_name, mapGame.getName());
+        AndroidLayoutUtil.setTextViewText(view, R.id.et_name, gameMap.getName());
 
         return view;
     }
@@ -93,14 +93,14 @@ public class ParamMapModal extends DialogFragment {
     }
 
     public void show(Context context,
-                     MapGame value,
+                     GameMap value,
                      IActionOK onValidate) {
-        mapGame = value;
-        if (mapGame == null) {
-            mapGame = new MapGame();
+        gameMap = value;
+        if (gameMap == null) {
+            gameMap = new GameMap();
         }
-        gameSelection = mapGame.getGame();
-        themeSelection = mapGame.getTheme();
+        gameSelection = gameMap.getGame();
+        themeSelection = gameMap.getTheme();
 
         initView(context);
 
@@ -110,10 +110,10 @@ public class ParamMapModal extends DialogFragment {
     }
 
     private void onValidateDialog(Dialog dialog, IActionOK onValidate) {
-        mapGame.setName(AndroidLayoutUtil.getTextViewText(view, R.id.et_name));
-        mapGame.setGame(gameSelection);
-        mapGame.setTheme(themeSelection);
-        if (onValidate.action(mapGame)) {
+        gameMap.setName(AndroidLayoutUtil.getTextViewText(view, R.id.et_name));
+        gameMap.setGame(gameSelection);
+        gameMap.setTheme(themeSelection);
+        if (onValidate.action(gameMap)) {
             dialog.cancel();
         }
     }

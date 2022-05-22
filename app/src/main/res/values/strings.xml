@@ -64,7 +64,7 @@
 
     <!-- Map -->
     <string name="menu_manage_map">Map manager</string>
-    <string name="msg_new_map">New mapGame</string>
+    <string name="msg_new_map">New gameMap</string>
 
     <!-- Markdown -->
     <string name="tooltip_btn_link">Add entity link</string>

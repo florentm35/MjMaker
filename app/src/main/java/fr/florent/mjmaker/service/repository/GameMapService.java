@@ -1,27 +1,27 @@
 package fr.florent.mjmaker.service.repository;
 
 import fr.florent.mjmaker.service.common.AbstractRepository;
-import fr.florent.mjmaker.service.model.MapGame;
+import fr.florent.mjmaker.service.model.GameMap;
 
 /**
  * Map service repository
  */
-public class MapGameService extends AbstractRepository<MapGame, Integer> {
+public class GameMapService extends AbstractRepository<GameMap, Integer> {
 
-    private MapGameService() {
+    private GameMapService() {
         super();
     }
 
-    private static MapGameService instance;
+    private static GameMapService instance;
 
     /**
      * Get service instance
      *
      * @return Service instance
      */
-    public static MapGameService getInstance() {
+    public static GameMapService getInstance() {
         if (instance == null) {
-            instance = new MapGameService();
+            instance = new GameMapService();
         }
 
         return instance;
@@ -29,8 +29,8 @@ public class MapGameService extends AbstractRepository<MapGame, Integer> {
 
 
     @Override
-    public Class<MapGame> getTableClass() {
-        return MapGame.class;
+    public Class<GameMap> getTableClass() {
+        return GameMap.class;
     }
 
     @Override
@@ -40,6 +40,6 @@ public class MapGameService extends AbstractRepository<MapGame, Integer> {
 
     @Override
     protected String getTag() {
-        return MapGameService.class.getName();
+        return GameMapService.class.getName();
     }
 }

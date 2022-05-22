@@ -9,7 +9,7 @@
 	- Element ajoutable	
 		- Ecriture de lore X
 			- Markdown X
-			- Custom lien Monstre/pnj/mapGame/combat/autres élément de fieldset ?
+			- Custom lien Monstre/pnj/gameMap/combat/autres élément de fieldset ?
 		- Creation de combat
 			- Gestion des combats
 			- Ordre des tours
@@ -17,7 +17,7 @@
 			- Recap monstre
 			- Marqueur d'avancement du combats
 			- Marqueur d'état ?
-		- Affichage mapGame (cf gestion de mapGame)
+		- Affichage gameMap (cf gestion de gameMap)
 			- Redirection edit
 			- Affichage fullscreen en modal ?
 		- Affichage pnj/monstre
@@ -26,7 +26,7 @@
 	- Generation PDF + export one drive ?
 - Gestion entité : monstre / pnj / sort / équipement
 	- Template markdown + variable (Type : Entity, Thème, text et number)  ?
-- Création de mapGames
+- Création de gameMaps
 		- Ajout de légende
 		- Case à case
 		- Couleur
