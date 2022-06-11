@@ -49,12 +49,12 @@ public class ListMapFragment extends AbstractFragment {
                 break;
             case DELETE:
                 AndroidLayoutUtil.openModalQuestion(getContext(),
-                        getString(R.string.msg_ask_delete_template),
+                        getString(R.string.msg_ask_delete_map),
                         choice -> {
                             if (choice) {
                                 mapGameService.delete(gameMap);
                                 gameMapAdapter.removeItem(gameMap);
-                                AndroidLayoutUtil.showToast(getContext(), getString(R.string.msg_template_deleted));
+                                AndroidLayoutUtil.showToast(getContext(), getString(R.string.msg_map_deleted));
                             }
                             return true;
                         });
@@ -86,7 +86,7 @@ public class ListMapFragment extends AbstractFragment {
 
     private boolean saveMap(GameMap gameMap) {
         mapGameService.save(gameMap);
-        AndroidLayoutUtil.showToast(getContext(), getString(R.string.msg_template_created));
+        AndroidLayoutUtil.showToast(getContext(), getString(R.string.msg_map_created));
         redirectToDetailMap(gameMap);
         return true;
     }

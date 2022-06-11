@@ -12,6 +12,7 @@ import fr.florent.mjmaker.service.model.FieldSetScenario;
 import fr.florent.mjmaker.service.model.Game;
 import fr.florent.mjmaker.service.model.Entity;
 import fr.florent.mjmaker.service.model.GameMap;
+import fr.florent.mjmaker.service.model.GameMapCell;
 import fr.florent.mjmaker.service.model.GameMapLegend;
 import fr.florent.mjmaker.service.model.Scenario;
 import fr.florent.mjmaker.service.model.Template;
@@ -44,6 +45,7 @@ public abstract class EntityHelper {
             Pair.create(Template.class, 0),
             Pair.create(TemplateVar.class, 0),
             Pair.create(GameMap.class, 9),
-            Pair.create(GameMapLegend.class, 9)
+            Pair.create(GameMapLegend.class, 9),
+            Pair.create(GameMapCell.class, 9)
     );
 }

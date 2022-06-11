@@ -44,7 +44,6 @@
     <string name="msg_entity_updated">Entité mise à jour</string>
     <string name="msg_template_deleted">Modèle supprimé</string>
     <string name="msg_ask_delete_template">Voulez vous vraiment supprimer ce modèle ?</string>
-    <string name="label_view">Voir</string>
     <string name="label_id">Id</string>
     <string name="msg_entity_not_found">Entité non trouvée</string>
     <string name="label_entity">Entité</string>
@@ -58,4 +57,9 @@
     <string name="tooltip_btn_delete">Supprimer</string>
     <string name="menu_manage_map">Géstion carte</string>
     <string name="msg_new_map">Ajouter  gameMap</string>
+    <string name="msg_map_updated">Carte mise à jour</string>
+    <string name="msg_map_deleted">Carte supprimée</string>
+    <string name="msg_map_created">Casrte créée</string>
+    <string name="msg_ask_delete_map">Voulez vous vraiment supprimer cette carte ?</string>
+    <string name="label_view">Vue</string>
 </resources>

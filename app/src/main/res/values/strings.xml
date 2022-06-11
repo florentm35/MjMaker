@@ -65,6 +65,10 @@
     <!-- Map -->
     <string name="menu_manage_map">Map manager</string>
     <string name="msg_new_map">New gameMap</string>
+    <string name="msg_map_created">Map created</string>
+    <string name="msg_map_updated">Map updated</string>
+    <string name="msg_map_deleted">Map deleted</string>
+    <string name="msg_ask_delete_map">Did you want really delete this map ?</string>
 
     <!-- Markdown -->
     <string name="tooltip_btn_link">Add entity link</string>
