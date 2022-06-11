@@ -30,7 +30,7 @@ public class EditGameMapFragment extends AbstractFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.edit_entity, container, false);
+        View view = inflater.inflate(R.layout.edit_map, container, false);
 
         return view;
     }
@@ -54,7 +54,12 @@ public class EditGameMapFragment extends AbstractFragment {
 
     private boolean saveMap(GameMap gameMap) {
         mapGameService.update(gameMap);
-        AndroidLayoutUtil.showToast(getContext(), getString(R.string.msg_template_created));
+        AndroidLayoutUtil.showToast(getContext(), getString(R.string.msg_map_updated));
+        return true;
+    }
+
+    @Override
+    public boolean showBack() {
         return true;
     }
 }
