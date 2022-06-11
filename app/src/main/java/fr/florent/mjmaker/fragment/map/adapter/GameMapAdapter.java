@@ -10,6 +10,7 @@ import java.util.List;
 import fr.florent.mjmaker.R;
 import fr.florent.mjmaker.service.model.GameMap;
 import fr.florent.mjmaker.utils.AbstractLinearWithHeaderAdapter;
+import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 
 public class GameMapAdapter extends AbstractLinearWithHeaderAdapter<GameMap> {
 
@@ -51,9 +52,9 @@ public class GameMapAdapter extends AbstractLinearWithHeaderAdapter<GameMap> {
 
             GameMap gameMap = values.get(position - 1);
 
-            /*AndroidLayoutUtil.setTextViewText(view, R.id.tv_game, template.getGame() != null ? template.getGame().getName() : "");
-            AndroidLayoutUtil.setTextViewText(view, R.id.tv_theme, template.getTheme() != null ? template.getTheme().getName() : "");
-            AndroidLayoutUtil.setTextViewText(view, R.id.tv_name, template.getName());*/
+            AndroidLayoutUtil.setTextViewText(view, R.id.tv_game, gameMap.getGame() != null ? gameMap.getGame().getName() : "");
+            AndroidLayoutUtil.setTextViewText(view, R.id.tv_theme, gameMap.getTheme() != null ? gameMap.getTheme().getName() : "");
+            AndroidLayoutUtil.setTextViewText(view, R.id.tv_name, gameMap.getName());
 
             view.findViewById(R.id.view).setOnClickListener(v -> handler.action(EnumAction.EDIT, gameMap));
             view.findViewById(R.id.delete).setOnClickListener(v -> handler.action(EnumAction.DELETE, gameMap));
