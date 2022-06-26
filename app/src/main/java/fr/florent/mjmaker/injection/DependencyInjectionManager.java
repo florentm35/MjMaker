@@ -13,8 +13,8 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 /**
- * Dependency injection manager, provide injection of class annotated with @{@link fr.florent.mjmaker.injection.annotation.Injectable}
- * for field class annotated with @{@link fr.florent.mjmaker.injection.annotation.Inject}.
+ * Dependency injection manager, provide injection of class annotated with {@link fr.florent.mjmaker.injection.annotation.Injectable}
+ * for field class annotated with {@link fr.florent.mjmaker.injection.annotation.Inject}.
  * <p>The injected class are rule as singleton, take care of synchronisation by your self</p>
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -57,7 +57,7 @@ public class DependencyInjectionManager {
                 } catch (IllegalAccessException e) {
                     throw new DependencyInjectionException("Can not be inject " +
                             injectableInstance.getClass().getName() + "to the field : " + field.getName() +
-                            " of class " + object.getClass().getName());
+                            " of class " + object.getClass().getName(), e);
                 }
             }
         }
