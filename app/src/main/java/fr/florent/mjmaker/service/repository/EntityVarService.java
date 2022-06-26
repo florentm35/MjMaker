@@ -1,31 +1,18 @@
 package fr.florent.mjmaker.service.repository;
 
+import fr.florent.mjmaker.injection.annotation.Injectable;
 import fr.florent.mjmaker.service.common.AbstractRepository;
 import fr.florent.mjmaker.service.model.EntityVar;
 
 /**
  * EntityVar service repository
  */
+@Injectable
 public class EntityVarService extends AbstractRepository<EntityVar, Integer> {
 
     private EntityVarService() {
         super();
     }
-
-    private static EntityVarService instance;
-
-    /**
-     * Get service instance
-     *
-     * @return Service instance
-     */
-    public static EntityVarService getInstance() {
-        if (instance == null) {
-            instance = new EntityVarService();
-        }
-        return instance;
-    }
-
 
     @Override
     public Class<EntityVar> getTableClass() {

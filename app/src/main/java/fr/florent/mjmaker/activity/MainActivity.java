@@ -24,6 +24,7 @@ import fr.florent.mjmaker.fragment.common.AbstractFragment;
 import fr.florent.mjmaker.fragment.common.menu.EnumScreen;
 import fr.florent.mjmaker.fragment.common.menu.MenuFragment;
 import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
+import fr.florent.mjmaker.injection.DependencyInjectionManager;
 
 /**
  * Main application controller
@@ -78,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 throw new RuntimeException("Not implemented");
             }
         }
+        DependencyInjectionManager.getInstance().inject(fragment);
 
         if (fromMenu) {
             // Hide side menu

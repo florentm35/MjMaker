@@ -17,13 +17,15 @@ import fr.florent.mjmaker.R;
 import fr.florent.mjmaker.fragment.category.recyclerview.GameAdapter;
 import fr.florent.mjmaker.fragment.common.AbstractFragment;
 import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
+import fr.florent.mjmaker.injection.annotation.Inject;
 import fr.florent.mjmaker.service.model.Game;
 import fr.florent.mjmaker.service.repository.GameService;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 
 public class ListGameFragment extends AbstractFragment {
 
-    private final GameService gameService = GameService.getInstance();
+    @Inject
+    private GameService gameService;
 
     private GameAdapter gameAdapter;
 

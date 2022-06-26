@@ -19,13 +19,15 @@ import fr.florent.mjmaker.fragment.common.menu.EnumScreen;
 import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
 import fr.florent.mjmaker.fragment.map.adapter.GameMapAdapter;
 import fr.florent.mjmaker.fragment.map.modal.ParamGameMapModal;
+import fr.florent.mjmaker.injection.annotation.Inject;
 import fr.florent.mjmaker.service.model.GameMap;
 import fr.florent.mjmaker.service.repository.GameMapService;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 
 public class ListMapFragment extends AbstractFragment {
 
-    private final GameMapService mapGameService = GameMapService.getInstance();
+    @Inject
+    private GameMapService mapGameService;
 
     private GameMapAdapter gameMapAdapter;
 

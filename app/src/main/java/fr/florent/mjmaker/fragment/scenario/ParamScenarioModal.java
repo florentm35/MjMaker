@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 
 import fr.florent.mjmaker.R;
 import fr.florent.mjmaker.component.FilterComboBox;
+import fr.florent.mjmaker.injection.DependencyInjectionManager;
+import fr.florent.mjmaker.injection.annotation.Inject;
 import fr.florent.mjmaker.service.model.Game;
 import fr.florent.mjmaker.service.model.Scenario;
 import fr.florent.mjmaker.service.repository.GameService;
@@ -19,17 +21,20 @@ import fr.florent.mjmaker.utils.ItemSelect;
 
 public class ParamScenarioModal extends DialogFragment {
 
-    private GameService gameService = GameService.getInstance();
+    @Inject
+    private GameService gameService;
 
     private Game gameSelection;
 
     private Scenario scenario;
 
-
     public interface IActionOK {
         boolean action(Scenario dialog);
     }
 
+    public ParamScenarioModal() {
+        DependencyInjectionManager.getInstance().inject(this);
+    }
 
     private View getView(Context context) {
         View view = LayoutInflater.from(context).inflate(R.layout.param_scenario_modal, null);

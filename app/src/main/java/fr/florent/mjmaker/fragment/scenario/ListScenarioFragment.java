@@ -18,13 +18,15 @@ import fr.florent.mjmaker.fragment.common.AbstractFragment;
 import fr.florent.mjmaker.fragment.common.menu.EnumScreen;
 import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
 import fr.florent.mjmaker.fragment.scenario.adapter.ScenarioAdapter;
+import fr.florent.mjmaker.injection.annotation.Inject;
 import fr.florent.mjmaker.service.model.Scenario;
 import fr.florent.mjmaker.service.repository.ScenarioService;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 
 public class ListScenarioFragment extends AbstractFragment {
 
-    private final ScenarioService scenarioService = ScenarioService.getInstance();
+    @Inject
+    private ScenarioService scenarioService;
 
     private ScenarioAdapter scenarioAdapter;
 

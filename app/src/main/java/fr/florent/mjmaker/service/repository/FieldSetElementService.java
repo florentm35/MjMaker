@@ -6,6 +6,7 @@ import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
 
+import fr.florent.mjmaker.injection.annotation.Injectable;
 import fr.florent.mjmaker.service.common.AbstractRepository;
 import fr.florent.mjmaker.service.model.EntityElement;
 import fr.florent.mjmaker.service.model.FieldSetElement;
@@ -14,6 +15,7 @@ import fr.florent.mjmaker.service.model.TextElement;
 /**
  * FieldSetElement service repository
  */
+@Injectable
 public class FieldSetElementService extends AbstractRepository<FieldSetElement, Integer> {
 
     private static final String TAG = FieldSetElementService.class.getName();
@@ -24,21 +26,6 @@ public class FieldSetElementService extends AbstractRepository<FieldSetElement, 
 
     private FieldSetElementService() {
         super();
-    }
-
-    private static FieldSetElementService instance;
-
-    /**
-     * Get service instance
-     *
-     * @return Service instance
-     */
-    public static FieldSetElementService getInstance() {
-        if (instance == null) {
-            instance = new FieldSetElementService();
-        }
-
-        return instance;
     }
 
     @Override

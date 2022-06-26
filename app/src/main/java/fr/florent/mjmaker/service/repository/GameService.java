@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.sql.SQLException;
 
+import fr.florent.mjmaker.injection.annotation.Injectable;
 import fr.florent.mjmaker.service.common.AbstractRepository;
 import fr.florent.mjmaker.service.common.SQLRuntimeException;
 import fr.florent.mjmaker.service.model.Game;
@@ -11,24 +12,11 @@ import fr.florent.mjmaker.service.model.Game;
 /**
  * Game service repository
  */
+@Injectable
 public class GameService extends AbstractRepository<Game, Integer> {
 
     private GameService() {
         super();
-    }
-
-    private static GameService instance;
-
-    /**
-     * Get service instance
-     *
-     * @return Service instance
-     */
-    public static GameService getInstance() {
-        if (instance == null) {
-            instance = new GameService();
-        }
-        return instance;
     }
 
     /**

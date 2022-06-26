@@ -1,31 +1,18 @@
 package fr.florent.mjmaker.service.repository;
 
+import fr.florent.mjmaker.injection.annotation.Injectable;
 import fr.florent.mjmaker.service.common.AbstractRepository;
 import fr.florent.mjmaker.service.model.Template;
 
 /**
  * Template service repository
  */
+@Injectable
 public class TemplateService extends AbstractRepository<Template, Integer> {
 
     private TemplateService() {
         super();
     }
-
-    private static TemplateService instance;
-
-    /**
-     * Get service instance
-     *
-     * @return Service instance
-     */
-    public static TemplateService getInstance() {
-        if (instance == null) {
-            instance = new TemplateService();
-        }
-        return instance;
-    }
-
 
     @Override
     public Class<Template> getTableClass() {

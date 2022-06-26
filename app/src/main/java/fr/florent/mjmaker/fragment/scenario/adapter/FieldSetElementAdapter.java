@@ -18,6 +18,8 @@ import fr.florent.mjmaker.R;
 import fr.florent.mjmaker.component.MarkdownEditor;
 import fr.florent.mjmaker.fragment.common.markdown.InternalLinkMovementMethod;
 import fr.florent.mjmaker.fragment.scenario.ScenarioFragment;
+import fr.florent.mjmaker.injection.DependencyInjectionManager;
+import fr.florent.mjmaker.injection.annotation.Inject;
 import fr.florent.mjmaker.service.markdown.MarkDownService;
 import fr.florent.mjmaker.service.model.Entity;
 import fr.florent.mjmaker.service.model.FieldSetElement;
@@ -31,7 +33,8 @@ public class FieldSetElementAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     private final MarkDownService markDownService = MarkDownService.getInstance();
 
-    private final EntityService entityService = EntityService.getInstance();
+    @Inject
+    private EntityService entityService;
 
     private static final String TAG = FieldSetElementAdapter.class.getName();
 
@@ -55,6 +58,8 @@ public class FieldSetElementAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         this.lstElement = lstElement;
         this.state = state;
         this.handler = handler;
+
+        DependencyInjectionManager.getInstance().inject(this);
     }
 
     @NonNull

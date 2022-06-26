@@ -19,6 +19,7 @@ import fr.florent.mjmaker.R;
 import fr.florent.mjmaker.fragment.common.AbstractFragment;
 import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
 import fr.florent.mjmaker.fragment.scenario.adapter.FieldSetAdapter;
+import fr.florent.mjmaker.injection.annotation.Inject;
 import fr.florent.mjmaker.service.model.FieldSetElement;
 import fr.florent.mjmaker.service.model.FieldSetScenario;
 import fr.florent.mjmaker.service.model.Scenario;
@@ -36,8 +37,10 @@ public class ScenarioFragment extends AbstractFragment {
         VIEW, EDIT;
     }
 
-    private final FieldSetScenarioService fieldSetScenarioService = FieldSetScenarioService.getInstance();
-    private final FieldSetElementService fieldSetElementService = FieldSetElementService.getInstance();
+    @Inject
+    private FieldSetScenarioService fieldSetScenarioService;
+    @Inject
+    private FieldSetElementService fieldSetElementService;
 
     private Scenario scenario;
 

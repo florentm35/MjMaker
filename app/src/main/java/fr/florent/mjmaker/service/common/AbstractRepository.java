@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import fr.florent.mjmaker.injection.annotation.Injectable;
 import fr.florent.mjmaker.service.model.FieldSetElement;
 import fr.florent.mjmaker.service.model.TextElement;
 

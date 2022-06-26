@@ -12,6 +12,7 @@ import fr.florent.mjmaker.R;
 import fr.florent.mjmaker.fragment.common.AbstractFragment;
 import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
 import fr.florent.mjmaker.fragment.map.modal.ParamGameMapModal;
+import fr.florent.mjmaker.injection.annotation.Inject;
 import fr.florent.mjmaker.service.model.GameMap;
 import fr.florent.mjmaker.service.repository.GameMapService;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;
@@ -20,7 +21,8 @@ public class EditGameMapFragment extends AbstractFragment {
 
     private GameMap gameMap;
 
-    private final GameMapService mapGameService = GameMapService.getInstance();
+    @Inject
+    private GameMapService mapGameService;
 
     public EditGameMapFragment(Object... params) {
         if (params != null && params.length > 0) {

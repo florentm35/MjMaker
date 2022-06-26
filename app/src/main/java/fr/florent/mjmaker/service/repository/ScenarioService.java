@@ -1,20 +1,22 @@
 package fr.florent.mjmaker.service.repository;
 
+import fr.florent.mjmaker.injection.annotation.Inject;
+import fr.florent.mjmaker.injection.annotation.Injectable;
 import fr.florent.mjmaker.service.common.AbstractRepository;
 import fr.florent.mjmaker.service.model.Scenario;
 
 /**
  * Scenario service repository
  */
+@Injectable
 public class ScenarioService extends AbstractRepository<Scenario, Integer> {
 
-    FieldSetScenarioService fieldSetScenarioService = FieldSetScenarioService.getInstance();
+    @Inject
+    private FieldSetScenarioService fieldSetScenarioService;
 
     private ScenarioService() {
         super();
     }
-
-    private static ScenarioService instance;
 
     @Override
     public void delete(Scenario entity) {
@@ -29,19 +31,6 @@ public class ScenarioService extends AbstractRepository<Scenario, Integer> {
         delete(findBydId(integer));
     }
 
-
-    /**
-     * Get service instance
-     *
-     * @return Service instance
-     */
-    public static ScenarioService getInstance() {
-        if (instance == null) {
-            instance = new ScenarioService();
-        }
-
-        return instance;
-    }
 
     @Override
     public Class<Scenario> getTableClass() {

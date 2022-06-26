@@ -6,6 +6,8 @@ import com.j256.ormlite.stmt.QueryBuilder;
 
 import java.sql.SQLException;
 
+import fr.florent.mjmaker.injection.annotation.Inject;
+import fr.florent.mjmaker.injection.annotation.Injectable;
 import fr.florent.mjmaker.service.common.AbstractRepository;
 import fr.florent.mjmaker.service.common.SQLRuntimeException;
 import fr.florent.mjmaker.service.model.Game;
@@ -14,28 +16,15 @@ import fr.florent.mjmaker.service.model.Theme;
 /**
  * Theme service repository
  */
+@Injectable
 public class ThemeService extends AbstractRepository<Theme, Integer> {
 
-    private static ThemeService instance;
-
-    private final GameService gameService = GameService.getInstance();
+    @Inject
+    private GameService gameService;
 
     private ThemeService() {
         super();
     }
-
-    /**
-     * Get service instance
-     *
-     * @return Service instance
-     */
-    public static ThemeService getInstance() {
-        if (instance == null) {
-            instance = new ThemeService();
-        }
-        return instance;
-    }
-
 
     /**
      * Search theme by game and name

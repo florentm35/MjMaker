@@ -1,32 +1,18 @@
 package fr.florent.mjmaker.service.repository;
 
+import fr.florent.mjmaker.injection.annotation.Injectable;
 import fr.florent.mjmaker.service.common.AbstractRepository;
 import fr.florent.mjmaker.service.model.GameMapLegend;
 
 /**
  * MapLegend service repository
  */
+@Injectable
 public class GameMapLegendService extends AbstractRepository<GameMapLegend, Integer> {
 
     private GameMapLegendService() {
         super();
     }
-
-    private static GameMapLegendService instance;
-
-    /**
-     * Get service instance
-     *
-     * @return Service instance
-     */
-    public static GameMapLegendService getInstance() {
-        if (instance == null) {
-            instance = new GameMapLegendService();
-        }
-
-        return instance;
-    }
-
 
     @Override
     public Class<GameMapLegend> getTableClass() {

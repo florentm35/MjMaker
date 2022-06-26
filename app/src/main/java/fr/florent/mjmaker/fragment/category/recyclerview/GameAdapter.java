@@ -14,6 +14,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 import fr.florent.mjmaker.R;
+import fr.florent.mjmaker.injection.DependencyInjectionManager;
+import fr.florent.mjmaker.injection.annotation.Inject;
 import fr.florent.mjmaker.service.common.SQLRuntimeException;
 import fr.florent.mjmaker.service.model.Game;
 import fr.florent.mjmaker.service.model.Theme;
@@ -26,7 +28,8 @@ public class GameAdapter extends AbstractLinearWithHeaderAdapter<Game> {
 
     private static String TAG = GameAdapter.class.getName();
 
-    private ThemeService themeService = ThemeService.getInstance();
+    @Inject
+    private ThemeService themeService;
 
     public enum EnumAction {
         EDIT, DELETE;
@@ -41,6 +44,7 @@ public class GameAdapter extends AbstractLinearWithHeaderAdapter<Game> {
     public GameAdapter(Context context, List<Game> categories, IEventAction handler) {
         super(context, categories);
         this.handler = handler;
+        DependencyInjectionManager.getInstance().inject(this);
     }
 
     @Override

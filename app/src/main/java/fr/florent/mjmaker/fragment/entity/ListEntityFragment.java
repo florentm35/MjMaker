@@ -17,13 +17,15 @@ import fr.florent.mjmaker.fragment.common.menu.EnumScreen;
 import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
 import fr.florent.mjmaker.fragment.entity.adapter.EntityAdapter;
 import fr.florent.mjmaker.fragment.entity.modal.ParamEntityModal;
+import fr.florent.mjmaker.injection.annotation.Inject;
 import fr.florent.mjmaker.service.model.Entity;
 import fr.florent.mjmaker.service.repository.EntityService;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 
 public class ListEntityFragment extends AbstractFragment {
 
-    private final EntityService entityService = EntityService.getInstance();
+    @Inject
+    private EntityService entityService;
 
     private EntityAdapter entityAdapter;
 

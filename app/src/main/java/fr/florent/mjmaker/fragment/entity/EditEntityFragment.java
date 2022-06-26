@@ -17,6 +17,7 @@ import fr.florent.mjmaker.fragment.common.AbstractFragment;
 import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
 import fr.florent.mjmaker.fragment.entity.adapter.EntityVarAdapter;
 import fr.florent.mjmaker.fragment.entity.modal.ParamEntityModal;
+import fr.florent.mjmaker.injection.annotation.Inject;
 import fr.florent.mjmaker.service.model.Entity;
 import fr.florent.mjmaker.service.model.EntityVar;
 import fr.florent.mjmaker.service.model.TemplateVar;
@@ -27,8 +28,10 @@ import fr.florent.mjmaker.utils.DataBaseUtil;
 
 public class EditEntityFragment extends AbstractFragment {
 
-    private final EntityService entityService = EntityService.getInstance();
-    private final EntityVarService entityVarService = EntityVarService.getInstance();
+    @Inject
+    private EntityService entityService;
+    @Inject
+    private EntityVarService entityVarService;
 
     private EntityVarAdapter entityVarAdapter;
 

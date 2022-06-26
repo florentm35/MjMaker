@@ -1,32 +1,21 @@
 package fr.florent.mjmaker.service.repository;
 
+import fr.florent.mjmaker.injection.annotation.Inject;
+import fr.florent.mjmaker.injection.annotation.Injectable;
 import fr.florent.mjmaker.service.common.AbstractRepository;
 import fr.florent.mjmaker.service.model.FieldSetScenario;
 
 /**
  * FieldSetScenario service repository
  */
+@Injectable
 public class FieldSetScenarioService extends AbstractRepository<FieldSetScenario, Integer> {
 
-    private final FieldSetElementService fieldSetElementService = FieldSetElementService.getInstance();
+    @Inject
+    private FieldSetElementService fieldSetElementService;
 
     private FieldSetScenarioService() {
         super();
-    }
-
-    private static FieldSetScenarioService instance;
-
-    /**
-     * Get service instance
-     *
-     * @return Service instance
-     */
-    public static FieldSetScenarioService getInstance() {
-        if (instance == null) {
-            instance = new FieldSetScenarioService();
-        }
-
-        return instance;
     }
 
     @Override

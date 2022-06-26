@@ -18,6 +18,7 @@ import fr.florent.mjmaker.fragment.common.AbstractFragment;
 import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
 import fr.florent.mjmaker.fragment.entity.adapter.TemplateVarAdapter;
 import fr.florent.mjmaker.fragment.entity.modal.ParamTemplateModal;
+import fr.florent.mjmaker.injection.annotation.Inject;
 import fr.florent.mjmaker.service.model.EnumTemplateVarType;
 import fr.florent.mjmaker.service.model.Template;
 import fr.florent.mjmaker.service.model.TemplateVar;
@@ -28,8 +29,10 @@ import fr.florent.mjmaker.utils.DataBaseUtil;
 
 public class EditTemplateFragment extends AbstractFragment {
 
-    private final TemplateService templateService = TemplateService.getInstance();
-    private final TemplateVarService templateVarService = TemplateVarService.getInstance();
+    @Inject
+    private TemplateService templateService;
+    @Inject
+    private TemplateVarService templateVarService;
 
     private final Template template;
 

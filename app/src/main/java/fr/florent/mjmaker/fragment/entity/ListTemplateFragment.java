@@ -19,13 +19,15 @@ import fr.florent.mjmaker.fragment.common.menu.EnumScreen;
 import fr.florent.mjmaker.fragment.common.toolbar.ToolBarItem;
 import fr.florent.mjmaker.fragment.entity.adapter.TemplateAdapter;
 import fr.florent.mjmaker.fragment.entity.modal.ParamTemplateModal;
+import fr.florent.mjmaker.injection.annotation.Inject;
 import fr.florent.mjmaker.service.model.Template;
 import fr.florent.mjmaker.service.repository.TemplateService;
 import fr.florent.mjmaker.utils.AndroidLayoutUtil;
 
 public class ListTemplateFragment extends AbstractFragment {
 
-    private final TemplateService templateService = TemplateService.getInstance();
+    @Inject
+    private TemplateService templateService;
 
     private TemplateAdapter templateAdapter;
 

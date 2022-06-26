@@ -3,6 +3,7 @@ package fr.florent.mjmaker.service.repository;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import fr.florent.mjmaker.injection.annotation.Injectable;
 import fr.florent.mjmaker.service.common.AbstractRepository;
 import fr.florent.mjmaker.service.markdown.MarkDownService;
 import fr.florent.mjmaker.service.model.Entity;
@@ -12,27 +13,13 @@ import fr.florent.mjmaker.utils.DataBaseUtil;
 /**
  * Entity service repository
  */
+@Injectable
 public class EntityService extends AbstractRepository<Entity, Integer> {
 
     private final MarkDownService markDownService = MarkDownService.getInstance();
 
     private EntityService() {
         super();
-    }
-
-    private static EntityService instance;
-
-    /**
-     * Get service instance
-     *
-     * @return Service instance
-     */
-    public static EntityService getInstance() {
-        if (instance == null) {
-            instance = new EntityService();
-        }
-
-        return instance;
     }
 
     public String renderEntity(Entity entity) {

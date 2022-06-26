@@ -12,6 +12,8 @@ import java.util.stream.Collectors;
 
 import fr.florent.mjmaker.R;
 import fr.florent.mjmaker.component.FilterComboBox;
+import fr.florent.mjmaker.injection.DependencyInjectionManager;
+import fr.florent.mjmaker.injection.annotation.Inject;
 import fr.florent.mjmaker.service.model.Entity;
 import fr.florent.mjmaker.service.model.Game;
 import fr.florent.mjmaker.service.model.Template;
@@ -25,9 +27,12 @@ import fr.florent.mjmaker.utils.ItemSelect;
 
 public class ParamEntityModal extends DialogFragment {
 
-    private final GameService gameService = GameService.getInstance();
-    private final ThemeService themeService = ThemeService.getInstance();
-    private final TemplateService templateService = TemplateService.getInstance();
+    @Inject
+    private GameService gameService;
+    @Inject
+    private ThemeService themeService;
+    @Inject
+    private TemplateService templateService;
 
     private Game gameSelection;
 
@@ -39,8 +44,13 @@ public class ParamEntityModal extends DialogFragment {
 
     private View view;
 
+
     public interface IActionOK {
         boolean action(Entity dialog);
+    }
+
+    public ParamEntityModal() {
+        DependencyInjectionManager.getInstance().inject(this);
     }
 
     public void show(Context context,
