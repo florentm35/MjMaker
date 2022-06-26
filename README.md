@@ -1,3 +1,5 @@
+[![Build](https://github.com/florentm35/MjMaker/actions/workflows/build_and_packaging.yml/badge.svg?branch=master)](https://github.com/florentm35/MjMaker/actions/workflows/build_and_packaging.yml)
+
 # MjMaker
 - Gestion des Jeux et des thèmes 
 	- Ajouter des valeurs possible pour les thèmes (Permet de creer des list de param harmonisé)
