@@ -27,8 +27,8 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      - name: Run Tests
-        run: bash ./gradlew --stacktrace  
+      - name: Run build
+        run: bash ./gradlew build --stacktrace  
   apk:
     name: Generate APK
     runs-on: ubuntu-latest
